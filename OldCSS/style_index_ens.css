@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color:skyblue;
+    padding: 10px;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-brand {
+    font-size: 20px;
+    font-weight: bold;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .navbar-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .navbar-item {
+    margin-right: 10px;
+  }
+  
+  .navbar-item:last-child {
+    margin-right: 0;
+  }
+  
+  .navbar-item a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px;
+  }
+  
+  .navbar-item.active a {
+    color: #0066cc;
+  }
+  a{
+    text-decoration: none;
+    color: #fff;
+  }
+
+
+
+
+
+ 
+
+
+
+
+
+  
+  .submit-button {
+    background-color: #0066cc;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #004080;
+  }
+  
+  .content {
+    padding: 80px 20px 20px; /* Ajoute un padding pour éviter que le contenu soit masqué par la navbar */
+  }
+  

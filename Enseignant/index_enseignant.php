@@ -6,7 +6,7 @@
  if($_SESSION["role"]!="ens"){
      header("location:../authentification.php");
  }
- include "../nav_bar.php";
+
 ?>
 </br></br></br>
 <div class="container">
@@ -51,6 +51,9 @@
           ?>
         </table>
     </div>
+    <?php
+    include "../nav_bar.php";
+    ?>
 </div>
 </body>
 </html>

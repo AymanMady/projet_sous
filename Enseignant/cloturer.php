@@ -46,7 +46,7 @@
             if($req){
                 header('location:soumission_en_ligne.php');
             }else {
-                $message = "soumission non modifié";
+                $message = "Soumission non modifié";
             }
 
         }else {

@@ -89,7 +89,7 @@ include "../nav_bar.php";
     </tr>
     <?php 
                     include_once "../connexion.php";
-                    $req = mysqli_query($conn , "SELECT * FROM etudiant group by matricule asc;");
+                    $req = mysqli_query($conn , "SELECT * FROM etudiant INNER JOIN semestre USING(id_semestre) ORDER by matricule asc;");
                     if(mysqli_num_rows($req) == 0){
                         echo "Il n'y a pas encore des etudiants ajouter !" ;
                         
@@ -102,10 +102,10 @@ include "../nav_bar.php";
                                 <?=$row['prenom']?></td>
                                 <?php $row['lieu_naiss']?>
                                 <?php $row['Date_naiss']?>
-                                <td><?=$row['semestre']?></td>
+                                <td><?=$row['nom_semestre']?></td>
                                 <?php $row['annee']?>
                                 <td><?=$row['email']?></td>
-                                <td><a href="detail_etudiant.php?id_etud=<?=$row['id_etud']?>">Detailler</a></td>
+                                <td><a href="detail_etudiant.php?id_etud=<?=$row['id_etud']?>">Dètails</a></td>
                                 <td><a href="modifier_etudiant.php?id_etud=<?=$row['id_etud']?>">Modifier</a></td>
                                 <td><a href="supprimer_etudiant.php?id_etud=<?=$row['id_etud']?>"onclick="return confirm(`voulez-vous vraiment supprimé ce etudiant ?`)">Supprimer</a></td>
                             </tr>

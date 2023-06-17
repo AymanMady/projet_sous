@@ -6,6 +6,7 @@ if($_SESSION["role"]!="ens"){
 }
 
 include_once "../connexion.php";
+echo "<br><br>";
 $semestre = "SELECT * FROM matiere,enseigner,enseignant  where matiere.id_matiere = enseigner.id_matiere AND enseigner.id_ens = enseignant.id_ens and email='$email'  ";
 $semestre_qry = mysqli_query($conn, $semestre);
 function test_input($data){

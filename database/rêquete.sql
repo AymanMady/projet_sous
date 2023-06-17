@@ -1,4 +1,4 @@
--- Active: 1684230870250@@127.0.0.1@3306
+
 CREATE TABLE `groupe` (
   `id_groupe` int(10) PRIMARY KEY AUTO_INCREMENT ,
   `libelle` varchar(50) DEFAULT NULL,
@@ -242,11 +242,11 @@ INSERT INTO `module` ( `nom_module`) VALUES
 -- --------------------------------------------------------
 
 
-INSERT INTO `departement` (`id`, `code`, `nom`) VALUES
-(1, 'DSI', 'Devellopement'),
-(2, 'RSS', 'reseaux'),
-(3, 'CNM', 'multimedia'),
-(4, 'TC', 'trancommun');
+INSERT INTO `departement` ( `code`, `nom`) VALUES
+('DSI', 'Devellopement'),
+('RSS', 'reseaux'),
+('CNM', 'multimedia'),
+('TC', 'trancommun');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -270,19 +270,22 @@ INSERT INTO `matiere` (`id_matiere`, `code`, `libelle`, `specialite`,`charge`, `
 -- --------------------------------------------------------
 
 
-INSERT INTO `enseignant` (`id_ens`, `nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`,  `diplome`, `grade`, `id_role`,  `id_sous`) VALUES
-(1, 'haroune', 'meya', '1993-06-22', 'nkt', 'meya.haroune@supnum.mr', 'doctor', 'prof', 2,  NULL),
-(2, 'cheikh', 'dhib', '1983-01-22', 'nkt', 'cheikh.dhib@supnum.mr', 'doctor', 'directeur', 2,  NULL);
+INSERT INTO `enseignant` (`id_ens`, `nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`,  `diplome`, `grade`, `id_role` ) VALUES
+(1, 'haroune', 'meya', '1993-06-22', 'nkt', 'meya.haroune@supnum.mr', 'doctor', 'prof', 2 ),
+(2, 'cheikh', 'dhib', '1983-01-22', 'nkt', 'cheikh.dhib@supnum.mr', 'doctor', 'directeur', 2 );
 
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
 
-INSERT INTO `etudiant` (`id_etud`, `matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `semestre`, `annee`, `email`,  `id_role`, `id_groupe`,  `id_sous`) VALUES
-(1, '22053', 'abderahman', 'abderahman', 'nkt', '2023-05-11', 'S2', '2023', '22053@supnum.mr', 3,  NULL, NULL),
-(2, '22014', 'Bechir', 'Mady', 'nkt', '2023-05-17', 'S2', '2023', '22014@supnum.mr', 3, NULL, NULL),
-(3, '22018', 'souleyman', 'baba', 'nkt', '2023-05-25', 'S2', '2023', '22018@supnum.mr', 3,  NULL, NULL);
+INSERT INTO `etudiant` (`id_etud`, `matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,  `id_role`, `id_groupe`,  `id_sous`) VALUES
+(1, '22053', 'abderahman', 'abderahman', 'nkt', '2023-05-11', '1', '2023', '22053@supnum.mr', 3,  NULL, NULL),
+(2, '22014', 'Bechir', 'Mady', 'nkt', '2023-05-17', '1', '2023', '22014@supnum.mr', 3, NULL, NULL),
+(3, '22018', 'souleyman', 'baba', 'nkt', '2023-05-25', '1', '2023', '22018@supnum.mr', 3,  NULL, NULL);
+
+
+
 
 
 

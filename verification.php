@@ -19,6 +19,15 @@
 
 <form action="" method="POST" class="form-signin">
 
+<?php
+            if($errors > 0){
+                foreach($errors AS $displayErrors){
+                ?>
+                <div id="alert"><?php echo $displayErrors; ?></div>
+                <?php
+                }
+            }
+     ?>
       <input type="email" name="email" required placeholder="Email" class="form-control">
       <select name="role" class="form-control">
         <option value="enseignant">Enseignant</option>

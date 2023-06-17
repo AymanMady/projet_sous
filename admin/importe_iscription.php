@@ -39,7 +39,7 @@ if($_SESSION["role"]!="admin"){
 
 <div class="form-horizontal">
 <br><br>
-<form action="" method="POST">
+<form action="" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label class="col-md-1">Sélectionner un fichier Excel : </label>
             <div class="col-md-6">

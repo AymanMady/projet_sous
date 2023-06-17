@@ -37,7 +37,7 @@ include_once "../connexion.php";
 $id_etud = $_GET['id_etud'];
 
 
-$req_detail = "SELECT * FROM etudiant WHERE id_etud = $id_etud";
+$req_detail = "SELECT * FROM etudiant inner join semestre using(id_semestre) WHERE id_etud = $id_etud";
 $req = mysqli_query($conn , $req_detail);
 while($row=mysqli_fetch_assoc($req)){
 ?>
@@ -68,7 +68,7 @@ while($row=mysqli_fetch_assoc($req)){
                                                             <br><?php echo "<strong class='font-weight-bold'>Date de naissance : </strong>".$row['Date_naiss']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>Lieu de naissance : </strong>". $row['lieu_naiss']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>E-mail : </strong>".$row['email']; ?><br>
-                                                            <?php echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['semestre']; ?><br>
+                                                            <?php echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['nom_semestre']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>Année : </strong>".$row['annee']; ?>
                                                         </h4>
                                                 

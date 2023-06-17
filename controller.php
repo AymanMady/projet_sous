@@ -63,6 +63,27 @@ $alert = "";
             if(isset($_POST['verifier'])){
                 $role =  $_POST['role'];
                 $email = $_POST['email'];
+                if($role=="enseignant"){
+                    $sql_ens=mysqli_query($conn,"select * from enseignant where login='$email'");
+                    $query1="select id_role from enseignant where email='$email' limit 1";
+                    $query=mysqli_query($conn,$query1);
+                    $droit=mysqli_fetch_assoc($query); 
+                }else{
+                    $sql_etud=mysqli_query($conn,"select * from etudiant where login='$email'");
+                    $query1="select id_role from etudiant where email='$email' limit 1";
+                    $query=mysqli_query($conn,$query1);
+                    $droit=mysqli_fetch_assoc($query);
+                }
+
+                $sql = "SELECT * FROM utilisateur WHERE login = '$email'";
+                $res = mysqli_query($conn, $sql) or die('échec de la requête');
+
+
+                if(mysqli_num_rows($query)==0){
+                    $errors['password'] = "Vous n'avez pas les droits pour cree un compt!"; 
+                }else if (mysqli_num_rows($res) > 0) {
+                    $errors['login'] = 'L’e-mail est déjà pris';
+                }else{
                     if(isset($role) && isset($email)){
                         if($role == "etudiant"){
                             session_start();
@@ -79,6 +100,7 @@ $alert = "";
                         }else {
                         $message = "Veuillez remplir tous les champs !";
                     }
+                }  
             }
 
 
@@ -93,29 +115,18 @@ $alert = "";
     }
     $role = $_SESSION['nom'];
     $email = $_SESSION['email'];
-
-    if($role == "etudiant"){
-        $sql_etud=mysqli_query($conn,"select * from etudiant where login='$email'");
-        $query1="select id_role from etudiant where email='$email' limit 1";
-        $query=mysqli_query($conn,$query1);
-        $droit=mysqli_fetch_assoc($query);
-        $id_role = $droit['id_role'];
+    if($role == "enseignant"){
+        $id_role = 2;
     }else{
-        $sql_ens=mysqli_query($conn,"select * from enseignant where login='$email'");
-        $query1="select id_role from enseignant where email='$email' limit 1";
-        $query=mysqli_query($conn,$query1);
-        $droit=mysqli_fetch_assoc($query); 
-        $id_role=$droit['id_role'];
+        $id_role = 3;
     }
+
 
         $fname = test(mysqli_real_escape_string($conn, $_POST['fname']));
         $lname = test(mysqli_real_escape_string($conn, $_POST['lname']));
         @$test=explode("@", test($email));
 
-
-         if(mysqli_num_rows($query)==0){
-                    $errors['password'] = "Vous n'avez pas les droits pour cree un compt!";
-            }   
+ 
             if($test[1]=='supnum.mr'){
         if (strlen(trim($_POST['password'])) < 8) {
             $errors['password'] = 'Utilisez 8 caractères ou plus avec un mélange de lettres, de chiffres et de symboles';
@@ -131,11 +142,7 @@ $alert = "";
         $code = rand(999999, 111111);
         // set Status
         $status = 0;
-        $sql = "SELECT * FROM utilisateur WHERE login = '$email'";
-        $res = mysqli_query($conn, $sql) or die('échec de la requête');
-        if (mysqli_num_rows($res) > 0) {
-            $errors['login'] = 'L’e-mail est déjà pris';
-        }
+
 
         // count erros
         if (count($errors) === 0) {

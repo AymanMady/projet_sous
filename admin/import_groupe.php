@@ -1,33 +1,58 @@
+<?php
+session_start() ;
+$email = $_SESSION['email'];
+if($_SESSION["role"]!="admin"){
+    header("location:authentification.php");
+}
+include "../nav_bar.php";
 
-<?php require '../connexion.php'; ?>
- <!DOCTYPE html>
-<html lang="en" dir="ltr">
-	<head> 
-		<meta charset="utf-8">
-		<title>Import Excel To MySQL</title>
-		<link rel="stylesheet" href="../CSS/style.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
-	</head>
-	<body>
-	<?php
-      include "nav_bar.php"
-    ?>
-    <div class="content_import">
-		<h1>Importation de données à partir d'un fichier Excel</h1>
-		<form action="" method="post" enctype="multipart/form-data">
-		<label for="file">Sélectionner un fichier Excel :</label>
-		<input type="file" id="file" name="file" accept=".xlsx" required>
-		<input type="submit" name="import" value="Importer">
+require '../connexion.php';
+ ?>
+
+</br>
+</br></br></br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            
+            <ol class="breadcrumb">
+            <li><a href="#">Acceuil</a>
+                    
+                    </li>
+                    <li>Gestion des groupes</li>
+                    <li class="active">Importer des groupes</li>
+            </ol>
+        </div>
+    </div>
+
+<div class="form-horizontal">
+<br><br>
+<form action="" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="col-md-1">Sélectionner un fichier Excel : </label>
+            <div class="col-md-6">
+                <input type="file" name="file" class = "form-control" accept=".xlsx" required>
+            </div>
+        </div>
+		<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="import" value=Importer class="btn-primary"  />
+            </div>
+        </div>
 	</form>
-	<footer>
-		<p>&copy; 2023 - Importation de données à partir d'un fichier Excel</p>
-	</footer>
+</div>
+</div>
+
+
+
+
+
 		
 		<?php
 		if(isset($_POST["import"])){
 			$fileName = $_FILES["file"]["name"];
 			$fileExtension = explode('.', $fileName);
-      $fileExtension = strtolower(end($fileExtension));
+      		$fileExtension = strtolower(end($fileExtension));
 			$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
 
 			$targetDirectory = "uploads/" . $newFileName;
@@ -42,10 +67,9 @@
 
 			$reader = new SpreadsheetReader($targetDirectory);
 			foreach($reader as $key => $row){
-				$groupe_cm = $row[0];
-				$groupe_tp = $row[1];
-				$filiere = $row[2];
-				if(mysqli_query($conn, "INSERT INTO groupe(`groupe_cm`, `groupe_tp`, `filiere`) VALUES( '$groupe_cm', '$groupe_tp', '$filiere')")){
+				$libelle = $row[0];
+				$filiere = $row[1];
+				if(mysqli_query($conn, "INSERT INTO groupe(`libelle`, `filiere`) VALUES( '$libelle', '$filiere')")){
                     header('location:groupe.php');
                 }
 			}

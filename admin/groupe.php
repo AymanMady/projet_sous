@@ -62,10 +62,12 @@ include "../nav_bar.php";
        
     </div>
     <br>
-    <p>
+
+    <div style="display: flex ; justify-content: space-between;">
         <a href="ajouter_groupe.php" class = "btn btn-primary" >Nouveau</a>
-    </p>
-    
+        <a href="import_groupe.php"  class="btn btn-primary ml-25">importer</a>
+    </div>
+    <br>
     <div style="overflow-x:auto;">
 
         <table class="table table-striped table-bordered">

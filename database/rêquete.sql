@@ -179,10 +179,11 @@ FOREIGN KEY (id_matieres) REFERENCES matiere(id_matiere),
 
 
 CREATE TABLE `departement` (
-  `id_dep` int(30) AUTO_INCREMENT PRIMARY key,
+  `id` int(30) AUTO_INCREMENT PRIMARY key,
   `code` text NOT NULL,
   `nom` text NOT NULL
 );
+
 --
 CREATE TABLE data_test(
   id_data int AUTO_INCREMENT PRIMARY key ,

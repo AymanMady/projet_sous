@@ -69,7 +69,9 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right">
                         
-
+                <li id="potfolio" class="nav-item dropdown">   
+                            <a class="nav-link dropdown-toggle" href="index_enseignant.php" >matiere</a>
+                            </li>
                         <li id="potfolio" class="nav-item dropdown">   
                             <a class="nav-link dropdown-toggle" href="#" >Soumission</a>
                             <ul class="dropdown-menu">

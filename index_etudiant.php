@@ -1,8 +1,11 @@
+<br>
 <?php
-// session_start() ;
-// if($_SESSION["admin"]!="oui"){
-//     header("location:authentification.php");
-// }
+ session_start() ;
+ $email = $_SESSION['email'];
+ if($_SESSION["role"]!="ens"){
+     header("location:../authentification.php");
+ }
+ include "nav_bar.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -14,9 +17,7 @@
 </head>
 <body>
  
-<?php
-  //include "nav_bar.php";
-  ?>
+
 
 
 

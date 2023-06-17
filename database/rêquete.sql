@@ -1,4 +1,4 @@
--- Active: 1684230870250@@127.0.0.1@3306
+
 CREATE TABLE `groupe` (
   `id_groupe` int(10) PRIMARY KEY AUTO_INCREMENT ,
   `libelle` varchar(50) DEFAULT NULL,
@@ -74,8 +74,7 @@ CREATE TABLE `soumission` (
   `date_debut` datetime NOT NULL,
   `date_fin` datetime NOT NULL,
   `valide` tinyint(1) DEFAULT NULL,
-  `archive` tinyint(1) DEFAULT NULL,
-  `cloturer` tinyint(1) DEFAULT NULL,
+  `status` INT(5) DEFAULT 0,
   `id_matiere` int(10) DEFAULT NULL,
   FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
    FOREIGN KEY (id_ens) REFERENCES enseignant(id_ens)
@@ -242,11 +241,11 @@ INSERT INTO `module` ( `nom_module`) VALUES
 -- --------------------------------------------------------
 
 
-INSERT INTO `departement` (`id`, `code`, `nom`) VALUES
-(1, 'DSI', 'Devellopement'),
-(2, 'RSS', 'reseaux'),
-(3, 'CNM', 'multimedia'),
-(4, 'TC', 'trancommun');
+INSERT INTO `departement` ( `code`, `nom`) VALUES
+('DSI', 'Devellopement'),
+('RSS', 'reseaux'),
+('CNM', 'multimedia'),
+('TC', 'trancommun');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------

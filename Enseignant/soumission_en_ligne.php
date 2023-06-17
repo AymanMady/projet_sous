@@ -54,7 +54,9 @@ include "../nav_bar.php";
           </tr>
           <?php 
               include_once "../connexion.php";
-              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND archive != 1  ";
+              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE date_debut <= NOW() AND date_fin >= NOW() AND status = 0  ";
+              $update = "UPDATE soumission SET status = 1 where date_fin <= NOW()";
+              $req_update = mysqli_query($conn , $update);
               $req = mysqli_query($conn , $req_sous);
               if(mysqli_num_rows($req) == 0){
                   echo "Il n'y a pas encore des soumission en ligne !" ;
@@ -120,5 +122,36 @@ document.getElementById('archiver').addEventListener('click', function(event) {
     });
 });
 
-   
+document.getElementById('cloturer').addEventListener('click', function(event) {
+    event.preventDefault(); // Empêche le lien de se comporter normalement
+
+    Swal.fire({
+        title: 'Voulez-vous vraiment clôturer cette soumission ?',
+        text: "",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3099d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Annuler',
+        confirmButtonText: 'Clôturer'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Confirmation supplémentaire',
+                text: 'Êtes-vous sûr(e) de vouloir clôturer cette soumission ?',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3099d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Confirmer'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    window.location.href = event.target.href;
+                }
+            });
+        }
+    });
+});
+
 </script>

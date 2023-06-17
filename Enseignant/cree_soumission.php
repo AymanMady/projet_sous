@@ -1,3 +1,4 @@
+<br><br><br>
 <?php 
 session_start() ;
 $email = $_SESSION['email'];
@@ -6,7 +7,7 @@ if($_SESSION["role"]!="ens"){
 }
 
 include_once "../connexion.php";
-echo "<br><br>";
+
 $semestre = "SELECT * FROM matiere,enseigner,enseignant  where matiere.id_matiere = enseigner.id_matiere AND enseigner.id_ens = enseignant.id_ens and email='$email'  ";
 $semestre_qry = mysqli_query($conn, $semestre);
 function test_input($data){
@@ -16,20 +17,22 @@ function test_input($data){
     $data = stripcslashes($data);
     return $data;
 }
-if(isset($_POST['button'])){
-$id_matiere = test_input($_POST['semester']);
-$date_debus = test_input($_POST['codematieres']);
-$date_fin =  test_input($_POST['fin']);
-$type=test_input($_POST['type']);
-$file= $_POST['file'];
-$titre=test_input($_POST['titre_sous']);
-$descri=test_input($_POST['description_sous']);
-$sql1="INSERT INTO `soumission`(`titre_sous`, `description_sous`, `date_debut`, `date_fin`, `valide`, `archive`, `id_matiere`) VALUES('$titre','$descri','$date_debus','$date_fin',0,0,$id_matiere) ";
+    if(isset($_POST['button'])){
+        $id_matiere = test_input($_POST['matiere']);
+        $date_debus = test_input($_POST['debut']);
+        $date_fin =  test_input($_POST['fin']);
+        $type=test_input($_POST['type']);
+        $file= $_POST['file'];
+        $titre=test_input($_POST['titre_sous']);
+        $descri=test_input($_POST['description_sous']);
 
-mysqli_query($conn,$sql1);
-if($type=="examen"){
-$sql2="INSERT INTO `examen` (`date_examen`, `id_sous`, `id_matiere`) VALUES ('$date_debus',(SELECT id_sous FROM soumission WHERE id_sous=(SELECT MAX(id_sous) FROM soumission)),$id_matiere)";
-mysqli_query($conn,$sql2);
+
+        $sql1="INSERT INTO `soumission`(`titre_sous`, `description_sous`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`) VALUES('$titre','$descri','$date_debus','$date_fin',0,0,$id_matiere) ";
+
+    mysqli_query($conn,$sql1);
+    if($type=="examen"){
+    $sql2="INSERT INTO `examen` (`date_examen`, `id_sous`, `id_matiere`) VALUES ('$date_debus',(SELECT id_sous FROM soumission WHERE id_sous=(SELECT MAX(id_sous) FROM soumission)),$id_matiere)";
+    mysqli_query($conn,$sql2);
 
 $riq3="INSERT INTO `data_test`(`data`, `id_sous`) VALUES ('$file',(SELECT id_sous FROM soumission WHERE id_sous=(SELECT MAX(id_sous) FROM soumission)))";
 mysqli_query($conn,$riq3);
@@ -115,7 +118,7 @@ include "../nav_bar.php";
         <div class="form-group">
             <label class="col-md-1" >Matière</label>
             <div class="col-md-6" >
-            <select class = "form-control" id="academic" value="Semesters" name="semester">
+            <select class = "form-control" id="academic" value="Semesters" name="matiere">
                     <option selected disabled> Matière </option>
                             <?php while ($row = mysqli_fetch_assoc($semestre_qry)) : ?>
                         <option value="<?= $row['id_matiere']; ?>"> <?= $row['libelle']; ?> </option>
@@ -127,7 +130,7 @@ include "../nav_bar.php";
         <div class="form-group">
             <label class="col-md-1">Date début </label>
             <div class="col-md-6">
-                <input type="datetime-local" name="codematieres" class = "form-control">
+                <input type="datetime-local" name="debut" class = "form-control">
             </div>
         </div>
         <div class="form-group">

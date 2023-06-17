@@ -46,7 +46,7 @@ include "../nav_bar.php";
           </tr>
           <?php 
               include_once "../connexion.php";
-              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  archive = 1 ";
+              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  status = 2 ";
               $req = mysqli_query($conn , $req_sous);
               if(mysqli_num_rows($req) == 0){
                   echo "Il n'y a pas encore des soumission archiver !" ;

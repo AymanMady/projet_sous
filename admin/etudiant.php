@@ -47,31 +47,14 @@ include "../nav_bar.php";
             </div>
         </div>
     </div>
-<!--     <div class="text-center">
-       
-    </div> -->
-    <br>
-    <!-- <div class="btn-group">
-        <div class="text-left">
-        <a href="ajouter_etudiant.php" class = "btn btn-primary" >Nouveau</a>
-        </div>
-        <div class="text-right" >
-        <a href="importer_etudiant.php"  class="btn btn-primary">importer</a>
-        </div>
-    </div> -->
-    <div class="row">
-    <div class="col-md-6">
-        <div class="btn-group">
-        <a href="ajouter_etudiant.php" class = "btn btn-primary mr-25" >Nouveau</a>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="btn-group">
-        <a href="importer_etudiant.php"  class="btn btn-primary ml-25">importer</a>
-        </div>
-    </div>
-    </div>
 
+    <br>
+    <div style="display: flex ; justify-content: space-between;">
+        <a href="ajouter_etudiant.php" class = "btn btn-primary mr-25" >Nouveau</a>
+        <a href="change_semestre.php" class = "btn btn-primary mr-25" >Changement de semestre</a>
+        <a href="importer_etudiant.php"  class="btn btn-primary ml-25">importer</a>
+    </div>
+    <br>
 
 
 
@@ -90,6 +73,8 @@ include "../nav_bar.php";
     <?php 
                     include_once "../connexion.php";
                     $req = mysqli_query($conn , "SELECT * FROM etudiant INNER JOIN semestre USING(id_semestre) ORDER by matricule asc;");
+
+
                     if(mysqli_num_rows($req) == 0){
                         echo "Il n'y a pas encore des etudiants ajouter !" ;
                         

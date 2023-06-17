@@ -32,7 +32,7 @@ if($_SESSION["role"]!="admin"){
 
        if(isset($_POST['button'])){
                 $matricule = test_input($_POST['matricule']);
-                $semestre = test_input($_POST['Semestre']);
+                $semestre = test_input($_POST['semestre']);
                 $annee = test_input($_POST['annee']);
                 $nom =  test_input($_POST['nom']);
                 $prenom = test_input($_POST['prenom']); 
@@ -40,7 +40,7 @@ if($_SESSION["role"]!="admin"){
                 $lieu_naiss =  test_input($_POST['lieu_naiss']);
                 $email =  test_input($_POST['email']);
            if( !empty($matricule) && !empty($semestre)  && !empty($annee) && !empty($nom) && !empty($prenom) && !empty($Date_naiss) && !empty($lieu_naiss)  && !empty($email)){
-                $req = "INSERT INTO `etudiant`( `matricule`, `nom`,`prenom`,`lieu_naiss`, `Date_naiss`, `semestre`,`annee`, `email`,`id_role`) VALUES('$matricule', '$nom','$prenom','$lieu_naiss','$Date_naiss', '$semestre','$annee','$email',3)";
+                $req = "INSERT INTO `etudiant`( `matricule`, `nom`,`prenom`,`lieu_naiss`, `Date_naiss`, `id_semestre`,`annee`, `email`,`id_role`) VALUES('$matricule', '$nom','$prenom','$lieu_naiss','$Date_naiss', '$semestre','$annee','$email',3)";
                                 
                 $req = mysqli_query($conn , $req);
                 if($req){
@@ -67,8 +67,8 @@ if($_SESSION["role"]!="admin"){
             <li><a href="#">Acceuil</a>
                     
                     </li>
-                    <li>Gestion des utisateurs</li>
-                    <li>Ajouter un etudiant</li>
+                    <li>Gestion des étudiants</li>
+                    <li>Ajouter un étudiant</li>
             </ol>
         </div>
     </div>
@@ -117,10 +117,19 @@ if($_SESSION["role"]!="admin"){
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-1" >Semestre</label>
+            <label class="col-md-1" >Semester</label>
             <div class="col-md-6" >
-            <input type="text" name="Semestre" class = "form-control">
-            </div>
+            <?php
+                    $semestre = "SELECT * FROM semestre ";
+                    $semestre_qry = mysqli_query($conn, $semestre);
+            ?>
+            <select class = "form-control" id="academic" value="Semestres" name="semestre">
+                    <option selected disabled> Semesters </option>
+                            <?php while ($row = mysqli_fetch_assoc($semestre_qry)) : ?>
+                        <option value="<?= $row['id_semestre']; ?>"> <?= $row['nom_semestre']; ?> </option>
+                    <?php endwhile; ?> 
+                </select>            
+               </div>
         </div>
         <div class="form-group">
             <label class="col-md-1" >Année</label>

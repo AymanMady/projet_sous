@@ -2,9 +2,9 @@
 <?php
 session_start() ;
 $email = $_SESSION['email'];
-// if($_SESSION["role"]!="admin"){
-//     header("location:authentification.php");
-// }
+if($_SESSION["role"]!="admin"){
+    header("location:authentification.php");
+}
 
 include "../nav_bar.php";
 ?>
@@ -51,10 +51,13 @@ include "../nav_bar.php";
     <div class="text-center">
        
     </div> 
+   
     <br>
-    <p>
+    <div style="display: flex ; justify-content: space-between;">
         <a href="ajoute_matiere.php" class = "btn btn-primary" >Nouveau</a>
-    </p>
+        <a href="importe_matiere.php"  class="btn btn-primary ml-25">Importer</a>
+    </div>
+    <br>
     <div style="overflow-x:auto;">
   <table class="table table-striped table-bordered">
         <tr>

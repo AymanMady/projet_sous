@@ -54,7 +54,6 @@
             <input type="submit" name="entrer" value="login" class="btn btn-lg btn-primary btn-block btn-signin">
             <a href="forgot.php" id="forgot">Mot de passe oublier?</a>
             <p>Cree un compte <a href="verification.php">Sign Up</a></p>
-           
         </form>
     </div>
 </body>

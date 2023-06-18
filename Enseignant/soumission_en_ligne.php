@@ -37,33 +37,33 @@ include "../nav_bar.php";
 
 
     <?php 
-            $ens = "SELECT * FROM matiere ";
-            $ens_qry = mysqli_query($conn, $ens);
-            ?>
+    $ens = "SELECT * FROM matiere ";
+    $ens_qry = mysqli_query($conn, $ens);
+    ?>
 
 <div style="overflow-x:auto;">
 <form action="" method="post">
 <div class="form-group">
-                    <label class="col-md-3">Enseignant 1 </label>
-                    <div class="col-md-3">
-                    <select  name="code" id="modi" class = "form-control">
-                        <option selected disabled> filtre par code </option>
-                                <?php  while ($row_ens = mysqli_fetch_assoc($ens_qry)) :?>
-                                <option value="<?= $row_ens['code']; ?>"> <?= $row_ens['code'] ?> </option>  
-                            <?php endwhile;?>
-                           </select>
+    <label class="col-md-3">Enseignant 1 </label>
+    <div class="col-md-3">
+    <select  name="code" id="modi" class = "form-control">
+        <option selected disabled> filtre par code </option>
+                <?php  while ($row_ens = mysqli_fetch_assoc($ens_qry)) :?>
+                <option value="<?= $row_ens['code']; ?>"> <?= $row_ens['code'] ?> </option>  
+            <?php endwhile;?>
+            </select>
 
-                    </div>
-                    <div class="col-md-3">
-                    <select  name="soul" id="modi1" class = "form-control">
-                        <option selected disabled> filtre par type </option>
-                                <option value="examen">examen</option>
-                                <option value="devoir">devoir</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" value="filtre" name="toutouu">
-                        </div>
+    </div>
+    <div class="col-md-3">
+    <select  name="soul" id="modi1" class = "form-control">
+        <option selected disabled> filtre par type </option>
+                <option value="examen">examen</option>
+                <option value="devoir">devoir</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <input type="submit" value="Filtre" name="toutouu" class = "btn btn-primary mr-25">
+    </div>
 </div>
 
 </form>

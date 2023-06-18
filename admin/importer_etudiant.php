@@ -73,7 +73,7 @@ include "../nav_bar.php";
 			$annee = $row[6];
 			$email = $row[7];
 
-		if(mysqli_query($conn, "INSERT INTO etudiant( `matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`) VALUES('$matricule', '$nom','$prenom', '$lieu_naiss','$Date_naiss', (select id_semestre from semestre where nom_semestre = '$semestre'), '$annee','$email',3)")){
+		if(mysqli_query($conn, "INSERT INTO etudiant( `matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `semestre`, `annee`, `email`,`id_role`) VALUES('$matricule', '$nom','$prenom', '$lieu_naiss','$Date_naiss', '$semestre', '$annee','$email',3)")){
 			header("location:etudiant.php");
 		}	
 		}

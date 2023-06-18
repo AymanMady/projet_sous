@@ -183,6 +183,7 @@ CREATE TABLE `departement` (
   `code` text NOT NULL,
   `nom` text NOT NULL
 );
+
 --
 CREATE TABLE data_test(
   id_data int AUTO_INCREMENT PRIMARY key ,

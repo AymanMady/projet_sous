@@ -13,7 +13,7 @@
     <link href="CSS/cssLogin.css" rel="stylesheet" />
     <title>Login</title>
 </head>
-<body>
+<!-- <body>
     <div id='page'>
         <div id="head">
             <br/>
@@ -35,20 +35,20 @@
                 <img id="profile-img" src="" />
             </div>
     <div class="card card-container">
-        <form action="authentification.php" method="POST" class="form-signin">
+        <form action="authentification.php" method="POST" class="form-signin"> -->
         <!-- <img class="mb-4" src="assets/brand/supnum.jpg" alt="" width="72" height="57"> -->
 
             <?php
-                    if(count($errors) > 0){
-                        foreach($errors AS $displayErrors){
+                    // if(count($errors) > 0){
+                    //     foreach($errors AS $displayErrors){
                         
                         ?>
-                        <div><?php echo $displayErrors; ?></div>
+                        <div><?php //echo $displayErrors; ?></div>
                         <?php
-                        }
-                    }
+                    //     }
+                    // }
                     ?>
-            <span id="reauth-email" class="reauth-email"></span>
+            <!-- <span id="reauth-email" class="reauth-email"></span>
             <input type="email" name="email" required placeholder="Email"  class="form-control">
             <input type="password" name="password" required placeholder="Password" class="form-control">
             <input type="submit" name="entrer" value="login" class="btn btn-lg btn-primary btn-block btn-signin">
@@ -57,8 +57,8 @@
            
         </form>
     </div>
-</body>
-</html>
+</body>-->
+</html> 
 
 
 
@@ -82,7 +82,7 @@
 <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-      /* .bd-placeholder-img {
+      .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
         -webkit-user-select: none;
@@ -152,12 +152,13 @@
       }
       .bd-mode-toggle {
         z-index: 1500;
-      } */
+        
+      }
     </style>
 
     
     <!-- Custom styles for this template -->
-    <!-- <link href="assets/dist/css/sign-in.css" rel="stylesheet">
+    <link href="assets/dist/css/sign-in.css" rel="stylesheet">
   </head>
   <body class="text-center">
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -212,8 +213,9 @@
     </div>
 
     
-<main class="form-signin w-100 m-auto">
-  <form action="authentification.php" method="POST">
+<main class="form-signin w-100 m-auto" >
+<div class="card card-container" >
+  <form action="authentification.php" method="POST" >
   
   <div id="head">
             <br/>
@@ -225,30 +227,34 @@
                 </p>
             </div>
         </div>
-    <img class="mb-4" src="assets/brand/supnum.jpg" alt="" width="150px" height="50"> -->
+    <img class="mb-4" src="assets/brand/supnum.jpg" alt="" width="74px" height="50">
     <!-- <h1 class="h3 mb-3 fw-normal">Please sign in</h1> -->
                 <?php
-                    // if(count($errors) > 0){
-                    //     foreach($errors AS $displayErrors){
+                    if(count($errors) > 0){
+                        foreach($errors AS $displayErrors){
                         
-                    //     ?>
-                         <div><?php //echo $displayErrors; ?></div>
+                      ?>
+                         <div><?php echo $displayErrors; ?></div>
                         <?php
-                    //     }
-                    // }
+                         }
+                    }
                     ?>
-    <!-- <div class="form-floating">
+    <div class="form-floating" style="margin-bottom: 10px;">
       <input type="email" name="email" required class="form-control" id="floatingInput" placeholder="name@example.com">
       <label for="floatingInput">Email address</label>
     </div>
-    <div class="form-floating">
+    <div class="form-floating" style="margin-bottom: 10px;">
       <input type="password" name="password" required class="form-control" id="floatingPassword" placeholder="Password">
       <label for="floatingPassword">Password</label>
-    </div> -->
+    </div>
     <!-- <button class="w-100 btn btn-lg btn-primary" type="submit" name="entrer" value="login">Sign in</button> -->
-    <!-- <input type="submit" name="entrer" value="login" class="btn btn-lg btn-primary btn-block btn-signin">
-    <p class="mt-5 mb-3 text-body-secondary">&copy; 2022–2023</p>
+     <input type="submit" name="entrer" value="login" class="btn btn-lg btn-primary btn-block btn-signin" style="margin-bottom: 10px;">
+     <a href="forgot.php" id="forgot">Mot de passe oublier?</a>
+            <p>Cree un compte <a href="verification.php">Sign Up</a></p>
+    
   </form>
+</div>
+<p class="mt-5 mb-3 text-body-secondary">&copy; 2022–2023</p>
 </main>
 
 
@@ -259,4 +265,4 @@
 
 
 
- -->
+

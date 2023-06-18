@@ -80,7 +80,7 @@ require '../connexion.php';
 							VALUES(
 							'$nom','$prenom',
 							'$Date_naiss', '$lieu_naiss', 
-							'$email',3)")){
+							'$email',2)")){
 					header("location:enseignant.php");
 		}	
 		}

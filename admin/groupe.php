@@ -91,7 +91,7 @@ include "../nav_bar.php";
                                 <td><?=$row['libelle']?></td>
                                 <td><?=$row['filiere']?></td>
                                 <td><a href="modifier_groupe.php?id_groupe=<?=$row['id_groupe']?>">Modifier</a></td>
-                                <td><a href="supprimer_groupe.php?id_groupe=<?=$row['id_groupe']?>"onclick="return confirm(`voulez-vous vraiment supprimé ce utilisateur ?`)"> Supprimer</a></td>
+                                <td><a href="supprimer_groupe.php?id_groupe=<?=$row['id_groupe']?>"onclick="return confirm(`voulez-vous vraiment supprimé ce groupe ?`)"> Supprimer</a></td>
                             </tr>
                             <?php
                         }

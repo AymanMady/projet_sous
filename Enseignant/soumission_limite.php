@@ -31,6 +31,35 @@ include "../nav_bar.php";
             </ol>
         </div>
     </div>
+    <?php 
+            $ens = "SELECT * FROM matiere ";
+            $ens_qry = mysqli_query($conn, $ens);
+            ?>
+    <div class="form-group">
+    <div style="overflow-x:auto;">
+    <form action="" method="post">
+    
+                    <label class="col-md-3">Enseignant 1 </label>
+                    <div class="col-md-3">
+                    <select  name="code" id="modi" class = "form-control">
+                        <option selected disabled> filtre par code </option>
+                                <?php  while ($row_ens = mysqli_fetch_assoc($ens_qry)) :?>
+                                <option value="<?= $row_ens['code']; ?>"> <?= $row_ens['code'] ?> </option>  
+                            <?php endwhile;?>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                    <select  name="soul" id="modi1" class = "form-control">
+                        <option selected disabled> filtre par type </option>
+                                <option value="examen">examen</option>
+                                <option value="devoir">devoir</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" value="filtre" name="toutouu">
+                        </div>
+    </div>
+
 
 
 
@@ -50,23 +79,23 @@ include "../nav_bar.php";
               $req = mysqli_query($conn , $req_sous);
               if(mysqli_num_rows($req) == 0){
                   echo "Il n'y a pas encore des soumission ajouter !" ;
-                  
               }else {
                   while($row=mysqli_fetch_assoc($req)){
                     ?>
+
                       <tr>
                           <td><?=$row['code']?></td>
                           <td><?=$row['titre_sous']?></td>
                           <td><?=$row['date_debut']?></td>
-                          <td><?=$row['date_fin']?></td>
+                          <td><a href="cloturer.php?id_sous=<?=$row['id_sous']?>"><?=$row['date_fin']?></a></td>
                           <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
                       </tr>
                     <?php
                   }
-              }
+            }
           ?>
         </table>
-    </div>
+        </div>
 </div>
 </body>
 </html>

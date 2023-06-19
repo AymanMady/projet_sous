@@ -39,10 +39,10 @@ include "../nav_bar.php";
     <div style="overflow-x:auto;">
     <form action="" method="post">
     
-                    <label class="col-md-3">Enseignant 1 </label>
+                    <label class="col-md-3"> . </label>
                     <div class="col-md-3">
                     <select  name="code" id="modi" class = "form-control">
-                        <option selected disabled> filtre par code </option>
+                        <option selected disabled> Filtre par code </option>
                                 <?php  while ($row_ens = mysqli_fetch_assoc($ens_qry)) :?>
                                 <option value="<?= $row_ens['code']; ?>"> <?= $row_ens['code'] ?> </option>  
                             <?php endwhile;?>
@@ -50,7 +50,7 @@ include "../nav_bar.php";
                     </div>
                     <div class="col-md-3">
                     <select  name="soul" id="modi1" class = "form-control">
-                        <option selected disabled> filtre par type </option>
+                        <option selected disabled> Filtre par type de matière</option>
                                 <option value="examen">examen</option>
                                 <option value="devoir">devoir</option>
                         </select>

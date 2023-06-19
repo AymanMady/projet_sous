@@ -74,7 +74,7 @@ include "../nav_bar.php";
             <tr>
                     <th>Libelle</th>
                     <th>Filière</th>
-                    <th colspan="2">action</th>
+                    <th colspan="2">Actions</th>
             </tr>
 
 

@@ -1,5 +1,11 @@
 
 <br><br><br>
+<style>
+    .date-fin-rouge {
+        color: red;
+    }
+</style>
+
 <?php
 
 use function PHPSTORM_META\type;
@@ -46,17 +52,17 @@ include "../nav_bar.php";
 
     <?php 
             $ens = "SELECT * FROM matiere ";
-            $ens_qry = mysqli_query($conn, $ens);
+            $matiere_filtre_qry = mysqli_query($conn, $ens);
             ?>
 
 <div style="overflow-x:auto;">
 <form action="" method="post">
 <div class="form-group">
-                    <label class="col-md-3">Enseignant 1 </label>
+                    <label class="col-md-3">. </label>
                     <div class="col-md-3">
                     <select  name="code" id="modi" class = "form-control">
                         <option selected disabled> Filtre par code de matière </option>
-                                <?php  while ($row_ens = mysqli_fetch_assoc($ens_qry)) :?>
+                                <?php  while ($row_ens = mysqli_fetch_assoc($matiere_filtre_qry)) :?>
                                 <option value="<?= $row_ens['code']; ?>"> <?= $row_ens['code'] ?> </option>  
                             <?php endwhile;?>
                            </select>
@@ -85,7 +91,7 @@ include "../nav_bar.php";
           </tr>
           <?php 
               include_once "../connexion.php";
-              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE date_debut <= NOW() AND date_fin >= NOW() AND status = 0  ";
+              // $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE date_debut <= NOW() AND date_fin >= NOW() AND status = 0  ";
             //   $update = "UPDATE soumission SET status = 1 where date_fin <= NOW()";
             //   $req_update = mysqli_query($conn , $update);
     
@@ -137,7 +143,9 @@ include "../nav_bar.php";
                           <td><?=$row['code']?></td>
                           <td><?=$row['titre_sous']?></td>
                           <td><?=$row['date_debut']?></td>
-                          <td><a href="modifier_date.php?id_sous=<?=$row['id_sous']?>"><?=$row['date_fin']?></a></td>
+                        <td <?php if (strtotime($row['date_fin']) - time() <= 600) echo 'style="color: red;"'; ?>>
+                            <input type="datetime-local" id="date-fin-<?=$row['id_sous']?>" value="<?=$row['date_fin']?>" onchange="modifierDateFin(<?=$row['id_sous']?>, this.value)" style="border: none;" >
+                        </td>
                           <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
                           <td><a href="cloturer.php?id_sous=<?=$row['id_sous']?>" id="cloturer">Clôturer</a></td>
                           <td><a href="archiver.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
@@ -241,5 +249,47 @@ liensCloturer.forEach(function(lien) {
     });
   });
 });
+
+
+
+// Fonction pour modifier la date de fin
+function modifierDateFin(id_sous, nouvelle_date_fin) {
+  // Créer un objet FormData pour envoyer les données via AJAX
+  var formData = new FormData();
+  formData.append('id_sous', id_sous);
+  formData.append('nouvelle_date_fin', nouvelle_date_fin);
+
+  // Envoyer la requête AJAX
+  fetch('modifier_date_fin.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Vérifier le statut de la réponse JSON
+    if (data.status === 'success') {
+      // Afficher une boîte de dialogue de succès
+      Swal.fire({
+        title: 'Succès',
+        text: data.message,
+        icon: 'success',
+        confirmButtonColor: '#3099d6'
+      });
+    } else {
+      // Afficher une boîte de dialogue d'erreur
+      Swal.fire({
+        title: 'Erreur',
+        text: data.message,
+        icon: 'error',
+        confirmButtonColor: '#3099d6'
+      });
+    }
+  })
+  .catch(error => {
+    console.error('Une erreur s\'est produite lors de la requête AJAX :', error);
+  });
+}
+
+
 
 </script>

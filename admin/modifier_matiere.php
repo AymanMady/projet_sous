@@ -177,7 +177,7 @@ if(isset($_POST['submit'])){
                                     <div>
                                         <?=$row['nom']." ".$row['prenom']?>
 
-                                        <a href="supprimer_affectation.php?id_ens=<?=$row['id_ens']?>&id_matiere=<?=$row['id_matiere']?>"onclick="return confirm(`voulez-vous vraiment supprimé cet enseignant ?`)"><img style="width: 18px; margin-left:110px;" title="Supprimer" src="images/close.png" alt=""></a><br><br>
+                                        <a href="supprimer_affectation.php?id_ens=<?=$row['id_ens']?>&id_matiere=<?=$row['id_matiere']?>"onclick="return confirm(`voulez-vous vraiment supprimé cet enseignant ?`)" ><img style="width: 18px; margin-left:110px;" title="Supprimer" src="images/close.png" alt=""></a><br><br>
 
                                     </div>
                                 <?php endwhile;?>
@@ -237,4 +237,5 @@ if(isset($_POST['submit'])){
             }
         })
     });
+
 </script>

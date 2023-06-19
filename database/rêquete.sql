@@ -1,8 +1,16 @@
 
+
+CREATE TABLE `departement` (
+  `id` int(10) AUTO_INCREMENT PRIMARY key,
+  `code` text NOT NULL,
+  `nom` text NOT NULL
+);
+
 CREATE TABLE `groupe` (
   `id_groupe` int(10) PRIMARY KEY AUTO_INCREMENT ,
   `libelle` varchar(50) DEFAULT NULL,
-  `filiere` varchar(50) DEFAULT NULL
+  `id_filiere` int(10) DEFAULT 4,
+  FOREIGN KEY (id_filiere) REFERENCES departement(id)
 );
 
 
@@ -50,6 +58,7 @@ CREATE TABLE `matiere` (
   FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre),
   FOREIGN KEY (id_type_matiere) REFERENCES type_matiere(id_type_matiere)
 );
+
 CREATE TABLE `enseignant` (
   `id_ens` int(10) PRIMARY KEY AUTO_INCREMENT ,
   `nom` varchar(60) DEFAULT NULL,
@@ -169,20 +178,16 @@ CREATE TABLE `enseigner` (
   FOREIGN KEY (id_ens) REFERENCES enseignant(id_ens)
 );
 
-CREATE TABLE inscripsion(
+CREATE TABLE inscription(
   id_insc int AUTO_INCREMENT PRIMARY key ,
   id_etudi int(10) NOT NULL ,
   id_matieres INT(10) NOt NULL,
-FOREIGN KEY (id_matieres) REFERENCES matiere(id_matiere),
-  FOREIGN KEY (id_etudi) REFERENCES etudiant(id_etud)
+  id_semestre int(10) NOt NULL,
+  FOREIGN KEY (id_matieres) REFERENCES matiere(id_matiere),
+  FOREIGN KEY (id_etudi) REFERENCES etudiant(id_etud),
+  FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre)
 );
 
-
-CREATE TABLE `departement` (
-  `id` int(30) AUTO_INCREMENT PRIMARY key,
-  `code` text NOT NULL,
-  `nom` text NOT NULL
-);
 
 --
 CREATE TABLE data_test(
@@ -190,6 +195,20 @@ CREATE TABLE data_test(
   data longblob NOT NULL ,
   id_sous INT(10) not NULL,
   FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
+);
+
+--
+
+CREATE TABLE reponses(
+  id_rep int(10) AUTO_INCREMENT PRIMARY key ,
+  description_rep varchar(200) ,
+  data_reponse longblob NOT NULL ,
+  date datetime DEFAULT NOW(),
+  note float(10) DEFAULT null,
+  id_sous INT(10) not NULL,
+  id_etud INT(10) not NULL,
+  FOREIGN KEY (id_sous) REFERENCES soumission(id_sous),
+  FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud)
 );
 
 -- --------------------------------------------------------

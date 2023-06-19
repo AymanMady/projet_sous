@@ -75,8 +75,37 @@ include "../nav_bar.php";
           </tr>
           <?php 
               include_once "../connexion.php";
-              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE status = 1 ";
-              $req = mysqli_query($conn , $req_sous);
+            //   $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE status = 1 or date_fin <= NOW() ";
+            if(isset($_POST['toutouu'])){
+                if(!empty($_POST['code']) && empty($_POST['soul'])){
+                $code=$_POST['code'];
+                $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE   date_fin <= NOW() OR status = 1 AND code='$code'  ORDER BY date_fin DESC  ";
+                $req = mysqli_query($conn , $req_sous);
+                }
+                elseif(empty($code) && !empty($_POST['soul'])){
+                    $type=$_POST['soul'];
+                    
+                    $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin <= NOW() OR status = 1 AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
+                    $req = mysqli_query($conn , $req_sous);
+               
+               
+            }
+                elseif(!empty($_POST['code']) && !empty($_POST['soul'])){
+                    $code=$_POST['code'];
+                    $type=$_POST['soul'];
+                 
+                        $type=$_POST['soul'];
+                            $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE   date_fin <= NOW() OR status = 1  AND code='$code' AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
+                            $req = mysqli_query($conn , $req_sous);
+                 
+                }
+              }
+              else{ 
+                
+                  $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin <= NOW() OR status = 1 ORDER BY date_fin DESC ";
+                  $req = mysqli_query($conn , $req_sous);
+                                    }
+            $req = mysqli_query($conn , $req_sous);
               if(mysqli_num_rows($req) == 0){
                   echo "Il n'y a pas encore des soumission ajouter !" ;
               }else {
@@ -87,12 +116,14 @@ include "../nav_bar.php";
                           <td><?=$row['code']?></td>
                           <td><?=$row['titre_sous']?></td>
                           <td><?=$row['date_debut']?></td>
-                          <td><a href="cloturer.php?id_sous=<?=$row['id_sous']?>"><?=$row['date_fin']?></a></td>
+                          <td><a href="modifier_date.php?id_sous=<?=$row['id_sous']?>"><?=$row['date_fin']?></a></td>
                           <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
+                          <td><a href="archiver.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
                       </tr>
                     <?php
                   }
             }
+            
           ?>
         </table>
         </div>

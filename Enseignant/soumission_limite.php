@@ -74,40 +74,9 @@ include "../nav_bar.php";
               <th>Actions</th>
           </tr>
           <?php 
-          include_once "../connexion.php";
-                if(isset($_POST['toutouu'])){
-            
-                    if(!empty($_POST['code']) && empty($_POST['soul'])){
-                    $code=$_POST['code'];
-                    $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin < NOW() AND archive != 1 AND code='$code' ORDER BY date_fin DESC  ";
-                    $req = mysqli_query($conn , $req_sous);
-                    }
-                    elseif(empty($code) && !empty($_POST['soul'])){
-                        $type=$_POST['soul'];
-                        
-                        $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin < NOW() AND archive != 1 AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
-                        $req = mysqli_query($conn , $req_sous);
-                   
-                   
-                }
-                    elseif(!empty($_POST['code']) && !empty($_POST['soul'])){
-                        $code=$_POST['code'];
-                        $type=$_POST['soul'];
-                            $type=$_POST['soul'];
-                                $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin < NOW() AND archive != 1  AND code='$code' AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
-                                $req = mysqli_query($conn , $req_sous);
-                     
-                    }
-                  }
-                  else{ 
-                    
-                      $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE   date_fin < NOW() AND archive != 1 ORDER BY date_fin DESC ";
-                      $req = mysqli_query($conn , $req_sous);
-                                        }
-           
-              
-            
-
+              include_once "../connexion.php";
+              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE status = 1 ";
+              $req = mysqli_query($conn , $req_sous);
               if(mysqli_num_rows($req) == 0){
                   echo "Il n'y a pas encore des soumission ajouter !" ;
               }else {

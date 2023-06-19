@@ -168,7 +168,10 @@ $alert = "";
             ]);                
                $result = curl_exec($ch);
                 if ($result) {
-                    $message = "Nous avons envoyé un code de vérification à votre adresse e-mail <br> $email";
+                    $message = '<div class="alert alert-danger row-md-15" id="success-alert">
+                                <span aria-hidden="true">&times;</span>
+                                <strong>Nous avons envoyé un code de vérification à votre adresse e-mail  $email </strong>
+                                </div>';
 
                     $_SESSION['message'] = $message;
                     header('location: verifier_code.php');
@@ -208,7 +211,10 @@ $alert = "";
                 $errors['db_error'] = "Impossible d’insérer des données dans la base de données!";
             }
         } else {
-            $errors['otp_error'] = "Vous entrez un code de vérification non valide!";
+            $errors['otp_error'] = '<div class="alert alert-danger row-md-15" id="success-alert">
+                                <span aria-hidden="true">&times;</span>
+                                <strong>Vous entrez un code de vérification non valide!</strong>
+                                </div>';
         }
     }
 
@@ -245,7 +251,10 @@ $alert = "";
                     }   
                 }
                 else{
-                    $errors['email'] = 'Ce compte n\'est pas activé, vous pouvez contacter l\'administrateur pour active le'; 
+                    $errors['email'] = '<div class="alert alert-danger row-md-15" id="success-alert">
+                                    <span aria-hidden="true">&times;</span>
+                                     <strong>Ce compte n\'est pas activé, vous pouvez contacter l\'administrateur pour active le</strong>
+        </div>';
                 }
         } else {
             $errors['email'] = '<div class="alert alert-danger row-md-15" id="success-alert">

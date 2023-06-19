@@ -37,7 +37,7 @@ include_once "../connexion.php";
 $id_etud = $_GET['id_etud'];
 
 
-$req_detail = "SELECT * FROM etudiant inner join semestre using(id_semestre) WHERE id_etud = $id_etud";
+$req_detail = "SELECT * FROM etudiant INNER JOIN semestre USING(id_semestre) WHERE id_etud = $id_etud";
 $req = mysqli_query($conn , $req_detail);
 while($row=mysqli_fetch_assoc($req)){
 ?>

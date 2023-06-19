@@ -15,6 +15,14 @@ use function PHPSTORM_META\type;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- sweetalert2 links -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
+
 </head>
 <body>
  
@@ -47,7 +55,7 @@ include "../nav_bar.php";
                     <label class="col-md-3">Enseignant 1 </label>
                     <div class="col-md-3">
                     <select  name="code" id="modi" class = "form-control">
-                        <option selected disabled> filtre par code </option>
+                        <option selected disabled> Filtre par code de matière </option>
                                 <?php  while ($row_ens = mysqli_fetch_assoc($ens_qry)) :?>
                                 <option value="<?= $row_ens['code']; ?>"> <?= $row_ens['code'] ?> </option>  
                             <?php endwhile;?>
@@ -56,9 +64,9 @@ include "../nav_bar.php";
                     </div>
                     <div class="col-md-3">
                     <select  name="soul" id="modi1" class = "form-control">
-                        <option selected disabled> filtre par type </option>
-                                <option value="examen">examen</option>
-                                <option value="devoir">devoir</option>
+                        <option selected disabled> Filtre par type de matière </option>
+                                <option value="examen">Examen</option>
+                                <option value="devoir">Devoir</option>
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -75,20 +83,24 @@ include "../nav_bar.php";
               <th>Date fin </th>
               <th colspan="3">Actions</th>
           </tr>
-          <?php
-            include_once "../connexion.php";
+          <?php 
+              include_once "../connexion.php";
+              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE date_debut <= NOW() AND date_fin >= NOW() AND status = 0  ";
+              $update = "UPDATE soumission SET status = 1 where date_fin <= NOW()";
+              $req_update = mysqli_query($conn , $update);
+    
 
           if(isset($_POST['toutouu'])){
             
             if(!empty($_POST['code']) && empty($_POST['soul'])){
             $code=$_POST['code'];
-            $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND archive != 1 AND code='$code'  ORDER BY date_fin DESC  ";
+            $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND code='$code'  ORDER BY date_fin DESC  ";
             $req = mysqli_query($conn , $req_sous);
             }
             elseif(empty($code) && !empty($_POST['soul'])){
                 $type=$_POST['soul'];
                 
-                $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND archive != 1 AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
+                $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
                 $req = mysqli_query($conn , $req_sous);
            
            
@@ -98,18 +110,18 @@ include "../nav_bar.php";
                 $type=$_POST['soul'];
              
                     $type=$_POST['soul'];
-                        $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND archive != 1  AND code='$code' AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
+                        $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0  AND code='$code' AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
                         $req = mysqli_query($conn , $req_sous);
              
             }
           }
           else{ 
             
-              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin >= NOW() AND archive != 1 ORDER BY date_fin DESC ";
+              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin >= NOW() AND status = 0 ORDER BY date_fin DESC ";
               $req = mysqli_query($conn , $req_sous);
                                 }
               if(mysqli_num_rows($req) == 0){
-                  echo "Il n'y a pas encore des soumission ajouter !" ;
+                  echo "Il n'y a pas encore des soumission en ligne !" ;
                   
               }else {
                   while($row=mysqli_fetch_assoc($req)){
@@ -118,9 +130,9 @@ include "../nav_bar.php";
                           <td><?=$row['code']?></td>
                           <td><?=$row['titre_sous']?></td>
                           <td><?=$row['date_debut']?></td>
-                          <td><a href="cloturer.php?id_sous=<?=$row['id_sous']?>"><?=$row['date_fin']?></a></td>
-                          <td>Cloturer</td>
-                          <td><a href="archiver.php?id_sous=<?=$row['id_sous']?>">Archiver</a></td>
+                          <td><?=$row['date_fin']?></td>
+                          <td><a href="cloturer.php?id_sous=<?=$row['id_sous']?>" id="cloturer">Clôturer</a></td>
+                          <td><a href="archiver.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
                           <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
                       </tr>
                     <?php
@@ -132,3 +144,84 @@ include "../nav_bar.php";
 </div>
 </body>
 </html>
+
+
+
+<!-- Script sweetalert2 -->
+
+<script>
+
+    
+
+
+
+var liensArchiver = document.querySelectorAll("#archiver");
+
+// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
+liensArchiver.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "Voulez-vous vraiment archiver cette soumission ?",
+      text: "",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Archiver"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Confirmation",
+          text: "Êtes-vous sûr(e) de vouloir archiver cette soumission ?",
+          icon: "info",
+          confirmButtonColor: "#3099d6",
+          cancelButtonText: "Annuler",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Archiver"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = this.href; 
+          }
+        });
+      }
+    });
+  });
+});
+
+// Sélectionner tous les éléments avec l'ID "cloturer"
+var liensCloturer = document.querySelectorAll("#cloturer");
+
+// Parcourir chaque lien de clôture et ajouter un écouteur d'événements
+liensCloturer.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "Voulez-vous vraiment clôturer cette soumission ?",
+      text: "",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Clôturer"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Confirmation",
+          text: "Êtes-vous sûr(e) de vouloir clôturer cette soumission ?",
+          icon: "info",
+          confirmButtonColor: "#3099d6",
+          confirmButtonText: "Clôturer"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = this.href; 
+          }
+        });
+      }
+    });
+  });
+});
+
+</script>

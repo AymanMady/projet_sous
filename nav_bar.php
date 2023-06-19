@@ -11,6 +11,7 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
+
     <style>
        
             .logo{
@@ -33,6 +34,9 @@
     <script src="Scripts/jquery-ui-1.12.1.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/commun.js"></script>
+    <script src="js/sweetalert2.js"></script>
+    
+
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -70,7 +74,7 @@
                 <ul class="nav navbar-nav navbar-right">
                         
                 <li id="potfolio" class="nav-item dropdown">   
-                            <a class="nav-link dropdown-toggle" href="index_enseignant.php" >matiere</a>
+                            <a class="nav-link dropdown-toggle" href="index_enseignant.php" >Matieres</a>
                             </li>
                         <li id="potfolio" class="nav-item dropdown">   
                             <a class="nav-link dropdown-toggle" href="#" >Soumission</a>
@@ -82,7 +86,7 @@
                                 <a href="soumission_en_ligne.php">Soumission en ligne</a>
                                 </li>
                                 <li>
-                                <a href="soumission_limite.php">Soumission limité</a>
+                                <a href="soumission_limite.php">Soumission terminer</a>
                                 </li>
                                 <li>
                                 <a href="soumission_archiver.php">Soumission archifer</a>

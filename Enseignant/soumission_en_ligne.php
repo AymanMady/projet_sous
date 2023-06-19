@@ -52,7 +52,7 @@ include "../nav_bar.php";
 
     <?php 
             $ens = "SELECT * FROM matiere ";
-            $ens_qry = mysqli_query($conn, $ens);
+            $matiere_filtre_qry = mysqli_query($conn, $ens);
             ?>
 
 <div style="overflow-x:auto;">
@@ -62,7 +62,7 @@ include "../nav_bar.php";
                     <div class="col-md-3">
                     <select  name="code" id="modi" class = "form-control">
                         <option selected disabled> Filtre par code de matière </option>
-                                <?php  while ($row_ens = mysqli_fetch_assoc($ens_qry)) :?>
+                                <?php  while ($row_ens = mysqli_fetch_assoc($matiere_filtre_qry)) :?>
                                 <option value="<?= $row_ens['code']; ?>"> <?= $row_ens['code'] ?> </option>  
                             <?php endwhile;?>
                            </select>
@@ -76,7 +76,7 @@ include "../nav_bar.php";
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" value="filtre" name="toutouu">
+                        <input type="submit" value="filtre" name="filtrer" class="btn-primary">
                         </div>
 </div>
 
@@ -91,46 +91,53 @@ include "../nav_bar.php";
           </tr>
           <?php 
               include_once "../connexion.php";
-              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE date_debut <= NOW() AND date_fin >= NOW() AND status = 0  ";
-              $update = "UPDATE soumission SET status = 1 where date_fin <= NOW()";
-              $req_update = mysqli_query($conn , $update);
+              // $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE date_debut <= NOW() AND date_fin >= NOW() AND status = 0  ";
+            //   $update = "UPDATE soumission SET status = 1 where date_fin <= NOW()";
+            //   $req_update = mysqli_query($conn , $update);
     
 
-          if(isset($_POST['toutouu'])){
+        if(isset($_POST['filtrer'])){
             
             if(!empty($_POST['code']) && empty($_POST['soul'])){
-            $code=$_POST['code'];
-            $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND code='$code'  ORDER BY date_fin DESC  ";
-            $req = mysqli_query($conn , $req_sous);
+                $code=$_POST['code'];
+
+
+                $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND code='$code' AND id_ens = (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC  ";
+                $req1 = mysqli_query($conn , $req_sous1);
+                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND code='$code' AND id_ens != (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC  ";
+                $req2 = mysqli_query($conn , $req_sous2);
             }
             elseif(empty($code) && !empty($_POST['soul'])){
                 $type=$_POST['soul'];
                 
-                $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
-                $req = mysqli_query($conn , $req_sous);
-           
-           
-        }
+                $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND id_sous in (SELECT id_sous FROM $type )  AND id_ens = (select id_ens from enseignant where email = '$email')   ORDER BY date_fin DESC ";
+                $req1 = mysqli_query($conn , $req_sous1);
+                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND id_sous in (SELECT id_sous FROM $type )AND id_ens != (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
+                $req2 = mysqli_query($conn , $req_sous2);
+            }
             elseif(!empty($_POST['code']) && !empty($_POST['soul'])){
                 $code=$_POST['code'];
                 $type=$_POST['soul'];
              
-                    $type=$_POST['soul'];
-                        $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0  AND code='$code' AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
-                        $req = mysqli_query($conn , $req_sous);
-             
+                $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0  AND code='$code' AND id_sous in (SELECT id_sous FROM $type )  AND id_ens = (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC ";
+                $req1 = mysqli_query($conn , $req_sous1);
+                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0  AND code='$code' AND id_sous in (SELECT id_sous FROM $type ) AND id_ens != (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC ";
+                $req2 = mysqli_query($conn , $req_sous2);
             }
-          }
-          else{ 
+        }else{ 
             
-              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin >= NOW() AND status = 0 ORDER BY date_fin ASC ";
-              $req = mysqli_query($conn , $req_sous);
-                                }
-              if(mysqli_num_rows($req) == 0){
+              $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin >= NOW() AND status = 0 AND id_ens = (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
+              $req1 = mysqli_query($conn , $req_sous1);
+              $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin >= NOW() AND status = 0 AND id_ens != (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
+              $req2 = mysqli_query($conn , $req_sous2);
+        }
+
+
+              if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
                   echo "Il n'y a pas encore des soumission en ligne !" ;
                   
-              }else {
-                  while($row=mysqli_fetch_assoc($req)){
+              }else if(mysqli_num_rows($req1)>0) {
+                  while($row=mysqli_fetch_assoc($req1)){
                     ?>
                       <tr>
                           <td><?=$row['code']?></td>
@@ -139,13 +146,24 @@ include "../nav_bar.php";
                         <td <?php if (strtotime($row['date_fin']) - time() <= 600) echo 'style="color: red;"'; ?>>
                             <input type="datetime-local" id="date-fin-<?=$row['id_sous']?>" value="<?=$row['date_fin']?>" onchange="modifierDateFin(<?=$row['id_sous']?>, this.value)" style="border: none;" >
                         </td>
+                          <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
                           <td><a href="cloturer.php?id_sous=<?=$row['id_sous']?>" id="cloturer">Clôturer</a></td>
                           <td><a href="archiver.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
-                          <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
                       </tr>
                     <?php
                   }
-              }
+                while($row=mysqli_fetch_assoc($req2)){
+                  ?>
+                    <tr>
+                        <td><?=$row['code']?></td>
+                        <td><?=$row['titre_sous']?></td>
+                        <td><?=$row['date_debut']?></td>
+                        <td><?=$row['date_fin']?></td>
+                        <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
+                    </tr>
+                  <?php
+                }
+            }
           ?>
         </table>
     </div>

@@ -69,6 +69,7 @@ while($row=mysqli_fetch_assoc($req)){
                                                             <?php echo "<strong class='font-weight-bold'>Lieu de naissance : </strong>". $row['lieu_naiss']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>E-mail : </strong>".$row['email']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['nom_semestre']; ?><br>
+                                                            <?php echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['libelle']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>Année : </strong>".$row['annee']; ?>
                                                         </h4>
                                                 

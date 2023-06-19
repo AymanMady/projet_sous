@@ -27,7 +27,7 @@ function test_input($data){
         $descri=test_input($_POST['description_sous']);
 
 
-        $sql1="INSERT INTO `soumission`(`titre_sous`, `description_sous`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`) VALUES('$titre','$descri','$date_debus','$date_fin',0,0,$id_matiere) ";
+        $sql1="INSERT INTO `soumission`(`titre_sous`, `description_sous`,`id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`) VALUES('$titre','$descri',(select id_ens from enseignant where email = '$email'),'$date_debus','$date_fin',0,0,$id_matiere) ";
 
     mysqli_query($conn,$sql1);
     if($type=="examen"){

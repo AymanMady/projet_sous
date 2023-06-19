@@ -70,7 +70,7 @@ include "../nav_bar.php";
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" value="filtre" name="toutouu">
+                        <input type="submit" value="filtre" name="toutouu" class="btn-primary">
                         </div>
 </div>
 
@@ -86,12 +86,11 @@ include "../nav_bar.php";
           <?php 
               include_once "../connexion.php";
               $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE date_debut <= NOW() AND date_fin >= NOW() AND status = 0  ";
-              $update = "UPDATE soumission SET status = 1 where date_fin <= NOW()";
-              $req_update = mysqli_query($conn , $update);
+            //   $update = "UPDATE soumission SET status = 1 where date_fin <= NOW()";
+            //   $req_update = mysqli_query($conn , $update);
     
 
           if(isset($_POST['toutouu'])){
-            
             if(!empty($_POST['code']) && empty($_POST['soul'])){
             $code=$_POST['code'];
             $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND code='$code'  ORDER BY date_fin DESC  ";
@@ -130,7 +129,7 @@ include "../nav_bar.php";
                           <td><?=$row['code']?></td>
                           <td><?=$row['titre_sous']?></td>
                           <td><?=$row['date_debut']?></td>
-                          <td><?=$row['date_fin']?></td>
+                          <td><a href="modifier_date.php?id_sous=<?=$row['id_sous']?>"><?=$row['date_fin']?></a></td>
                           <td><a href="cloturer.php?id_sous=<?=$row['id_sous']?>" id="cloturer">Clôturer</a></td>
                           <td><a href="archiver.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
                           <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>

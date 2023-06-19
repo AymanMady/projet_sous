@@ -68,13 +68,13 @@ $alert = "";
                     $query1="select id_role from enseignant where email='$email' limit 1";
                     $query=mysqli_query($conn,$query1);
                     $droit=mysqli_fetch_assoc($query); 
-                }else{
+                }
+                else{
                     $sql_etud=mysqli_query($conn,"select * from etudiant where login='$email'");
                     $query1="select id_role from etudiant where email='$email' limit 1";
                     $query=mysqli_query($conn,$query1);
                     $droit=mysqli_fetch_assoc($query);
                 }
-
                 $sql = "SELECT * FROM utilisateur WHERE login = '$email'";
                 $res = mysqli_query($conn, $sql) or die('échec de la requête');
 
@@ -238,7 +238,10 @@ $alert = "";
                         header("location:Enseignant/index_enseignant.php");
                     }   
                     elseif($row['id_role']==3){
-                        header("location:index_etudiant.php");
+                        session_start();
+                        $_SESSION['email']=$email;
+                        $_SESSION['role']="etudiant";
+                        header("location:etudiant/index_etudiant.php");
                     }   
                 }
                 else{

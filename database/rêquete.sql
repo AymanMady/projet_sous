@@ -1,4 +1,12 @@
 
+
+CREATE TABLE `departement` (
+  `id` int(10) AUTO_INCREMENT PRIMARY key,
+  `code` text NOT NULL,
+  `nom` text NOT NULL
+);
+
+
 CREATE TABLE `groupe` (
 `id_groupe` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `libelle` varchar(50) DEFAULT NULL,
@@ -50,6 +58,7 @@ FOREIGN KEY (id_module) REFERENCES module(id_module),
 FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre),
 FOREIGN KEY (id_type_matiere) REFERENCES type_matiere(id_type_matiere)
 );
+
 CREATE TABLE `enseignant` (
 `id_ens` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `nom` varchar(60) DEFAULT NULL,
@@ -174,16 +183,9 @@ id_insc int AUTO_INCREMENT PRIMARY key ,
 id_etud int(10) NOT NULL ,
 id_matiere INT(10) NOt NULL,
 id_semestre INT(10) NOt NULL,
-FOREIGN KEY (id_matieres) REFERENCES matiere(id_matiere),
+FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
 FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre),
-FOREIGN KEY (id_etudi) REFERENCES etudiant(id_etud)
-);
-
-
-CREATE TABLE `departement` (
-`id` int(30) AUTO_INCREMENT PRIMARY key,
-`code` text NOT NULL,
-`nom` text NOT NULL
+FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud)
 );
 
 --
@@ -192,6 +194,20 @@ id_data int AUTO_INCREMENT PRIMARY key ,
 data longblob NOT NULL ,
 id_sous INT(10) not NULL,
 FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
+);
+
+--
+
+CREATE TABLE reponses(
+  id_rep int(10) AUTO_INCREMENT PRIMARY key ,
+  description_rep varchar(200) ,
+  data_reponse longblob NOT NULL ,
+  date datetime DEFAULT NOW(),
+  note float(10) DEFAULT null,
+  id_sous INT(10) not NULL,
+  id_etud INT(10) not NULL,
+  FOREIGN KEY (id_sous) REFERENCES soumission(id_sous),
+  FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud)
 );
 
 -- --------------------------------------------------------
@@ -293,7 +309,7 @@ INSERT INTO `groupe` (`id_groupe`, `libelle`, `filiere`) VALUES
 
 
 
-INSERT INTO `matiere` (`id_matiere`, `code`, `libelle`, `specialite`,`charge`, `id_module`, `id_semestre`,`id_type_matiere`) VALUES
+INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `id_semestre`, `id_type_matiere`) VALUES
 ('DSI310', 'Programmation avancée', 'DSI', 60, 1, 3, 1),
 ('DSI311', 'Bases de données', 'DSI', 60, 1, 3, 1),
 ('DSI312', 'Projet intégrateur I', 'DSI', 60, 1, 3, 1),
@@ -314,9 +330,7 @@ INSERT INTO `matiere` (`id_matiere`, `code`, `libelle`, `specialite`,`charge`, `
 ('DAS311', 'RO', 'DAS', 60, 4, 3, 1),
 ('RSS310', 'Introduction aux Réseaux Mobiles', 'RSS', 60, 2, 3, 1),
 ('RSS311', 'Administration systèmes et réseaux', 'RSS', 60, 2, 3, 1),
-('RSS312', 'Projet intégrateur Avancé', 'RSS', 60, 2, 3, 1);
-
-
+('RSS312', 'Projet intégrateur Avancé', 'RSS', 60, 2, 3, 1),
 ('PAV312', 'Sécurité des applications mobiles', 'PAV', 60, 4, 3, 1),
 ('DPR314', 'Marketing numérique', 'DSI', 60, 4, 3, 1),
 ('DPR315', 'Management de l\'innovation', 'DSI', 60, 4, 3, 1),
@@ -359,9 +373,7 @@ INSERT INTO `matiere` (`id_matiere`, `code`, `libelle`, `specialite`,`charge`, `
 ('INF101', 'Informatique', 'TC', 90, 1, 1, 2),
 ('MAT102', 'Algèbre linéaire', 'TC', 90, 1, 2, 2),
 ('PHY102', 'Électromagnétisme', 'TC', 90, 1, 2, 2),
-('INF102', 'Programmation procédurale', 'TC', 90, 1, 2, 2);
-
-
+('INF102', 'Programmation procédurale', 'TC', 90, 1, 2, 2),
 ('DPR412', 'Leadership et gestion d\'équipe', 'DSI', 60, 4, 4, 1),
 ('CNM412', 'Marketing digital', 'CNM', 60, 3, 4, 1),
 ('PAV413', 'Développement d\'applications mobiles avancées', 'PAV', 60, 4, 4, 1),
@@ -402,6 +414,11 @@ INSERT INTO `matiere` (`id_matiere`, `code`, `libelle`, `specialite`,`charge`, `
 
 
 
+-- --------------------------------------------------------
+-- --------------------------------------------------------
+
+
+
 
 
 
@@ -411,45 +428,102 @@ INSERT INTO `matiere` (`id_matiere`, `code`, `libelle`, `specialite`,`charge`, `
 -- --------------------------------------------------------
 
 
-INSERT INTO `enseignant` (`nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`,  `diplome`, `grade`, `id_role`) VALUES
-('meya', 'haroune', '1993-06-22', 'nktt', 'meya.haroune@supnum.mr', 'doctor', 'prof', 2),
-('cheikh', 'dhib', '1983-01-22', 'nktt', 'cheikh.dhib@supnum.mr', 'doctor', 'directeur', 2),
-('haroune', 'meya', '1993-06-22', 'Kiva', 'meya.haroune@supnum.mr', 'doctor', 'prof', 2),
-('cheikh', 'dhib', '1983-01-22', 'NDB', 'cheikh.dhib@supnum.mr', 'doctor', 'directeur', 2),
-('ahmed', 'oumar', '1990-03-15', 'nktt', 'ahmed.oumar@supnum.mr', 'master', 'prof', 2),
-('fatim', 'sidi', '1985-07-10', 'nktt', 'fatim.sidi@supnum.mr', 'doctor', 'prof', 2),
-('mohamed', 'ali', '1992-09-05', 'nktt', 'mohamed.ali@supnum.mr', 'doctor', 'prof', 2),
-('Mariem', 'Bellal', '1988-12-17', 'nktt', 'mariem.bellal@supnum.mr', 'master', 'maître assistant', 2),
-('asma', 'oussama', '1995-04-25', 'Aion', 'asma.oussama@supnum.mr', 'master', 'maître assistant', 2),
-('issouf', 'hamid', '1991-11-09', 'nktt', 'issouf.hamid@supnum.mr', 'doctor', 'maître assistant', 2),
-('khadija', 'mohamed', '1987-08-03', 'nktt', 'khadija.mohamed@supnum.mr', 'doctor', 'prof', 2),
-('ali', 'amine', '1994-02-18', 'nkt', 'ali.amine@supnum.mr', 'doctor', 'prof', 2),
-('moussa', 'Demba', '1989-10-12', 'nkt', 'moussa.demba@supnum.mr', 'doctor', 'directeur', 2),
-('souad', 'abdou', '1996-05-30', 'nkt', 'souad.abdou@supnum.mr', 'doctor', 'prof', 2),
-('ibrahim', 'khalil', '1984-09-02', 'nkt', 'ibrahim.khalil@supnum.mr', 'master', 'maître assistant', 2),
-('aicha', 'salim', '1991-12-07', 'nkt', 'aicha.salim@supnum.mr', 'doctor', 'maître assistant', 2),
-('salma', 'ahmed', '1986-06-28', 'nkt', 'salma.ahmed@supnum.mr', 'doctor', 'prof', 2),
-('Oumar', 'Abdoulaye', '1990-07-15', 'Nouakchott', 'oumar.abdoulaye@supnum.mr', 'doctor', 'maître assistant', 2),
-('Mariem', 'Ahmed', '1988-05-19', 'Nouadhibou', 'mariem.ahmed@supnum.mr', 'master', 'prof', 2),
-('Khalifa', 'Mohamed', '1993-02-25', 'Rosso', 'khalifa.mohamed@supnum.mr', 'doctor', 'prof', 2),
-('Aissatou', 'Mohamed', '1991-12-09', 'Nouakchott', 'aissatou.mohamed@supnum.mr', 'doctor', 'maître assistant', 2),
-('Ahmed', 'Salem', '1987-10-27', 'Kaédi', 'ahmed.salem@supnum.mr', 'master', 'maître assistant', 2),
-('Khadijetou', 'Ali', '1995-04-03', 'Nouakchott', 'khadijetou.ali@supnum.mr', 'doctor', 'prof', 2),
-('Abdallahi', 'Fatimetou', '1986-08-18', 'Nouadhibou', 'abdallahi.fatimetou@supnum.mr', 'doctor', 'maître assistant', 2),
-('Sidi', 'Mamadou', '1992-06-22', 'Nouakchott', 'sidi.mamadou@supnum.mr', 'master', 'prof', 2),
-('Hawa', 'Mohamed', '1989-04-09', 'Kaédi', 'hawa.mohamed@supnum.mr', 'doctor', 'maître assistant', 2),
-('Moulaye', 'Sidi', '1994-12-17', 'Rosso', 'moulaye.sidi@supnum.mr', 'doctor', 'maître assistant', 2),
-('Salem', 'Aicha', '1985-09-05', 'Nouakchott', 'salem.aicha@supnum.mr', 'master', 'maître assistant', 2),
-('Mariem', 'Ahmed', '1991-07-10', 'Nouadhibou', 'mariem.ahmed@supnum.mr', 'doctor', 'prof', 2),
-('Mohamed', 'Khalil', '1988-05-30', 'Nouakchott', 'mohamed.khalil@supnum.mr', 'master', 'prof', 2),
-('Aminetou', 'Mohamed', '1996-03-12', 'Rosso', 'aminetou.mohamed@supnum.mr', 'doctor', 'maître assistant', 2),
-('Abderrahmane', 'Salem', '1990-09-18', 'Nouakchott', 'abderrahmane.salem@supnum.mr', 'doctor', 'maître assistant', 2),
-('Fatimetou', 'Ali', '1987-06-23', 'Nouadhibou', 'fatimetou.ali@supnum.mr', 'doctor', 'prof', 2),
-('Mamadou', 'Sidi', '1993-04-10', 'Nouakchott', 'mamadou.sidi@supnum.mr', 'master', 'prof', 2),
-('Hawa', 'Mohamed', '1989-02-15', 'Kaédi', 'hawa.mohamed@supnum.mr', 'doctor', 'maître assistant', 2),
-('Sidi', 'Mohamed', '1995-10-27', 'Rosso', 'sidi.mohamed@supnum.mr', 'doctor', 'maître assistant', 2),
-('Salem', 'Aicha', '1986-08-08', 'Nouakchott', 'salem.aicha@supnum.mr', 'master', 'maître assistant', 2);
+INSERT INTO `enseignant`(`nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`, `num_tel`, `num_whatsapp`, `diplome`, `grade`, `id_role`) VALUES 
+('meya', 'haroune', '1993-06-22', 'nktt', 'meya.haroune@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('cheikh', 'dhib', '1983-01-22', 'nktt', 'cheikh.dhib@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
+('haroune', 'meya', '1993-06-22', 'Kiva', 'meya.haroune@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('cheikh', 'dhib', '1983-01-22', 'NDB', 'cheikh.dhib@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
+('ahmed', 'oumar', '1990-03-15', 'nktt', 'ahmed.oumar@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
+('fatim', 'sidi', '1985-07-10', 'nktt', 'fatim.sidi@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('mohamed', 'ali', '1992-09-05', 'nktt', 'mohamed.ali@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('Mariem', 'Bellal', '1988-12-17', 'nktt', 'mariem.bellal@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
+('asma', 'oussama', '1995-04-25', 'Aion', 'asma.oussama@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
+('issouf', 'hamid', '1991-11-09', 'nktt', 'issouf.hamid@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('khadija', 'mohamed', '1987-08-03', 'nktt', 'khadija.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('ali', 'amine', '1994-02-18', 'nkt', 'ali.amine@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('moussa', 'Demba', '1989-10-12', 'nkt', 'moussa.demba@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
+('souad', 'abdou', '1996-05-30', 'nkt', 'souad.abdou@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('ibrahim', 'khalil', '1984-09-02', 'nkt', 'ibrahim.khalil@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
+('aicha', 'salim', '1991-12-07', 'nkt', 'aicha.salim@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('salma', 'ahmed', '1986-06-28', 'nkt', 'salma.ahmed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('Oumar', 'Abdoulaye', '1990-07-15', 'Nouakchott', 'oumar.abdoulaye@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Mariem', 'Ahmed', '1988-05-19', 'Nouadhibou', 'mariem.ahmed@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
+('Khalifa', 'Mohamed', '1993-02-25', 'Rosso', 'khalifa.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('Aissatou', 'Mohamed', '1991-12-09', 'Nouakchott', 'aissatou.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Ahmed', 'Salem', '1987-10-27', 'Kaédi', 'ahmed.salem@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
+('Khadijetou', 'Ali', '1995-04-03', 'Nouakchott', 'khadijetou.ali@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('Abdallahi', 'Fatimetou', '1986-08-18', 'Nouadhibou', 'abdallahi.fatimetou@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Sidi', 'Mamadou', '1992-06-22', 'Nouakchott', 'sidi.mamadou@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
+('Hawa', 'Mohamed', '1989-04-09', 'Kaédi', 'hawa.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Moulaye', 'Sidi', '1994-12-17', 'Rosso', 'moulaye.sidi@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Salem', 'Aicha', '1985-09-05', 'Nouakchott', 'salem.aicha@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
+('Mariem', 'Ahmed', '1991-07-10', 'Nouadhibou', 'mariem.ahmed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('Mohamed', 'Khalil', '1988-05-30', 'Nouakchott', 'mohamed.khalil@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
+('Aminetou', 'Mohamed', '1996-03-12', 'Rosso', 'aminetou.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Abderrahmane', 'Salem', '1990-09-18', 'Nouakchott', 'abderrahmane.salem@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Fatimetou', 'Ali', '1987-06-23', 'Nouadhibou', 'fatimetou.ali@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('Mamadou', 'Sidi', '1993-04-10', 'Nouakchott', 'mamadou.sidi@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
+('Hawa', 'Mohamed', '1989-02-15', 'Kaédi', 'hawa.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Sidi', 'Mohamed', '1995-10-27', 'Rosso', 'sidi.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Salem', 'Aicha', '1986-08-08', 'Nouakchott', 'salem.aicha@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2);
 
+
+
+-- ----------------------------------------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+INSERT INTO `soumission` (`id_sous`, `titre_sous`, `description_sous`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`) VALUES
+(1, 'Titre', 'Mon sou', NULL, '2023-06-17 19:32:00', '2023-07-17 00:33:00', 0, 2, 2),
+(2, 'titre', 'ribo', NULL, '2023-06-17 19:34:00', '2023-06-17 01:36:00', 0, 1, 3),
+(3, 'titre', 'zero', NULL, '2023-06-17 02:32:00', '2023-07-07 13:51:48', 0, 2, 3),
+(4, 'Esai', 'zero zero', NULL, '2023-06-17 20:42:00', '2023-06-17 00:44:00', 0, 1, 4),
+(5, 'Esai', 'xor and nor', NULL, '2023-06-17 20:44:00', '2023-06-17 02:45:00', 0, 1, 3),
+(6, 'titi', 'rsgfghsfhsjshnhgdnadtsfdgfkhgjhl.,bmnvbcvx', NULL, '2023-06-17 21:15:00', '2023-06-17 03:16:00', 0, 1, 4),
+(7, 'Titre', 'ereur', NULL, '2023-06-17 21:37:00', '2023-06-17 21:40:00', 0, 1, 3),
+(8, 'Bechir', 'Reur', NULL, '2023-06-17 21:40:00', '2023-06-17 21:44:00', 0, 1, 2),
+(9, 'MEDsdfgfs', 'reofsdgfsfdg', NULL, '2023-06-17 21:42:00', '2023-06-17 21:44:00', 0, 1, 3),
+(10, 'frmn', 'My Sou', NULL, '2023-06-17 21:45:00', '2023-06-17 21:52:00', 0, 1, 3),
+(11, 'Sou', 'esai', NULL, '2023-06-17 21:50:00', '2023-06-17 21:59:00', 0, 1, 3),
+(12, 'titre', 'Deux Test', NULL, '2023-06-17 22:15:00', '2023-06-17 23:20:00', 0, 1, 2),
+(13, 'Examin', 'zera', 3, '2023-06-17 23:36:00', '2023-07-17 00:36:00', 0, 0, 3),
+(14, 'Soumission', 'zero one', 3, '2023-06-17 23:36:00', '2023-07-20 00:37:00', 0, 0, 3),
+(15, 'Titre', 'riri', NULL, '2023-06-17 23:43:00', '2023-06-17 23:56:00', 0, 1, 2),
+(16, 'Examin', 'bla bla', NULL, '2023-06-17 23:51:00', '2023-06-17 00:09:00', 0, 1, 3),
+(17, 'Titre bla bla', 'bla bla', NULL, '2023-06-17 23:51:00', '2023-06-17 00:02:00', 0, 1, 4),
+(18, 'Titre', 'bla', NULL, '2023-06-17 23:53:00', '2023-06-17 23:59:00', 0, 1, 4),
+(19, 'ritoAFCDS', 'bla bls', NULL, '2023-06-18 00:03:00', '2023-06-18 00:08:00', 0, 1, 3),
+(20, 'frmn', 'reto', 3, '2023-06-18 00:05:00', '2023-06-18 00:12:00', 0, 1, 3),
+(21, 'frmn', 'sero', NULL, '2023-06-18 00:12:00', '2023-06-18 00:19:00', 0, 1, 3),
+(22, 'Titre', '235467hgethty', NULL, '2023-06-18 00:17:00', '2023-07-29 00:29:00', 0, 0, 2),
+(23, 'frmn', 'frei', NULL, '2023-06-18 00:20:00', '2023-06-18 00:34:00', 0, 1, 3),
+(24, 'titre', 'wreyu', 3, '2023-06-18 00:21:00', '2023-06-18 00:37:00', 0, 1, 3),
+(25, 'ritoAFCDS', 'rteiikhj', NULL, '2023-06-16 00:24:00', '2023-06-18 00:42:00', 0, 1, 3),
+(26, 'Soumisssion1', 'recherche', NULL, '2023-06-18 13:33:00', '2023-08-18 13:48:00', 0, 0, 4),
+(27, 'Soumisssion', 'Recharch', 3, '2023-06-18 13:37:00', '2023-08-19 13:55:00', 0, 0, 3),
+(28, 'Soumisssion', '12gdfgdfhdf', 3, '2023-06-18 13:38:00', '2023-06-18 13:59:00', 0, 1, 4),
+(29, 'Soumisssion', 'reboter', NULL, '2023-06-18 13:39:00', '2023-06-18 13:58:00', 0, 1, 4),
+(30, 'titre sou', 'reboti', NULL, '2023-06-18 13:42:00', '2023-06-18 13:59:00', 0, 1, 3),
+(31, 'Examen SGBD1', 'redfgdbs', 3, '2023-06-18 13:55:00', '2023-10-18 13:59:00', 0, 0, 4),
+(32, 'Soumisssion', 'ereur', NULL, '2023-06-18 13:58:00', '2023-06-18 14:59:00', 0, 1, 3),
+(33, 'Soumisssion', 'rito', NULL, '2023-06-18 14:00:00', '2023-06-18 14:15:00', 0, 1, 4),
+(34, 'TITRe', 'Ereur', NULL, '2023-06-18 14:01:00', '2023-06-18 14:23:00', 0, 1, 3),
+(35, 'Soumisssion', 'ereur', NULL, '2023-06-18 14:15:00', '2023-06-18 14:36:00', 0, 1, 2),
+(36, 'drrghdhg', 'devit', NULL, '2023-06-18 14:16:00', '2023-06-18 14:50:00', 0, 1, 3),
+(37, 'Soumisssion', 'Siouvf', NULL, '2023-06-18 14:25:00', '2023-06-18 15:20:00', 0, 1, 4),
+(38, 'TITRe', '12ngdhthtruy', NULL, '2023-06-18 14:28:00', '2023-06-18 17:29:00', 0, 1, 2),
+(39, '', '23dfgshdsrhnfdg', 3, '2023-06-18 14:30:00', '2023-06-18 18:35:00', 0, 1, 4),
+(40, 'Soumisssion en ligne', 'Zero Zero', NULL, '2023-06-18 14:45:00', '2023-08-15 10:08:00', 0, 0, 2),
+(41, 'Soumisssion en ligne 25rojo', 'Siu  cvbcvxb', 3, '2023-06-18 14:47:00', '2023-07-19 21:59:00', 0, 0, 3),
+(42, 'titre soumissio', 'reso', 3, '2023-06-18 23:17:00', '2023-07-11 23:23:00', 0, 0, 4),
+(43, 'Titre S', 'Zero', 3, '2023-06-18 23:17:00', '2023-07-27 23:24:00', 0, 0, 3),
+(44, 'frmn', 'reso', NULL, '2023-06-19 00:16:00', '2023-06-19 00:22:00', 0, 1, 4),
+(45, 'Derniere soum', 'ereursdfv', 3, '2023-06-19 11:01:00', '2023-06-27 21:42:00', 0, 0, 3),
+(46, 'Titre', 'rizqi', NULL, '2023-06-19 12:15:00', '2023-06-28 12:16:00', 0, 0, 3),
+(47, 'ritoAFCDS', 'eruer', 3, '2023-06-19 12:15:00', '2023-06-30 14:22:00', 0, 0, 4),
+(48, 'W7d jdid', 'Refdrgvdfgv', 4, '2023-06-19 18:31:00', '2023-07-21 23:32:00', 0, 0, 2);
 
 
 
@@ -471,7 +545,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('21012', 'Ahlam', 'Abdel Kader', 'Nouadhibou', '1999-12-15', 2, '2023', '21012@supnum.mr', 3, 1, NULL),
 ('21014', 'Taleb', 'Bahan', 'Nouakchott', '2001-02-28', 4, '2023', '21014@supnum.mr', 3, 2, NULL),
 ('21016', 'Khadijetou', 'Abdel Ghader', 'Rosso', '1997-04-10', 3, '2023', '21016@supnum.mr', 3, 3, NULL),
-('21017', 'Bedra', 'Deddy', 'Nouadhibou', '1998-05-25', 1, '2023', '21017@supnum.mr', 3, 1, NULL),
+('21017', 'Bedra', 'Deddy', 'Nouadhibou', '1998-05-25', 1, '2023', '21017@supnum.mr', 3, 1, NULL);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('21018', 'Mohamed', 'Ejelal', 'Nouakchott', '1999-07-10', 5, '2023', '21018@supnum.mr', 3, 2, NULL),
 ('21019', 'Fatimetou', 'Dah', 'Nouadhibou', '2000-08-25', 2, '2023', '21019@supnum.mr', 3, 3, NULL),
 ('21020', 'Ahmed', 'Sejad', 'Nouakchott', '1997-10-10', 4, '2023', '21020@supnum.mr', 3, 1, NULL),
@@ -481,7 +558,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('21027', 'Khadigetou', 'Mohamed Mewloud', 'Nouakchott', '1997-04-25', 4, '2023', '21027@supnum.mr', 3, 2, NULL),
 ('21028', 'Fatimetou', 'El Alem', 'Nouadhibou', '1998-06-10', 1, '2023', '21028@supnum.mr', 3, 3, NULL),
 ('21029', 'Sidi', 'Ebeidi', 'Nouakchott', '1999-07-25', 5, '2023', '21029@supnum.mr', 3, 1, NULL),
-('21030', 'Aicha', 'Moussa', 'Nouadhibou', '2000-09-10', 2, '2023', '21030@supnum.mr', 3, 2, NULL),
+('21030', 'Aicha', 'Moussa', 'Nouadhibou', '2000-09-10', 2, '2023', '21030@supnum.mr', 3, 2, NULL);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('21031', 'Sidi El Valy', 'SidElemine', 'Nouakchott', '1997-11-15', 3, '2023', '21031@supnum.mr', 3, 3, NULL),
 ('21032', 'Oum Elvadhli', 'Cheikh', 'Nouadhibou', '1998-12-25', 4, '2023', '21032@supnum.mr', 3, 1, NULL),
 ('21033', 'Lalla', 'Ebety', 'Nouakchott', '1999-02-10', 1, '2023', '21033@supnum.mr', 3, 2, NULL),
@@ -491,7 +571,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('21042', 'Zeinebou', 'Lebchir', 'Nouadhibou', '1999-05-17', 4, '2023', '21042@supnum.mr', 3, 2, NULL),
 ('21043', 'Mohamed Vall', 'Mohameden Vall', 'Atar', '2000-05-25', 1, '2023', '21043@supnum.mr', 3, 3, NULL),
 ('21045', 'Rougha', 'Amar Salem', 'Nouakchott', '1997-06-11', 2, '2023', '21045@supnum.mr', 3, 1, NULL),
-('21046', 'Zeinebou', 'El Ghellawi', 'Nouadhibou', '1998-06-17', 3, '2023', '21046@supnum.mr', 3, 2, NULL),
+('21046', 'Zeinebou', 'El Ghellawi', 'Nouadhibou', '1998-06-17', 3, '2023', '21046@supnum.mr', 3, 2, NULL);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('21047', 'Djilitt', 'Abdellahi', 'Nouakchott', '1999-06-25', 5, '2023', '21047@supnum.mr', 3, 3, NULL),
 ('21050', 'Aicha', 'Chrif Bou Ghouba', 'Nouadhibou', '2000-07-11', 4, '2023', '21050@supnum.mr', 3, 1, NULL),
 ('21051', 'Fatimetou', 'Abdel Haye', 'Nouakchott', '1997-07-17', 1, '2023', '21051@supnum.mr', 3, 2, NULL),
@@ -501,7 +584,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('21055', 'Cherifa', 'Beillahi', 'Nouakchott', '1997-08-25', 4, '2023', '21055@supnum.mr', 3, 3, NULL),
 ('21056', 'Bouchra', 'Ahmed Ramdhane', 'Nouadhibou', '1998-09-11', 1, '2023', '21056@supnum.mr', 3, 1, NULL),
 ('21059', 'Mariem', 'Afou', 'Nouakchott', '1999-09-17', 3, '2023', '21059@supnum.mr', 3, 2, NULL),
-('21060', 'Tekeiber', 'Bah', 'Nouadhibou', '2000-09-25', 5, '2023', '21060@supnum.mr', 3, 3, NULL),
+('21060', 'Tekeiber', 'Bah', 'Nouadhibou', '2000-09-25', 5, '2023', '21060@supnum.mr', 3, 3, NULL);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('21061', 'Abderrahmane', 'Nanne Mohamed', 'Nouakchott', '1997-10-11', 4, '2023', '21061@supnum.mr', 3, 1, NULL),
 ('21062', 'Oumou', 'Ba', 'Nouadhibou', '1998-10-17', 2, '2023', '21062@supnum.mr', 3, 2, NULL),
 ('21063', 'Aicha', 'Fadel', 'Nouakchott', '1999-10-25', 3, '2023', '21063@supnum.mr', 3, 3, NULL),
@@ -511,7 +597,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('21068', 'Amani', 'Baba', 'Nouadhibou', '1999-05-02', 3, '2023', '21068@supnum.mr', 3, 1, 2),
 ('21069', 'Ahmed', 'Cheikh', 'Nouakchott', '1997-12-20', 2, '2023', '21069@supnum.mr', 3, 3, 1),
 ('21072', 'Aminetou', 'Ahmed Cherif', 'Nouakchott', '1998-09-27', 3, '2023', '21072@supnum.mr', 3, 2, 2),
-('21076', 'Ahmedou', 'Enaha Cheikh', 'Nouakchott', '1997-07-05', 2, '2023', '21076@supnum.mr', 3, 3, 2),
+('21076', 'Ahmedou', 'Enaha Cheikh', 'Nouakchott', '1997-07-05', 2, '2023', '21076@supnum.mr', 3, 3, 2);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('21007', 'Meimouna', 'Erebih', 'Nouakchott', '2001-04-18', 5, '2023', '21007@supnum.mr', 3, 1, 3),
 ('21009', 'Mohamed', 'Ahmedou', 'Nouakchott', '1998-11-30', 4, '2023', '21009@supnum.mr', 3, 2, 3),
 ('21026', 'Mohamedhen Vall', 'Khaled', 'Nouakchott', '1999-09-09', 3, '2023', '21026@supnum.mr', 3, 3, 3),
@@ -521,7 +610,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('22001', 'Mezid Abderahman', 'Mohamed Mahmoud', 'Nouakchott', '1999-04-01', 5, '2022', '22001@supnum.mr', 3, 1, 2),
 ('22002', 'Mohamed Lemine', 'Al Id', 'Nouakchott', '2001-11-08', 1, '2022', '22002@supnum.mr', 3, 2, 2),
 ('22003', 'Ebou Oubeideta', 'Mohamed Vall', 'Nouakchott', '2000-07-15', 3, '2022', '22003@supnum.mr', 3, 3, 2),
-('22004', 'El Moukhtar', 'Amar Mohamed', 'Nouakchott', '1999-06-22', 2, '2022', '22004@supnum.mr', 3, 1, 3),
+('22004', 'El Moukhtar', 'Amar Mohamed', 'Nouakchott', '1999-06-22', 2, '2022', '22004@supnum.mr', 3, 1, 3);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('22005', 'Mariem', 'Erebih', 'Nouakchott', '2001-03-04', 4, '2022', '22005@supnum.mr', 3, 2, 3),
 ('22006', 'Mohamed', 'Cheikh Sidi', 'Nouadhibou', '1998-12-11', 3, '2022', '22006@supnum.mr', 3, 3, 3),
 ('22007', 'Ahmedou', 'Miya', 'Nouakchott', '2000-10-18', 1, '2022', '22007@supnum.mr', 3, 1, 1),
@@ -531,7 +623,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('22011', 'Abdellah', 'Nomane Mohamed', 'Nouadhibou', '2000-06-17', 3, '2022', '22011@supnum.mr', 3, 2, 2),
 ('22012', 'Aboubakri', 'NGaidé', 'Nouakchott', '1999-03-25', 2, '2022', '22012@supnum.mr', 3, 3, 2),
 ('22013', 'El Moustapha', 'Mohamed El Moustapha', 'Nouakchott', '2001-01-01', 1, '2022', '22013@supnum.mr', 3, 1, 3),
-('22014', 'Bechir', 'Mady', 'nkt', '2023-05-17', 2, '2023', '22014@supnum.mr', 3, NULL, NULL),
+('22014', 'Bechir', 'Mady', 'nkt', '2023-05-17', 2, '2023', '22014@supnum.mr', 3, NULL, NULL);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('22015', 'Nebghouha', 'Seyid', 'Nouakchott', '2001-01-05', 2, '2022', '22015@supnum.mr', 3, 1, 1),
 ('22016', 'Diyana', 'Sambe', 'Nouakchott', '1999-04-12', 1, '2022', '22016@supnum.mr', 3, 2, 1),
 ('22017', 'Kadiata', 'Niang', 'Nouadhibou', '2000-11-19', 3, '2022', '22017@supnum.mr', 3, 3, 1),
@@ -541,7 +636,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('22021', 'Taleb', 'Abde Selam', 'Nouakchott', '2000-10-18', 5, '2022', '22021@supnum.mr', 3, 1, 3),
 ('22022', 'Boubou', 'Camara', 'Nouakchott', '1998-07-26', 3, '2022', '22022@supnum.mr', 3, 2, 3),
 ('22023', 'Itawel Oumrou', 'Cheikh Mohamed Vadel', 'Nouadhibou', '2001-05-02', 2, '2022', '22023@supnum.mr', 3, 3, 3),
-('22024', 'Ahmedou Bemba', 'Ahmedou Salem', 'Nouakchott', '1999-02-09', 1, '2022', '22024@supnum.mr', 3, 1, 1),
+('22024', 'Ahmedou Bemba', 'Ahmedou Salem', 'Nouakchott', '1999-02-09', 1, '2022', '22024@supnum.mr', 3, 1, 1);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('22025', 'El Kherchy', 'Baba', 'Nouakchott', '2000-09-16', 5, '2022', '22025@supnum.mr', 3, 2, 1),
 ('22026', 'Yahya', 'Tyib Mohamed', 'Nouadhibou', '1998-06-24', 4, '2022', '22026@supnum.mr', 3, 3, 1),
 ('22027', 'Cheikh Maleinine', 'Cheikh Malainine', 'Nouakchott', '2001-04-01', 3, '2022', '22027@supnum.mr', 3, 1, 2),
@@ -551,7 +649,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('22032', 'Yahya', 'Elmine', 'Nouakchott', '2001-03-04', 4, '2022', '22032@supnum.mr', 3, 2, 3),
 ('22033', 'Salma', 'Lefad', 'Nouadhibou', '1999-10-11', 3, '2022', '22033@supnum.mr', 3, 3, 3),
 ('22034', 'Mohamed Mahmoud', 'Sidi Echeikh', 'Nouakchott', '2001-07-18', 2, '2022', '22034@supnum.mr', 3, 1, 1),
-('22035', 'Vatma', 'El Wavi', 'Nouakchott', '1999-04-26', 1, '2022', '22035@supnum.mr', 3, 2, 1),
+('22035', 'Vatma', 'El Wavi', 'Nouakchott', '1999-04-26', 1, '2022', '22035@supnum.mr', 3, 2, 1);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('22036', 'Memoud', 'Abdi Sidi', 'Nouadhibou', '2000-12-03', 5, '2022', '22036@supnum.mr', 3, 3, 1),
 ('22040', 'Mohamed', 'Dhmin', 'Nouakchott', '1998-09-10', 3, '2022', '22040@supnum.mr', 3, 1, 2),
 ('22041', 'Abdellahi', 'Elemine Vall', 'Nouakchott', '2001-06-17', 2, '2022', '22041@supnum.mr', 3, 2, 2),
@@ -561,7 +662,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('22046', 'Weva', 'Nahy', 'Nouakchott', '2001-05-18', 2, '2022', '22046@supnum.mr', 3, 3, 3),
 ('22047', 'Mohamed', 'Camara', 'Nouakchott', '1999-02-25', 1, '2022', '22047@supnum.mr', 3, 1, 1),
 ('22048', 'Zeinebou', 'El Hachmi', 'Nouakchott', '2000-10-04', 5, '2022', '22048@supnum.mr', 3, 2, 1),
-('22049', 'Abd Dayem', 'Ainine', 'Nouadhibou', '1998-07-12', 4, '2022', '22049@supnum.mr', 3, 3, 1),
+('22049', 'Abd Dayem', 'Ainine', 'Nouadhibou', '1998-07-12', 4, '2022', '22049@supnum.mr', 3, 3, 1);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('22050', 'Ahamed Salem', 'Chennan', 'Nouakchott', '2001-04-19', 3, '2022', '22050@supnum.mr', 3, 1, 2),
 ('22051', 'Ahmed', 'El Maouloud', 'Nouadhibou', '1998-03-07', 2, '2022', '22051@supnum.mr', 3, 2, 3),
 ('22052', 'Safia', 'El Hacen', 'Nouakchott', '2000-10-15', 1, '2022', '22052@supnum.mr', 3, 3, 1),
@@ -571,7 +675,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('22056', 'Achato', 'Cheikh El Mehdy', 'Nouakchott', '2001-03-19', 4, '2022', '22056@supnum.mr', 3, 2, 3),
 ('22057', 'Ahmed Yassine', 'Mohamed Salem', 'Nouadhibou', '1999-10-26', 3, '2022', '22057@supnum.mr', 3, 3, 3),
 ('22058', 'Ethemane', 'Niass', 'Nouakchott', '2001-08-02', 2, '2022', '22058@supnum.mr', 3, 1, 1),
-('22059', 'Tahra', 'Cheikh Mamine', 'Nouakchott', '1999-05-11', 1, '2022', '22059@supnum.mr', 3, 2, 1),
+('22059', 'Tahra', 'Cheikh Mamine', 'Nouakchott', '1999-05-11', 1, '2022', '22059@supnum.mr', 3, 2, 1);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('22060', 'Mama', 'Sidi Youssouf', 'Nouadhibou', '2000-12-18', 5, '2022', '22060@supnum.mr', 3, 3, 1),
 ('22061', 'Marieme', 'Lab', 'Nouakchott', '1998-09-25', 3, '2022', '22061@supnum.mr', 3, 1, 2),
 ('22062', 'Mohameden', 'Edou', 'Nouakchott', '2001-07-04', 2, '2022', '22062@supnum.mr', 3, 2, 2),
@@ -581,7 +688,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('22066', 'Aichetou', 'Mohamed Chrif', 'Nouakchott', '1998-12-18', 5, '2022', '22066@supnum.mr', 3, 1, 2),
 ('22067', 'Hafssatou', 'Bilal', 'Nouadhibou', '2001-07-25', 4, '2022', '22067@supnum.mr', 3, 2, 2),
 ('22068', 'Mariem', 'Kah', 'Nouakchott', '1999-05-03', 3, '2022', '22068@supnum.mr', 3, 3, 2),
-('22069', 'Sidi Mohamed', 'Taje Dine', 'Nouadhibou', '2000-02-10', 2, '2022', '22069@supnum.mr', 3, 1, 3),
+('22069', 'Sidi Mohamed', 'Taje Dine', 'Nouadhibou', '2000-02-10', 2, '2022', '22069@supnum.mr', 3, 1, 3);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('22070', 'Mariem', 'El Youssy', 'Nouakchott', '1998-11-18', 1, '2022', '22070@supnum.mr', 3, 2, 3),
 ('22071', 'Rabani', 'El Bessry', 'Nouakchott', '2001-08-26', 5, '2022', '22071@supnum.mr', 3, 3, 3),
 ('22072', 'Toutou', 'Mouslih', 'Nouadhibou', '1999-05-04', 4, '2022', '22072@supnum.mr', 3, 1, 1),
@@ -591,7 +701,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('22076', 'Fatimetou', 'Ahmed Maham', 'Nouadhibou', '1999-04-05', 5, '2022', '22076@supnum.mr', 3, 2, 2),
 ('22077', 'Mohamed Lemine', 'Zeidane', 'Nouakchott', '2000-01-13', 4, '2022', '22077@supnum.mr', 3, 3, 2),
 ('22078', 'Roughaya', 'Bebane', 'Nouadhibou', '1998-08-21', 3, '2022', '22078@supnum.mr', 3, 1, 3),
-('22079', 'Oussame', 'Said', 'Nouakchott', '2001-05-29', 2, '2022', '22079@supnum.mr', 3, 2, 3),
+('22079', 'Oussame', 'Said', 'Nouakchott', '2001-05-29', 2, '2022', '22079@supnum.mr', 3, 2, 3);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('22080', 'Ammou Melika', 'Mohamed', 'Nouadhibou', '1999-03-07', 1, '2022', '22080@supnum.mr', 3, 3, 3),
 ('22081', 'Mohamed Lemine', 'Allouche', 'Nouakchott', '1998-10-15', 5, '2022', '22081@supnum.mr', 3, 1, 1),
 ('22083', 'El Heiba', 'Houmren', 'Nouadhibou', '2001-07-22', 4, '2022', '22083@supnum.mr', 3, 2, 1),
@@ -601,7 +714,10 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('22087', 'TFeil Maryeim', 'Mohamed', 'Nouadhibou', '1999-06-22', 5, '2022', '22087@supnum.mr', 3, 3, 2),
 ('22088', 'Ousama', 'El Atigh', 'Nouakchott', '2000-03-10', 4, '2022', '22088@supnum.mr', 3, 1, 3),
 ('22089', 'Mouna', 'El Mokhtar', 'Nouadhibou', '1998-10-18', 3, '2022', '22089@supnum.mr', 3, 2, 3),
-('22030', 'Abdellahi', 'Menem', 'Nouakchott', '2001-07-25', 2, '2022', '22030@supnum.mr', 3, 3, 1),
+('22030', 'Abdellahi', 'Menem', 'Nouakchott', '2001-07-25', 2, '2022', '22030@supnum.mr', 3, 3, 1);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('22037', 'Khira', 'Elema', 'Nouadhibou', '1999-04-05', 1, '2022', '22037@supnum.mr', 3, 1, 2),
 ('22038', 'Zeinebou', 'El Agheb', 'Nouakchott', '1998-11-13', 5, '2022', '22038@supnum.mr', 3, 2, 2),
 ('22039', 'Esma', 'MHadi', 'Nouadhibou', '2001-08-21', 4, '2022', '22039@supnum.mr', 3, 3, 2),
@@ -611,15 +727,18 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 ('21005', 'fatimetou ', 'ahmed eli', 'Nouadhibou', '1999-05-04', 5, '2021', '21005@supnum.mr', 3, 3, 1),
 ('21006', 'mohamed', 'sidi ahmed', 'Nouakchott', '1998-12-12', 4, '2021', '21006@supnum.mr', 3, 1, 2),
 ('21023', 'mohamed said', 'rebanie', 'Nouadhibou', '2001-09-20', 3, '2021', '21023@supnum.mr', 3, 2, 2),
-('21025', 'mohamed mahmoud', 'ahmemd', 'Nouakchott', '1999-06-27', 2, '2021', '21025@supnum.mr', 3, 3, 2),
+('21025', 'mohamed mahmoud', 'ahmemd', 'Nouakchott', '1999-06-27', 2, '2021', '21025@supnum.mr', 3, 3, 2);
+
+
+INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
 ('21034', 'khaled', 'ahmed mahmoud', 'Nouadhibou', '2000-03-10', 1, '2021', '21034@supnum.mr', 3, 1, 3),
 ('21039', 'taher', 'selahi', 'Nouakchott', '1998-10-18', 5, '2021', '21039@supnum.mr', 3, 2, 3),
 ('21044', 'El hssein', 'nah', 'Nouadhibou', '2001-07-25', 4, '2021', '21044@supnum.mr', 3, 3, 1),
 ('21048', 'sara', 'ahmed horme', 'Nouakchott', '1999-04-05', 3, '2021', '21048@supnum.mr', 3, 1, 2),
 ('21049', 'omelkheyri', 'mahfoudh', 'Nouadhibou', '1998-11-13', 2, '2021', '21049@supnum.mr', 3, 2, 2),
 ('21070', 'oudaa', 'oudaa', 'Nouakchott', '2001-08-21', 1, '2021', '21070@supnum.mr', 3, 3, 2),
-('21075', 'mohamed El moustpha ', 'Mohamedou', 'Nouakchott', '2000-03-07', 4, '2021', '21075@supnum.mr', 3, 2, 1);
-(274, '21074', 'mohamed mahmoud', 'Abd El kader', 'Nouadhibou', '1998-05-29', 5, '2021', '21074@supnum.mr', 3, 1, 3),
+('21075', 'mohamed El moustpha ', 'Mohamedou', 'Nouakchott', '2000-03-07', 4, '2021', '21075@supnum.mr', 3, 2, 1),
+('21074', 'mohamed mahmoud', 'Abd El kader', 'Nouadhibou', '1998-05-29', 5, '2021', '21074@supnum.mr', 3, 1, 3);
 
 
 

@@ -168,7 +168,7 @@ $alert = "";
             ]);                
                $result = curl_exec($ch);
                 if ($result) {
-                    $message = '<div class="alert alert-danger row-md-15" id="success-alert">
+                    $message = '<div class="alert alert-success row-md-15" id="success-alert">
                                 <span aria-hidden="true">&times;</span>
                                 <strong>Nous avons envoyé un code de vérification à votre adresse e-mail  $email </strong>
                                 </div>';

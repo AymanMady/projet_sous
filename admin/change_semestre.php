@@ -64,7 +64,7 @@ include "../nav_bar.php";
                     
                     </li>
                     <li>Gestion des utisateurs</li>
-                    <li>Ajouter un etudiant</li>
+                    <li>Changement de semestre</li>
             </ol>
         </div>
     </div>

@@ -429,22 +429,21 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 
 
 INSERT INTO `enseignant`(`nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`, `num_tel`, `num_whatsapp`, `diplome`, `grade`, `id_role`) VALUES 
-('meya', 'haroune', '1993-06-22', 'nktt', 'meya.haroune@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('cheikh', 'dhib', '1983-01-22', 'nktt', 'cheikh.dhib@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
-('haroune', 'meya', '1993-06-22', 'Kiva', 'meya.haroune@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('cheikh', 'dhib', '1983-01-22', 'NDB', 'cheikh.dhib@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
+('Cheikh', 'Dhib', '1983-01-22', 'nktt', 'cheikh.dhib@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
+('Moussa', 'Demba', '1989-10-12', 'nkt', 'moussa.demba@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur adjoint', 2),
+('Meya', 'Haroune', '1993-06-22', 'nktt', 'meya.haroune@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
+('Sidi', 'Mohamed', '1995-10-27', 'Rosso', 'sidi.med@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Aicha', 'Bobakar', '1991-12-07', 'nkt', 'aicha.bobakar@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
+('Mariem', 'Bellal', '1988-12-17', 'nktt', 'mariem.bellal@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
 ('ahmed', 'oumar', '1990-03-15', 'nktt', 'ahmed.oumar@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
 ('fatim', 'sidi', '1985-07-10', 'nktt', 'fatim.sidi@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
 ('mohamed', 'ali', '1992-09-05', 'nktt', 'mohamed.ali@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('Mariem', 'Bellal', '1988-12-17', 'nktt', 'mariem.bellal@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
 ('asma', 'oussama', '1995-04-25', 'Aion', 'asma.oussama@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
 ('issouf', 'hamid', '1991-11-09', 'nktt', 'issouf.hamid@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
 ('khadija', 'mohamed', '1987-08-03', 'nktt', 'khadija.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
 ('ali', 'amine', '1994-02-18', 'nkt', 'ali.amine@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('moussa', 'Demba', '1989-10-12', 'nkt', 'moussa.demba@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
 ('souad', 'abdou', '1996-05-30', 'nkt', 'souad.abdou@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
 ('ibrahim', 'khalil', '1984-09-02', 'nkt', 'ibrahim.khalil@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
-('aicha', 'salim', '1991-12-07', 'nkt', 'aicha.salim@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
 ('salma', 'ahmed', '1986-06-28', 'nkt', 'salma.ahmed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
 ('Oumar', 'Abdoulaye', '1990-07-15', 'Nouakchott', 'oumar.abdoulaye@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
 ('Mariem', 'Ahmed', '1988-05-19', 'Nouadhibou', 'mariem.ahmed@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
@@ -464,7 +463,6 @@ INSERT INTO `enseignant`(`nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`, `
 ('Fatimetou', 'Ali', '1987-06-23', 'Nouadhibou', 'fatimetou.ali@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
 ('Mamadou', 'Sidi', '1993-04-10', 'Nouakchott', 'mamadou.sidi@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
 ('Hawa', 'Mohamed', '1989-02-15', 'Kaédi', 'hawa.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Sidi', 'Mohamed', '1995-10-27', 'Rosso', 'sidi.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
 ('Salem', 'Aicha', '1986-08-08', 'Nouakchott', 'salem.aicha@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2);
 
 

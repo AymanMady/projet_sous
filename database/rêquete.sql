@@ -1,4 +1,6 @@
-
+drop database pi;
+CREATE database pi;
+use pi;
 
 CREATE TABLE `departement` (
   `id` int(10) AUTO_INCREMENT PRIMARY key,

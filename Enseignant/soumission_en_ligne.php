@@ -139,28 +139,37 @@ include "../nav_bar.php";
               }else if(mysqli_num_rows($req1)>0) {
                   while($row=mysqli_fetch_assoc($req1)){
                     ?>
-                      <tr>
-                          <td><?=$row['code']?></td>
-                          <td><?=$row['titre_sous']?></td>
-                          <td><?=$row['date_debut']?></td>
+                    
+                 
+                    <tr >
+                          <td onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['code']?></td>
+                          <td onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['titre_sous']?></td>
+                          <td onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['date_debut']?></td>
                         <td <?php if (strtotime($row['date_fin']) - time() <= 600) echo 'style="color: red;"'; ?>>
                             <input type="datetime-local" id="date-fin-<?=$row['id_sous']?>" value="<?=$row['date_fin']?>" onchange="modifierDateFin(<?=$row['id_sous']?>, this.value)" style="border: none;" >
                         </td>
                           <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
                           <td><a href="cloturer.php?id_sous=<?=$row['id_sous']?>" id="cloturer">Clôturer</a></td>
                           <td><a href="archiver.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
-                      </tr>
+                      
+                        </tr>
+                    </a>
                     <?php
                   }
                 while($row=mysqli_fetch_assoc($req2)){
                   ?>
-                    <tr>
+                  
+                 
+                   <tr>
+                   
                         <td><?=$row['code']?></td>
                         <td><?=$row['titre_sous']?></td>
                         <td><?=$row['date_debut']?></td>
                         <td><?=$row['date_fin']?></td>
                         <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
-                    </tr>
+                   
+                      </tr>
+                 
                   <?php
                 }
             }
@@ -171,7 +180,11 @@ include "../nav_bar.php";
 </body>
 </html>
 
-
+<script>
+        function redirectToDetails(id_matiere) {
+            window.location.href = "reponses_etud.php?id_sous=" + id_matiere;
+        }
+    </script>
 
 <!-- Script sweetalert2 -->
 

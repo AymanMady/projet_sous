@@ -48,7 +48,11 @@ $matiere_qry = mysqli_query($conn, $matiere);
                 $code =  test_input($_POST['code']);
 
 
+<<<<<<< HEAD
+                    // Vérification si l'étudiant est déjà inscrit pour cette matière dans ce semestre 
+=======
                     // Vérification si l'étudiant est déjà inscrit à cette matière dans ce semestre 
+>>>>>>> c38c1b86e6b9ff16f56716d44cd9017840505ba6
                     $verification = "SELECT * FROM inscription WHERE id_etud = '$matricule' AND id_semestre = '$semestre' AND id_matiere = '$code'";
                     $verification_qry = mysqli_query($conn, $verification);
                 
@@ -74,7 +78,11 @@ $matiere_qry = mysqli_query($conn, $matiere);
                             }
                         }
                     }
+<<<<<<< HEAD
+                        include "../nav_bar.php";
+=======
                 include "../nav_bar.php";
+>>>>>>> c38c1b86e6b9ff16f56716d44cd9017840505ba6
 
     ?>
 
@@ -106,6 +114,11 @@ $matiere_qry = mysqli_query($conn, $matiere);
 
         </p>
     <form action="" method="POST">
+<<<<<<< HEAD
+       <div class="col-md-5 error-message"><?php if(isset($errors['matricule'])) echo "<div class=\"error-message\">$error</div>"; ?></div>
+
+=======
+>>>>>>> c38c1b86e6b9ff16f56716d44cd9017840505ba6
             <div class="form-group">
                 <label class="col-md-1">Matricule</label>
                 <div class="col-md-6">
@@ -117,6 +130,10 @@ $matiere_qry = mysqli_query($conn, $matiere);
                     </select>        
                 </div>
             </div>
+<<<<<<< HEAD
+            <div class="col-md-5 error-message"><?php if(isset($errors['semestre'])) echo $errors['semestre']; ?></div>
+=======
+>>>>>>> c38c1b86e6b9ff16f56716d44cd9017840505ba6
             <div class="form-group">
                 <label class="col-md-1" >Semester</label>
                 <div class="col-md-6">
@@ -128,6 +145,10 @@ $matiere_qry = mysqli_query($conn, $matiere);
                     </select>             
                 </div>
             </div>
+<<<<<<< HEAD
+            <div class="col-md-5 error-message"><?php if(isset($errors['code'])) echo $errors['code']; ?></div>
+=======
+>>>>>>> c38c1b86e6b9ff16f56716d44cd9017840505ba6
             <div class="form-group">
                 <label class="col-md-1" >Code</label>
                 <div class="col-md-6" >

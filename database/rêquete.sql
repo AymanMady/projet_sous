@@ -203,7 +203,6 @@ FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
 CREATE TABLE reponses(
   id_rep int(10) AUTO_INCREMENT PRIMARY key ,
   description_rep varchar(200) ,
-  data_reponse longblob NOT NULL ,
   date datetime DEFAULT NOW(),
   note float(10) DEFAULT null,
   id_sous INT(10) not NULL,
@@ -763,8 +762,24 @@ BEGIN
 END $$
 DELIMITER ;
 
+DROP TABLE IF EXISTS `fichiers_soumission`;
+CREATE TABLE IF NOT EXISTS `fichiers_soumission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_sous` int(11) NOT NULL,
+  `nom_fichier` varchar(255) NOT NULL,
+  `chemin_fichier` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+   FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
+);
 
-
+CREATE TABLE IF NOT EXISTS `fichiers_reponses` (
+  `id_fich_rep` int(11) NOT NULL AUTO_INCREMENT,
+  id_rep int(10) NOT NULL,
+  `nom_fichiere` varchar(255) NOT NULL,
+  `chemin_fichiere` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_fich_rep`),
+    FOREIGN KEY (id_rep) REFERENCES reponses(id_rep)
+);
 
 
 

@@ -72,21 +72,51 @@ function test_input($data){
 }
 if(isset($_POST['button'])){
         $descri=test_input($_POST['description_sous']);
-        $file= $_POST['file'];
-
-    if( !empty($descri) or !empty($file) ){
-        $sql="INSERT INTO `reponses`(`description_rep`,`data_reponse`, `id_sous`, `id_etud`) VALUES('$descri','$file','$id_sous',(select id_etud from etudiant where email = '$email')) ";
+        $files = $_FILES['file'];
+    if( !empty($descri) or !empty($files) ){
+        $sql="INSERT INTO `reponses`(`description_rep`, `id_sous`, `id_etud`) VALUES('$descri','$id_sous',(select id_etud from etudiant where email = '$email')) ";
 
         $req = mysqli_query($conn,$sql);
-        if($req){
-            header("location: etudiant.php");
-        }else {
-            $message = "Etudiant non ajouté";
-        }
+        // if($req){
+        //     header("location: etudiant.php");
+        // }else {
+        //     $message = "Etudiant non ajouté";
+        // }
 
-    }else {
-       $message = "Veuillez remplir tous les champs !";
     }
+
+    foreach ($files['tmp_name'] as $key => $tmp_name) {
+        $file_name = $files['name'][$key];
+        $file_tmp = $files['tmp_name'][$key];
+        $file_size = $files['size'][$key];
+        $file_error = $files['error'][$key];
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+        if ($file_error === 0) {
+            $new_file_name = uniqid('', true) . '.' . $file_ext;
+
+			$sql3 = "SELECT matricule FROM etudiant WHERE etudiant.email = '$email'";
+			$code_matiere_result = mysqli_query($conn, $sql3);
+			$row = mysqli_fetch_assoc($code_matiere_result);
+			$code_matire = $row['matricule'];
+            $matricule_directory = 'C:\wamp64\www\projet_sous-main\Files\\' . $code_matire;
+
+            // Créer le dossier s'il n'exist pas
+            if (!is_dir($matricule_directory)) {
+                mkdir($matricule_directory, 0777, true);
+            }
+
+            // Chemin complet 
+            $destination = $matricule_directory . '\\' . $new_file_name;
+            move_uploaded_file($file_tmp, $destination);
+
+            // Insérer les info dans la base de donnéez
+            $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ((SELECT MAX(reponses.id_rep) FROM reponses), '$file_name', '$destination')";
+            mysqli_query($conn, $sql2);
+        }
+    }
+
+
 }
 include "../nav_bar.php";
 
@@ -99,7 +129,7 @@ include "../nav_bar.php";
             ?>
 
         </p>
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label class="col-md-1">Description </label>
             <div class="col-md-6">
@@ -107,25 +137,18 @@ include "../nav_bar.php";
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-1">Sélectionnez un fichier : </label>
-            <div class="col-md-6">
-                <input type="file" id="fichier" name="file" class = "form-control">
-            </div>
-        </div>
-        <div  id="newElementId">
-        </div>
-        <br>  <br> <br>
-        <div class="col-md-12">
-        <button type="button" onclick="createNewElement();">
-                Ajouter un fichier
-        </button>
-        </div>
-        <br>  <br> <br>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" name="button" value=Enregistrer class="btn-primary"  />
-            </div>
-        </div>
+                    <label class="col-md-1">Sélectionnez un fichier : </label>
+                    <div class="col-md-6">
+                        <input type="file" id="fichier" name="file[]" class="form-control" multiple>
+                    </div>
+                </div>
+                <div id="newElementId"></div>
+                <br><br><br>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" name="button" value="Enregistrer" class="btn-primary" />
+                    </div>
+                </div>
 </form>
 
 <?php
@@ -139,20 +162,49 @@ include "../nav_bar.php";
     }
     if(isset($_POST['button'])){
             $descri=test_input($_POST['description_sous']);
-            $file= $_POST['file'];
-    
-        if( !empty($descri) or !empty($file) ){
+            $files = $_FILES['file'];
+        if( !empty($descri) ){
             $sql="UPDATE reponses set description_rep = '$descri' ,  `date` = NOW() where id_sous = '$id_sous' and id_etud=(select id_etud from etudiant where email = '$email') ";
     
             $req = mysqli_query($conn,$sql);
-            if($req){
-                header("location: index_etudiant.php");
-            }else {
-                $message = "Reponse non ajouté";
-            }
+            // if($req){
+            //     header("location: index_etudiant.php");
+            // }else {
+            //     $message = "Reponse non ajouté";
+            // }
     
-        }else {
-           $message = "Veuillez remplir tous les champs !";
+        }
+
+        
+        foreach ($files['tmp_name'] as $key => $tmp_name) {
+            $file_name = $files['name'][$key];
+            $file_tmp = $files['tmp_name'][$key];
+            $file_size = $files['size'][$key];
+            $file_error = $files['error'][$key];
+            $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    
+            if ($file_error === 0) {
+                $new_file_name = uniqid('', true) . '.' . $file_ext;
+    
+                $sql3 = "SELECT matricule FROM etudiant WHERE `etudiant`.`email` = '$email'";
+                $code_matiere_result = mysqli_query($conn, $sql3);
+                $row = mysqli_fetch_assoc($code_matiere_result);
+                $code_matire = $row['matricule'];
+                $matricule_directory = 'C:\wamp64\www\projet_sous-main\Files\\' . $code_matire;
+    
+                // Créer le dossier s'il n'exist pas
+                if (!is_dir($matricule_directory)) {
+                    mkdir($matricule_directory, 0777, true);
+                }
+    
+                // Chemin complet 
+                $destination = $matricule_directory . '\\' . $new_file_name;
+                move_uploaded_file($file_tmp, $destination);
+    
+                // Insérer les info dans la base de donnéez
+                $sql2 = "UPDATE fichiers_reponses set nom_fichiere`='$file_name',chemin_fichiere='$destination'  where `id_rep`=(SELECT reponses.id_rep FROM reponses NATURAL JOIN etudiant WHERE etudiant.email='$email') ";
+                mysqli_query($conn, $sql2);
+            }
         }
     }
     include "../nav_bar.php";
@@ -168,7 +220,7 @@ include "../nav_bar.php";
             }
             ?>
         </p>
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label class="col-md-1">Description </label>
             <div class="col-md-6">
@@ -176,26 +228,18 @@ include "../nav_bar.php";
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-1">Sélectionnez un fichier : </label>
-            <div class="col-md-6">
-                <input type="file" id="fichier" name="file" class = "form-control">
-            </div>
-        </div>
-        <div  id="newElementId">
-        </div>
-        <br>  <br> <br>
-        <div class="col-md-12">
-        <button type="button" onclick="createNewElement();">
-                Ajouter un fichier
-        </button>
-        </div>
-        <br>  <br> <br>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" name="button" value=Enregistrer class="btn-primary"  />
-
-            </div>
-        </div>
+                    <label class="col-md-1">Sélectionnez un fichier : </label>
+                    <div class="col-md-6">
+                        <input type="file" id="fichier" name="file[]" class="form-control" multiple>
+                    </div>
+                </div>
+                <div id="newElementId"></div>
+                <br><br><br>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" name="button" value="Enregistrer" class="btn-primary" />
+                    </div>
+                </div>
 </form>
 <?php
 }

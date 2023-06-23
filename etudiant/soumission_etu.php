@@ -49,13 +49,32 @@
                 <?php echo "<strong>Description : </strong>". $row['description_sous'];  ?><br><br>
                 <?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?><br><br>
                 <?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?><br><br>
-                </h4>
-            </fieldset>
-            <br><br>
-        </div>
-        <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;" > 
-            <strong style="letter-spacing: 0.5px; font-size: 15px;width: 100%; height: 100%;text-align: center;"  >Le(s) Fichier(s)</strong><br><br>
-        </div>
+
+           
+        <br>
+        <?php
+     // ID du fichier que vous souhaitez récupérer
+     $fileId = $row['id_sous'];
+$sql = "SELECT chemin_fichier FROM fichiers_soumission WHERE id_sous = $fileId";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $filePath = $row['chemin_fichier'];
+
+        // Faites quelque chose avec chaque fichier, par exemple les afficher ou les traiter
+        echo '<strong><a href="' . $filePath . '" target="_blank">' . $filePath . '</a></strong><br><br>';
+    }
+} else {
+    echo "Aucun fichier trouvé pour cette soumission";
+}
+
+?>
+     </h4>
+     </fieldset>
+     <br><br>
+ </div>
+
     </div>
     <p>
         <a href="reponse_etudiant.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Rendre le travail</a>

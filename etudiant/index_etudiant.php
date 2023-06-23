@@ -45,7 +45,7 @@ include "../nav_bar.php";
                 </tr>
                 <?php
                 include_once "../connexion.php";
-                $req_ens_mail =  "SELECT * FROM inscription, matiere, etudiant WHERE inscription.id_etudi=etudiant.id_etud AND inscription.id_matieres=matiere.id_matiere AND email='$email'";
+                $req_ens_mail =  "SELECT * FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email='$email'";
                 $req = mysqli_query($conn, $req_ens_mail);
                 if (mysqli_num_rows($req) == 0) {
                     echo "Il n'y a pas encore de matières ajoutées !";

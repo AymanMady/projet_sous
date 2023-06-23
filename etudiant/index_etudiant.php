@@ -18,6 +18,7 @@ include "../nav_bar.php";
         /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */
         tr:hover {
             cursor: pointer;
+            background-color: aliceblue;
         }
     </style>
 </head>

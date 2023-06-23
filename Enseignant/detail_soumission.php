@@ -55,14 +55,30 @@ if($_SESSION["role"]!="ens"){
                
             </fieldset>
             <br><br>
-        </div>
-        <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;" > 
-            <strong style="letter-spacing: 0.5px; font-size: 15px;width: 100%; height: 100%;text-align: center;"  >Le(s) Fichier(s)</strong><br><br>
-        </div>
-    </div>
-    <?php
+            <?php
     }
     ?>
+        </div>
+        <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;position:relative;" > 
+            <strong style="position:absolute;top: 2;left: 0;"  >Le(s) Fichier(s)</strong><br><br>
+            <div style="position:absolute;top: 6;left: 2;">
+            <?php
+                $sql2 = "select * from fichiers_soumission where id_sous='$id_sous' ";
+                $req2 = mysqli_query($conn,$sql2);
+                if(mysqli_num_rows($req2) == 0){
+                    echo "Il n'y a pas des fichier ajouter !" ;
+                }else {
+                    while($row2=mysqli_fetch_assoc($req2)){
+                        ?>
+                        <a href="<?=$row2['chemin_fichier']?>"><?=$row2['nom_fichier']?></a><br><br>
+                        <?php
+                    }
+                }
+            ?>
+            </div>
+        </div>
+    </div>
+
 
 
 

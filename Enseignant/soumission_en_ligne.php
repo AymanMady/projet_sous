@@ -31,7 +31,13 @@ use function PHPSTORM_META\type;
 
 </head>
 <body>
- 
+    <style>
+        /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */
+        .click:hover {
+            cursor: pointer;
+            background-color: aliceblue;
+        }
+    </style>
 <?php 
 include "../nav_bar.php";
 ?>
@@ -142,9 +148,9 @@ include "../nav_bar.php";
                     
                  
                     <tr >
-                          <td onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['code']?></td>
-                          <td onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['titre_sous']?></td>
-                          <td onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['date_debut']?></td>
+                          <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['code']?></td>
+                          <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['titre_sous']?></td>
+                          <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['date_debut']?></td>
                         <td <?php if (strtotime($row['date_fin']) - time() <= 600) echo 'style="color: red;"'; ?>>
                             <input type="datetime-local" id="date-fin-<?=$row['id_sous']?>" value="<?=$row['date_fin']?>" onchange="modifierDateFin(<?=$row['id_sous']?>, this.value)" style="border: none;" >
                         </td>

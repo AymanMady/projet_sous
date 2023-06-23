@@ -16,6 +16,7 @@ CREATE TABLE `groupe` (
 );
 
 
+
 CREATE TABLE `role` (
 `id_role` int(10) PRIMARY KEY AUTO_INCREMENT,
 `profile` varchar(50) DEFAULT NULL
@@ -77,6 +78,14 @@ FOREIGN KEY (id_role) REFERENCES role(id_role)
 
 );
 
+
+CREATE TABLE type_soumission(
+  id_type_sous INT(10) AUTO_INCREMENT PRIMARY KEY,
+  `libelle` varchar(50) DEFAULT NULL
+);
+
+
+
 CREATE TABLE `soumission` (
 `id_sous` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `titre_sous` varchar(50),
@@ -87,10 +96,21 @@ CREATE TABLE `soumission` (
 `valide` tinyint(1) DEFAULT NULL,
 `status` INT(5) DEFAULT 0,
 `id_matiere` int(10) DEFAULT NULL,
+`id_type_sous` INT(10) DEFAULT NULL,
 FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
-  FOREIGN KEY (id_ens) REFERENCES enseignant(id_ens)
+  FOREIGN KEY (id_ens) REFERENCES enseignant(id_ens),
+  FOREIGN KEY (id_type_sous) REFERENCES type_soumission(id_type_sous)
 );
 
+
+DROP TABLE IF EXISTS `fichiers_soumission`;
+CREATE TABLE IF NOT EXISTS `fichiers_soumission` (
+  `id_fichier_sous` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nom_fichier` varchar(255) NOT NULL,
+  `chemin_fichier` varchar(255) NOT NULL,
+  `id_sous` int(10) DEFAULT NULL,
+ FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
+);
 
 CREATE TABLE `devoir` (
 `id_devoir` int(10) PRIMARY KEY AUTO_INCREMENT,
@@ -212,6 +232,15 @@ CREATE TABLE reponses(
   FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud)
 );
 
+CREATE TABLE IF NOT EXISTS `fichiers_reponses` (
+  `id_fich_rep` int(11) NOT NULL AUTO_INCREMENT,
+  id_rep int(10) NOT NULL,
+  `nom_fichiere` varchar(255) NOT NULL,
+  `chemin_fichiere` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_fich_rep`),
+    FOREIGN KEY (id_rep) REFERENCES reponses(id_rep)
+);
+
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
@@ -237,16 +266,24 @@ INSERT INTO `role` (`id_role`, `profile`) VALUES
 (2, 'enseignant'),
 (3, 'etudiant');
 
+
+INSERT INTO `type_soumission` (`id_type_sous`, `libelle`) VALUES 
+(1, 'Examen'), 
+(2, 'Devoir'), 
+(3, 'TP Notée');
+
+
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
 
-INSERT INTO `utilisateur` (`id_user`, `login`, `pwd`, `active`, `code`, `id_role`) VALUES
-(1, 'admin@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 1),
-(10, '22014@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 2),
-(11, '22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3),
-(12, 'cheikh.dhib@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 0, '0', 2),
-(14, 'sidi.med@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '', 2);
+INSERT INTO `utilisateur` (`login`, `pwd`, `active`, `code`, `id_role`) VALUES
+('admin@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 1),
+('22014@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 2),
+('22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3),
+('cheikh.dhib@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 0, '0', 2),
+('sidi.med@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '', 2),
+('moussa.demba@supnum.mr', '25f9e794323b453885f5181f1b624d0b', '1', NULL, '2');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -475,55 +512,19 @@ INSERT INTO `enseignant`(`nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`, `
 
 
 
-INSERT INTO `soumission` (`id_sous`, `titre_sous`, `description_sous`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`) VALUES
-(1, 'Titre', 'Mon sou', NULL, '2023-06-17 19:32:00', '2023-07-17 00:33:00', 0, 2, 2),
-(2, 'titre', 'ribo', NULL, '2023-06-17 19:34:00', '2023-06-17 01:36:00', 0, 1, 3),
-(3, 'titre', 'zero', NULL, '2023-06-17 02:32:00', '2023-07-07 13:51:48', 0, 2, 3),
-(4, 'Esai', 'zero zero', NULL, '2023-06-17 20:42:00', '2023-06-17 00:44:00', 0, 1, 4),
-(5, 'Esai', 'xor and nor', NULL, '2023-06-17 20:44:00', '2023-06-17 02:45:00', 0, 1, 3),
-(6, 'titi', 'rsgfghsfhsjshnhgdnadtsfdgfkhgjhl.,bmnvbcvx', NULL, '2023-06-17 21:15:00', '2023-06-17 03:16:00', 0, 1, 4),
-(7, 'Titre', 'ereur', NULL, '2023-06-17 21:37:00', '2023-06-17 21:40:00', 0, 1, 3),
-(8, 'Bechir', 'Reur', NULL, '2023-06-17 21:40:00', '2023-06-17 21:44:00', 0, 1, 2),
-(9, 'MEDsdfgfs', 'reofsdgfsfdg', NULL, '2023-06-17 21:42:00', '2023-06-17 21:44:00', 0, 1, 3),
-(10, 'frmn', 'My Sou', NULL, '2023-06-17 21:45:00', '2023-06-17 21:52:00', 0, 1, 3),
-(11, 'Sou', 'esai', NULL, '2023-06-17 21:50:00', '2023-06-17 21:59:00', 0, 1, 3),
-(12, 'titre', 'Deux Test', NULL, '2023-06-17 22:15:00', '2023-06-17 23:20:00', 0, 1, 2),
-(13, 'Examin', 'zera', 3, '2023-06-17 23:36:00', '2023-07-17 00:36:00', 0, 0, 3),
-(14, 'Soumission', 'zero one', 3, '2023-06-17 23:36:00', '2023-07-20 00:37:00', 0, 0, 3),
-(15, 'Titre', 'riri', NULL, '2023-06-17 23:43:00', '2023-06-17 23:56:00', 0, 1, 2),
-(16, 'Examin', 'bla bla', NULL, '2023-06-17 23:51:00', '2023-06-17 00:09:00', 0, 1, 3),
-(17, 'Titre bla bla', 'bla bla', NULL, '2023-06-17 23:51:00', '2023-06-17 00:02:00', 0, 1, 4),
-(18, 'Titre', 'bla', NULL, '2023-06-17 23:53:00', '2023-06-17 23:59:00', 0, 1, 4),
-(19, 'ritoAFCDS', 'bla bls', NULL, '2023-06-18 00:03:00', '2023-06-18 00:08:00', 0, 1, 3),
-(20, 'frmn', 'reto', 3, '2023-06-18 00:05:00', '2023-06-18 00:12:00', 0, 1, 3),
-(21, 'frmn', 'sero', NULL, '2023-06-18 00:12:00', '2023-06-18 00:19:00', 0, 1, 3),
-(22, 'Titre', '235467hgethty', NULL, '2023-06-18 00:17:00', '2023-07-29 00:29:00', 0, 0, 2),
-(23, 'frmn', 'frei', NULL, '2023-06-18 00:20:00', '2023-06-18 00:34:00', 0, 1, 3),
-(24, 'titre', 'wreyu', 3, '2023-06-18 00:21:00', '2023-06-18 00:37:00', 0, 1, 3),
-(25, 'ritoAFCDS', 'rteiikhj', NULL, '2023-06-16 00:24:00', '2023-06-18 00:42:00', 0, 1, 3),
-(26, 'Soumisssion1', 'recherche', NULL, '2023-06-18 13:33:00', '2023-08-18 13:48:00', 0, 0, 4),
-(27, 'Soumisssion', 'Recharch', 3, '2023-06-18 13:37:00', '2023-08-19 13:55:00', 0, 0, 3),
-(28, 'Soumisssion', '12gdfgdfhdf', 3, '2023-06-18 13:38:00', '2023-06-18 13:59:00', 0, 1, 4),
-(29, 'Soumisssion', 'reboter', NULL, '2023-06-18 13:39:00', '2023-06-18 13:58:00', 0, 1, 4),
-(30, 'titre sou', 'reboti', NULL, '2023-06-18 13:42:00', '2023-06-18 13:59:00', 0, 1, 3),
-(31, 'Examen SGBD1', 'redfgdbs', 3, '2023-06-18 13:55:00', '2023-10-18 13:59:00', 0, 0, 4),
-(32, 'Soumisssion', 'ereur', NULL, '2023-06-18 13:58:00', '2023-06-18 14:59:00', 0, 1, 3),
-(33, 'Soumisssion', 'rito', NULL, '2023-06-18 14:00:00', '2023-06-18 14:15:00', 0, 1, 4),
-(34, 'TITRe', 'Ereur', NULL, '2023-06-18 14:01:00', '2023-06-18 14:23:00', 0, 1, 3),
-(35, 'Soumisssion', 'ereur', NULL, '2023-06-18 14:15:00', '2023-06-18 14:36:00', 0, 1, 2),
-(36, 'drrghdhg', 'devit', NULL, '2023-06-18 14:16:00', '2023-06-18 14:50:00', 0, 1, 3),
-(37, 'Soumisssion', 'Siouvf', NULL, '2023-06-18 14:25:00', '2023-06-18 15:20:00', 0, 1, 4),
-(38, 'TITRe', '12ngdhthtruy', NULL, '2023-06-18 14:28:00', '2023-06-18 17:29:00', 0, 1, 2),
-(39, '', '23dfgshdsrhnfdg', 3, '2023-06-18 14:30:00', '2023-06-18 18:35:00', 0, 1, 4),
-(40, 'Soumisssion en ligne', 'Zero Zero', NULL, '2023-06-18 14:45:00', '2023-08-15 10:08:00', 0, 0, 2),
-(41, 'Soumisssion en ligne 25rojo', 'Siu  cvbcvxb', 3, '2023-06-18 14:47:00', '2023-07-19 21:59:00', 0, 0, 3),
-(42, 'titre soumissio', 'reso', 3, '2023-06-18 23:17:00', '2023-07-11 23:23:00', 0, 0, 4),
-(43, 'Titre S', 'Zero', 3, '2023-06-18 23:17:00', '2023-07-27 23:24:00', 0, 0, 3),
-(44, 'frmn', 'reso', NULL, '2023-06-19 00:16:00', '2023-06-19 00:22:00', 0, 1, 4),
-(45, 'Derniere soum', 'ereursdfv', 3, '2023-06-19 11:01:00', '2023-06-27 21:42:00', 0, 0, 3),
-(46, 'Titre', 'rizqi', NULL, '2023-06-19 12:15:00', '2023-06-28 12:16:00', 0, 0, 3),
-(47, 'ritoAFCDS', 'eruer', 3, '2023-06-19 12:15:00', '2023-06-30 14:22:00', 0, 0, 4),
-(48, 'W7d jdid', 'Refdrgvdfgv', 4, '2023-06-19 18:31:00', '2023-07-21 23:32:00', 0, 0, 2);
+INSERT INTO `soumission` (`titre_sous`, `description_sous`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`, `id_type_sous`) VALUES
+('Examin', 'bla bla', NULL, '2023-06-17 23:51:00', '2023-06-17 00:09:00', 0, 1, 3, 1),
+('Soumisssion1', 'recherche', NULL, '2023-06-18 13:33:00', '2023-08-18 13:48:00', 0, 0, 4, 2),
+('Examen SGBD1', 'redfgdbs', 3, '2023-06-18 13:55:00', '2023-10-18 13:59:00', 0, 0, 4, 1),
+('Soumisssion', 'ereur', NULL, '2023-06-18 13:58:00', '2023-06-18 14:59:00', 0, 1, 3, 2),
+('Soumisssion en ligne', 'Zero Zero', NULL, '2023-06-18 14:45:00', '2023-08-15 10:08:00', 0, 0, 2, 2),
+('Soumisssion en ligne 25rojo', 'Siu  cvbcvxb', 3, '2023-06-18 14:47:00', '2023-07-19 21:59:00', 0, 0, 3, 3),
+('titre soumissio', 'reso', 3, '2023-06-18 23:17:00', '2023-07-11 23:23:00', 0, 0, 4, 2),
+('Derniere soum', 'ereursdfv', 3, '2023-06-19 11:01:00', '2023-06-27 21:42:00', 0, 0, 3, 1),
+('Exame ratrapage', 'devoir', 2, '2023-06-22 12:14:00', '2023-06-24 12:20:00', 0, 0, 2, 1),
+('Devoir', 'Description', 2, '2023-06-22 13:59:00', '2023-07-06 13:03:00', 0, 0, 2, 2),
+('TP Notee', 'TP note', 2, '2023-06-22 13:06:00', '2023-07-07 13:12:00', 0, 0, 1, 3);
+
 
 
 
@@ -533,6 +534,10 @@ INSERT INTO `soumission` (`id_sous`, `titre_sous`, `description_sous`, `id_ens`,
 
 -- ----------------------------------------------------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 
 
 INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`, `id_role`, `id_groupe`, `id_sous`) VALUES
@@ -748,7 +753,7 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 -- -----------------------------------------------------------------------------------------------------------------------------------
 
 DELIMITER $$
-CREATE PROCEDURE `EnseignantMatiereParGroupe`(id_matiere integer)
+CREATE PROCEDURE `EnseignantMatiereParGroupe`(id_mat integer)
 BEGIN 
   SELECT DISTINCT 
     nom, prenom, 
@@ -757,29 +762,11 @@ BEGIN
     NATURAL JOIN enseigner
     NATURAL JOIN enseignant
     NATURAL JOIN type_matiere
-    WHERE id_matiere = 2 ORDER BY nom, prenom ASC;
+    WHERE id_matiere = id_mat ORDER BY nom, prenom ASC;
         
         
 END $$
 DELIMITER ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

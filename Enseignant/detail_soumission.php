@@ -35,7 +35,7 @@ if($_SESSION["role"]!="ens"){
     include_once "../connexion.php";
     $id_sous = $_GET['id_sous'];
 
-    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_sous = $id_sous";
+    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere),enseignant WHERE id_sous = $id_sous and soumission.id_ens=enseignant.id_ens ";
     $req = mysqli_query($conn , $req_detail);
     while($row=mysqli_fetch_assoc($req)){
     ?>
@@ -50,6 +50,7 @@ if($_SESSION["role"]!="ens"){
                 <?php echo "<strong>Code de la matiere : </strong>". $row['code']; ?><br><br>
                 <?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?><br><br>
                 <?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?><br><br>
+                <?php echo "<strong>nom est prenom de l'enseignant  : </strong>" . $row['nom']." ".$row['prenom']; ?><br><br>
                 </h4>
                
             </fieldset>

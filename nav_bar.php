@@ -54,7 +54,7 @@
         $email = $_SESSION['email'];
         include("connexion.php");
         $req = mysqli_query($conn, "SELECT * FROM enseignant WHERE email = '$email'");
-            while($row = mysqli_fetch_assoc($req)){
+        $row = mysqli_fetch_assoc($req);
 
 ?>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -131,7 +131,7 @@
     <br><br>
 
 <?php
-            }
+            
      }
 
      else if($_SESSION["role"]=="admin"){

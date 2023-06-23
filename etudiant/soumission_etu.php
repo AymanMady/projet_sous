@@ -25,7 +25,7 @@
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
                 <li><a href="acceuil.php">Acceuil</a></li>
-                <li>Détails sur la soumission  <?php //echo  ?> </li>
+                <li>Détails sur la soumission   </li>
             </ol>
         </div>
     </div>
@@ -34,22 +34,22 @@
     include_once "../connexion.php";
     $id_matiere = $_GET['id_matiere'];
 
-    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere";
+    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and status=0 ";
     $req = mysqli_query($conn , $req_detail);
+    if (mysqli_num_rows($req) > 0) {
+
     while($row=mysqli_fetch_assoc($req)){
     ?>
     <div class="row justify-content-center">
         <div class="col-md-10">
             <fieldset>
                 <br><br>
-
                 <h4>
                 <?php echo "<strong>Titre : </strong>". $row['titre_sous']; ?><br><br>
                 <?php echo "<strong>Description : </strong>". $row['description_sous'];  ?><br><br>
                 <?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?><br><br>
                 <?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?><br><br>
                 </h4>
-               
             </fieldset>
             <br><br>
         </div>
@@ -58,16 +58,19 @@
         </div>
     </div>
     <p>
-        <a href="reponse_etudiant.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Rendre le devoir</a>
+        <a href="reponse_etudiant.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Rendre le travail</a>
     </p>
     <?php
     }
+    }else{
     ?>
+    <div class="col-xs-12 center">
+        <h1 class="red-text">Il n'y a pas de soumission en ligne dans cette matière</h1>
+    </div>
 
-
-
-
-
+    <?php
+    }
+    ?>
 </div>
 
 

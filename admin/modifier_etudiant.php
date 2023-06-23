@@ -94,7 +94,6 @@ if($_SESSION["role"]!="admin"){
                 <input type="text" name="matricule" class = "form-control" value="<?=$row['matricule']?>">
             </div>
         </div>
-
         <div class="form-group">
             <label class="col-md-1" >Nom</label>
             <div class="col-md-6">

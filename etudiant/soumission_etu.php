@@ -59,8 +59,8 @@ $sql = "SELECT chemin_fichier FROM fichiers_soumission WHERE id_sous = $fileId";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $filePath = $row['chemin_fichier'];
+    while ($row1 = mysqli_fetch_assoc($result)) {
+        $filePath = $row1['chemin_fichier'];
 
         // Faites quelque chose avec chaque fichier, par exemple les afficher ou les traiter
         echo '<strong><a href="' . $filePath . '" target="_blank">' . $filePath . '</a></strong><br><br>';

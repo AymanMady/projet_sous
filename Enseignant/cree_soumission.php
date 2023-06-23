@@ -31,7 +31,7 @@ if (isset($_POST['button'])) {
     $descri = test_input($_POST['description_sous']);
 
     $sql1 = "INSERT INTO `soumission`(`titre_sous`, `description_sous`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`) VALUES ('$titre', '$descri', (SELECT id_ens FROM enseignant WHERE email = '$email'), '$date_debut', '$date_fin', 0, 0, $id_matiere)";
-    mysqli_query($conn, $sql1);
+    $req1 = mysqli_query($conn, $sql1);
 
     $id_sous = mysqli_insert_id($conn);
     foreach ($files['tmp_name'] as $key => $tmp_name) {
@@ -61,7 +61,11 @@ if (isset($_POST['button'])) {
 
             // Insérer les info dans la base de donnéez
             $sql2 = "INSERT INTO `fichiers_soumission` (`id_sous`, `nom_fichier`, `chemin_fichier`) VALUES ($id_sous, '$file_name', '$destination')";
-            mysqli_query($conn, $sql2);
+            $req2 = mysqli_query($conn, $sql2);
+            if($req1 and $req2){
+                header("location:soumission_en_ligne.php");
+                $_SESSION['ajout_reussi'] = true;
+            }
         }
     }
 }

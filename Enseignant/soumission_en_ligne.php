@@ -186,6 +186,22 @@ include "../nav_bar.php";
 </body>
 </html>
 
+<?php
+if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
+  echo "<script>
+  Swal.fire({
+      title: 'Ajout réussi !',
+      text: 'La soumission a été ajouté avec succès.',
+      icon: 'success',
+      confirmButtonColor: '#3099d6',
+      confirmButtonText: 'OK'
+  });
+  </script>";
+
+  // Supprimer l'indicateur de succès de la session
+  unset($_SESSION['ajout_reussi']);
+}
+?>
 <script>
         function redirectToDetails(id_matiere) {
             window.location.href = "reponses_etud.php?id_sous=" + id_matiere;
@@ -308,7 +324,5 @@ function modifierDateFin(id_sous, nouvelle_date_fin) {
     console.error('Une erreur s\'est produite lors de la requête AJAX :', error);
   });
 }
-
-
 
 </script>

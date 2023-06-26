@@ -212,28 +212,11 @@
                      
 
                         <li id="potfolio" class="dropdown">   
-                                <a href="index_etudiant.php" >acceil</a>
+                                <a href="index_etudiant.php" >Acceil</a>
                         </li>
                         <li id="potfolio" class="dropdown">   
-                                <a href="soumission_etu.php" >soumission</a>
+                                <a href="notes.php" >Notes</a>
                         </li>
-                            <!-- <ul class="dropdown-menu">
-                                <li>
-                                <a href="enseignant.php">Gestion des enseignants</a>
-                                </li>
-                                <li>
-                                    <a href="etudiant.php">Gestion des etudiants</a>
-                                </li >  
-                                <li >
-                                    <a href="utilisateurs.php">Gestion des utilisateurs</a>
-                                </li>
-                                <li >
-                                    <a href="groupe.php">Gestion des groupe</a>
-                                </li>
-                                <li >
-                                    <a href="matiere.php">Gestion des matiere</a>
-                                </li>
-                            </ul>  -->
                         <li  class="dropdown">
                                <a href="supprimer_session.php">Se déconnecte</a></div>
                         </li>

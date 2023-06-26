@@ -70,7 +70,7 @@ $alert = "";
                     $droit=mysqli_fetch_assoc($query); 
                 }
                 else{
-                    $sql_etud=mysqli_query($conn,"select * from etudiant where login='$email'");
+                    $sql_etud=mysqli_query($conn,"select * from etudiant where email='$email'");
                     $query1="select id_role from etudiant where email='$email' limit 1";
                     $query=mysqli_query($conn,$query1);
                     $droit=mysqli_fetch_assoc($query);

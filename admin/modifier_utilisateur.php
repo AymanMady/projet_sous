@@ -5,6 +5,11 @@ if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
 
+include_once "../connexion.php";
+
+$roles = "SELECT * FROM role";
+$roles_qry = mysqli_query($conn, $roles);
+
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +32,6 @@ if($_SESSION["role"]!="admin"){
                 return $data;
             }
 
-            include_once "../connexion.php";
             $id_user = $_GET['id_user'];
             $req = mysqli_query($conn , "SELECT * FROM utilisateur WHERE id_user = $id_user");
             $row = mysqli_fetch_assoc($req);
@@ -37,12 +41,13 @@ if($_SESSION["role"]!="admin"){
                 $role =  test_input($_POST['role']);
 
                 //test_input(extract($_POST));
-            
+                echo $role;
             if( !empty($pwd)  && !empty($login) && !empty($role)){
                 $req = mysqli_query($conn, "UPDATE utilisateur SET pwd = '$pwd', login = '$login', id_role = '$role'  WHERE id_user = $id_user");
 
                 if($req){
                     header("location: utilisateurs.php");
+                    $_SESSION['mod_reussi'] = true;
                 }else {
                     $message = "utilisateur non modifié";
                 }
@@ -98,7 +103,14 @@ if($_SESSION["role"]!="admin"){
             <div class="form-group">
                 <label class="col-md-1" >Role</label>
                 <div class="col-md-6" >
-                <input type="text" name="role" class = "form-control" value="<?=$row['id_role']?>">
+                <!-- <input type="text" name="role" class = "form-control" value="<?=$row['id_role']?>"> -->
+                
+                <select  name="role" id="modi1" class = "form-control">
+                    <option selected disabled> Rôles</option>
+                    <?php while ($row_role = mysqli_fetch_assoc($roles_qry)) : ?>
+                        <option value="<?= $row_role['id_role']; ?>"> <?= $row_role['profile']; ?> </option>
+                    <?php endwhile; ?>
+                </select>
                 </div>
             </div>
             <div class="form-group">

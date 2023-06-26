@@ -22,6 +22,7 @@ if($_SESSION["role"]!="admin"){
             if($req){
                 //header("Location: groupe.php");
                 echo "<script>window.location.href='groupe.php';</script>";
+                $_SESSION['modifier_reussi'] = true;
 
             }else {
                 $message = "groupe non modifié";

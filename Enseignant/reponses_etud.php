@@ -100,9 +100,9 @@
 <div style="overflow-x:auto;"  >
   <table class="table table-striped table-bordered">
           <tr>
-              <th>matricule</th>
-            <th>description de la reponse</th>
-              <th>date</th>
+              <th>Matricule</th>
+            <th>Description de la reponse</th>
+              <th>Date</th>
               <th>Details</th>
           </tr>
           <?php 

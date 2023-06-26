@@ -137,26 +137,19 @@ if(isset($_POST['submit'])){
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-1" >deppartement</label>
+            <label class="col-md-1" >Deppartement</label>
             <div class="col-md-3" >
             <select  id="deppartement" name="departement" class = "form-control">
-                    <option selected disabled>deppartements</option>
+                    <option selected disabled>Deppartements</option>
                 </select>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-md-1" >deppartement</label>
-            <div class="col-md-3" >
-            <select  id="deppartement" name="departement" class = "form-control">
-                    <option selected disabled>deppartements</option>
-                </select>
-            </div>
-        </div>
+        
         <div class="form-group">
         <div class="col-md-offset-1 col-md-12">
                     <div class="col-md-3">   
                     <!-- <div class="alert alert-info">  -->
-                    <strong style="letter-spacing: 0.5px; font-size: 15px;">Les enseignants affectés à cette matière </strong><br><br>
+                    <strong style="letter-spacing: 0.5px; font-size:15px;">Les enseignants affectés à cette matière </strong><br><br>
                         <h4>
                     <?php 
 

@@ -7,8 +7,14 @@ if ($_SESSION["role"] != "ens") {
 
 include_once "../connexion.php";
 
-$semestre = "SELECT * FROM matiere, enseigner, enseignant WHERE matiere.id_matiere = enseigner.id_matiere AND enseigner.id_ens = enseignant.id_ens AND email='$email'";
+$semestre = "SELECT * FROM matiere, enseigner, enseignant 
+    WHERE matiere.id_matiere = enseigner.id_matiere AND
+    enseigner.id_ens = enseignant.id_ens AND email='$email'";
 $semestre_qry = mysqli_query($conn, $semestre);
+
+$type_sous = "SELECT * FROM type_soumission";
+$type_sous_qry = mysqli_query($conn, $type_sous);
+
 
 function test_input($data)
 {
@@ -30,7 +36,9 @@ if (isset($_POST['button'])) {
     $titre = test_input($_POST['titre_sous']);
     $descri = test_input($_POST['description_sous']);
 
-    $sql1 = "INSERT INTO `soumission`(`titre_sous`, `description_sous`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`) VALUES ('$titre', '$descri', (SELECT id_ens FROM enseignant WHERE email = '$email'), '$date_debut', '$date_fin', 0, 0, $id_matiere)";
+    $sql1 = "INSERT INTO `soumission`(`titre_sous`, `description_sous`, `id_ens`, `date_debut`, `date_fin`, `valide`, `status`, `id_matiere`) VALUES 
+    ('$titre', '$descri', (SELECT id_ens FROM enseignant
+     WHERE email = '$email'), '$date_debut', '$date_fin', 0, 0, $id_matiere)";
     $req1 = mysqli_query($conn, $sql1);
 
     $id_sous = mysqli_insert_id($conn);
@@ -137,10 +145,11 @@ include "../nav_bar.php";
                 <div class="form-group">
                     <label class="col-md-1">Type soumission</label>
                     <div class="col-md-6">
-                        <select class="form-control" id="academic" value="Semesters" name="type">
-                            <option selected disabled> Types de soumissions </option>
-                            <option value="examen">Examen</option>
-                            <option value="devoir">Devoir</option>
+                        <select class="form-control" id="academic" value="Semesters" name="matiere">
+                            <option selected disabled> Type soumission </option>
+                            <?php while ($row_type_sous = mysqli_fetch_assoc($type_sous_qry)) : ?>
+                                <option value="<?= $row_type_sous['id_type_sous']; ?>"> <?= $row_type_sous['libelle']; ?> </option>
+                            <?php endwhile; ?>
                         </select>
                     </div>
                 </div>

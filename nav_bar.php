@@ -21,6 +21,7 @@
                 height: 60%;
                 margin-bottom: 10px;
                 flex-direction: column;
+                width: 200px;
             }
            
             </style>
@@ -193,6 +194,11 @@
     </nav>
 <?php
      }else{
+        include("connexion.php");
+        $email = $_SESSION['email'];
+        $req_etud = mysqli_query($conn, "SELECT * FROM etudiant WHERE email = '$email'");
+        $row_etud = mysqli_fetch_assoc($req_etud);
+
 ?>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -234,14 +240,49 @@
                                     <a href="matiere.php">Gestion des matiere</a>
                                 </li>
                             </ul>  -->
-                        <li  class="dropdown">
+                        <!-- <li  class="dropdown">
                                <a href="supprimer_session.php">Se déconnecte</a></div>
-                        </li>
+                        </li> -->
                         
+                     
+                <li  class="dropdown">
+                               
+                               <!-- <div class="container mt-12"> </div> -->
+                                 <a href="#"><img title="<?=$row_etud['nom']." ".$row_etud['prenom']?>" 
+                                 id="myButton" class="style-scope yt-img-shadow" src="../images/supnum.jpg" 
+                                 draggable="false" style="width: 32px; height: 32px; border-radius: 50%;"></a>
+ 
+                                <ul class="dropdown-menu">
+                                    <li>
+                                    <br>
+                                        <div class="logo">
+                                            <img title="<?=$row_etud['nom']." ".$row_etud['prenom']?>" 
+                                            id="myButton" class="style-scope yt-img-shadow" 
+                                            src="../images/photo_ens.jpg" draggable="false" 
+                                            style="width: 40px; height: 40px; border-radius: 50%;">
+                                            <p></p>
+                                            <a> <strong class='font-weight-bold'><?=$row_etud['nom']." ".$row_etud['prenom']?></strong></a>
+                                           
+                                            <p><?=$row_etud['email']?></p>
+                                        </div> 
+                                    </li>
+                                    <li>
+                                        <a href="#">Gérer votre compte</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"></a>
+                                    </li>
+                                    <li>
+                                        <a href="supprimer_session.php">Se déconnecte</a>
+                                    </li>
+                                </ul>
+                    </li>
+   
 
                         
                 </ul>
 
+                
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->

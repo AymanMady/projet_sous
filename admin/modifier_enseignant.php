@@ -22,6 +22,7 @@ if($_SESSION["role"]!="admin"){
             $req = mysqli_query($conn, "UPDATE enseignant SET   nom = '$nom', prenom = '$prenom', Date_naiss = '$Date_naiss', lieu_naiss = '$lieu_naiss', `email` = '$email', `num_tel` = '$numtel', `num_whatsapp` = '$numwhatsapp', diplome = '$diplome', grade = '$grade' WHERE id_ens = $id_ens");
             if($req){
                 header('location:enseignant.php');
+                $_SESSION['modifier_reussi'] = true;
             }else {
                 $message = "enseignant non modifié";
             }

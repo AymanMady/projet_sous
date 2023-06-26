@@ -98,7 +98,7 @@ if (mysqli_num_rows($matiere_result) == 0) {
                 <td><?= $row['specialite'] ?></td>               
                 <td><a href="detail_matiere.php?id_matiere=<?= $row['id_matiere'] ?>">Details</a></td>
                 <td><a href="affecter_matiere.php?id_matiere=<?= $row['id_matiere'] ?>">Affecter</a></td>
-                <td><a href="supprimer_matiere.php?id_matiere=<?= $row['id_matiere'] ?>" onclick="return confirm('Voulez-vous vraiment supprimer cette matière ?')">Supprimer</a></td>
+                <td><a href="supprimer_matiere.php?id_matiere=<?= $row['id_matiere'] ?>" id="supprimer">Supprimer</a></td>
             </tr>
             <?php
         }
@@ -180,3 +180,44 @@ if (isset($_SESSION['affecter_reussi']) && $_SESSION['affecter_reussi'] === true
 </body>
 </html>
 
+
+<script>
+var liensArchiver = document.querySelectorAll("#supprimer");
+
+// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
+liensArchiver.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "Voulez-vous vraiment supprimer cette matière ?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Supprimer"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
+        //Swal.fire({
+        //   title: "Suppression réussie !",
+        //   text: "L'inscription a été supprimée avec succès.",
+        //   icon: "success",
+        //   confirmButtonColor: "#3099d6",
+        //   confirmButtonText: "OK",
+          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
+          //timerProgressBar: true,
+         // showConfirmButton: true
+       // }).then(() => {
+          // Redirection après le délai
+          window.location.href = this.href;
+            }
+        });
+      });
+    });
+//   });
+// });
+
+   
+</script>

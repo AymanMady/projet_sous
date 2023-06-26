@@ -4,11 +4,17 @@ $email = $_SESSION['email'];
 if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
+ 
+
+include_once "../connexion.php";
+
+$roles = "SELECT * FROM role";
+$roles_qry = mysqli_query($conn, $roles);
 
 ?>
 
 <?php
-              include_once "../connexion.php";
+            
                 function test_input($data){
                 $data = htmlspecialchars($data);
                 $data = trim($data);
@@ -34,15 +40,17 @@ if($_SESSION["role"]!="admin"){
                    $login =  test_input($_POST['login']);
                    $pwd =  md5(test_input($_POST['pwd']));
                    $role =  test_input($_POST['role']);
+                   
                 //test_input(extract($_POST));
            if(  !empty($login)  && !empty($pwd)  && !empty($role) ){
 
-                $req = "INSERT INTO utilisateur (`login`,`pwd`,`active`,`id_role`)VALUES('$login','$pwd',1,'$role')";
+                $req = "INSERT INTO utilisateur (`login`,`pwd`,`active`,`id_role`)VALUES
+                                        ('$login','$pwd',1,'$role')";
 
-                //echo $req;               
                 $req = mysqli_query($conn , $req);
                 if($req){
                     header("location: utilisateurs.php");
+                    $_SESSION['ajout_user_reussi'] = true;
                 }else {
                     $message = "utilisateur non ajouté";
                 }
@@ -101,7 +109,12 @@ if($_SESSION["role"]!="admin"){
         <div class="form-group">
             <label class="col-md-1" >Role</label>
             <div class="col-md-6" >
-            <input type="text" name="role" class = "form-control">
+                <select  name="role" id="modi1" class = "form-control">
+                    <option selected disabled> Rôles</option>
+                    <?php while ($row_role = mysqli_fetch_assoc($roles_qry)) : ?>
+                        <option value="<?= $row_role['id_role']; ?>"> <?= $row_role['profile']; ?> </option>
+                    <?php endwhile; ?>
+                </select>
             </div>
         </div>
         <div class="form-group">

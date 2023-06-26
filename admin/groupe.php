@@ -18,6 +18,13 @@ include "../nav_bar.php";
     <title>Les etudiants</title>
     <link rel="stylesheet" href="../CSS/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+
+    
+    <!-- sweetalert2 links -->
+
+    <script src="../JS/sweetalert2.js"></script>
+
+
 </head>
 <body>
 </br></br></br>
@@ -91,7 +98,7 @@ include "../nav_bar.php";
                                 <td><?=$row['libelle']?></td>
                                 <td><?=$row['filiere']?></td>
                                 <td><a href="modifier_groupe.php?id_groupe=<?=$row['id_groupe']?>">Modifier</a></td>
-                                <td><a href="supprimer_groupe.php?id_groupe=<?=$row['id_groupe']?>"onclick="return confirm(`voulez-vous vraiment supprimé ce groupe ?`)"> Supprimer</a></td>
+                                <td><a href="supprimer_groupe.php?id_groupe=<?=$row['id_groupe']?>" id="supprimer"> Supprimer</a></td>
                             </tr>
                             <?php
                         }
@@ -105,5 +112,100 @@ include "../nav_bar.php";
 
 </div>
 
+<?php
+//if (isset($_GET['succes']) && $_GET['succes'] == 1) {
+
+if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Ajout réussi !',
+        text: 'Le groupe a été ajouté avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['ajout_reussi']);
+}
+
+
+if (isset($_SESSION['supp_reussi']) && $_SESSION['supp_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Suppression réussi !',
+        text: 'Le groupe a été supprimer avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['supp_reussi']);
+}
+
+
+if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Modification réussi !',
+        text: 'Le groupe a été modifier avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['modifier_reussi']);
+}
+
+?>
 </body>
 </html>
+
+
+
+
+<script>
+var liensArchiver = document.querySelectorAll("#supprimer");
+
+// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
+liensArchiver.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "voulez-vous vraiment supprimé ce groupe ?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Supprimer"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
+        //Swal.fire({
+        //   title: "Suppression réussie !",
+        //   text: "L'inscription a été supprimée avec succès.",
+        //   icon: "success",
+        //   confirmButtonColor: "#3099d6",
+        //   confirmButtonText: "OK",
+          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
+          //timerProgressBar: true,
+         // showConfirmButton: true
+       // }).then(() => {
+          // Redirection après le délai
+          window.location.href = this.href;
+            }
+        });
+      });
+    });
+//   });
+// });
+
+   
+</script>

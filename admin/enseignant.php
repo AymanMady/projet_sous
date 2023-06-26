@@ -9,6 +9,13 @@ if($_SESSION["role"]!="admin"){
 
 include "../nav_bar.php";
 ?>
+
+
+    <!-- sweetalert2 links -->
+
+    <script src="../JS/sweetalert2.js"></script>
+
+
 </br></br></br>
 <div class="container">
     <div class="row">
@@ -91,7 +98,7 @@ include "../nav_bar.php";
                                 <?=$row['num_whatsapp']?></td>
                                 <td><a href="detail_enseignant.php?id_ens=<?=$row['id_ens']?>">Détails</a></td>
                                 <td><a href="modifier_enseignant.php?id_ens=<?=$row['id_ens']?>">Modifier</a></td>
-                                <td><a href="supprimer_enseignant.php?id_ens=<?=$row['id_ens']?>"onclick="return confirm(`voulez-vous vraiment supprimé ce enseignant ?`)">Supprimer</a></td>
+                                <td><a href="supprimer_enseignant.php?id_ens=<?=$row['id_ens']?>" id="supprimer">Supprimer</a></td>
                             </tr>
                                                        
                             <?php
@@ -101,25 +108,110 @@ include "../nav_bar.php";
                         ?>
 
 
-                    <script>
-            Swal.fire({
-                    title: "<?php echo "Nom: ". $row['nom']." <br> Prenom : " . $row['prenom']."<br>"."Date de naissance: ".$row['Date_naiss']."<br> Lieux de naissance : ". $row['lieu_naiss']."<br> E-mail : ".$row['email']."<br> Diplôme : ".$row['diplome']."<br> Grade : ".$row['grade'];?> ",
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                    })
-            </script>
-
 
         </table>
     </div>
     <div class="pager">
             </div>
 
+
+<?php
+//if (isset($_GET['succes']) && $_GET['succes'] == 1) {
+
+if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Ajout réussi !',
+        text: 'L\'enseignant a été ajouté avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['ajout_reussi']);
+}
+
+
+if (isset($_SESSION['supp_reussi']) && $_SESSION['supp_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Suppression réussi !',
+        text: 'L\'enseignant a été supprimer avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['supp_reussi']);
+}
+
+
+if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Modification réussi !',
+        text: 'L\'enseignant a été modifier avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['modifier_reussi']);
+}
+
+?>
+
 </div>
 </body>
 
 </html>
+
+
+
+
+<script>
+var liensArchiver = document.querySelectorAll("#supprimer");
+
+// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
+liensArchiver.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "voulez-vous vraiment supprimé ce enseignant ?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Supprimer"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
+        //Swal.fire({
+        //   title: "Suppression réussie !",
+        //   text: "L'inscription a été supprimée avec succès.",
+        //   icon: "success",
+        //   confirmButtonColor: "#3099d6",
+        //   confirmButtonText: "OK",
+          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
+          //timerProgressBar: true,
+         // showConfirmButton: true
+       // }).then(() => {
+          // Redirection après le délai
+          window.location.href = this.href;
+            }
+        });
+      });
+    });
+//   });
+// });
+
+   
+</script>

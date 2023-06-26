@@ -36,10 +36,11 @@ if($_SESSION["role"]!="admin"){
                 $semestre = test_input($_POST['semestre']);
                 $code =  test_input($_POST['code']);
                 
-            if( !empty($matricule) && !empty($semestre)  && !empty($annee) && !empty($nom) && !empty($prenom) && !empty($Date_naiss) && !empty($lieu_naiss)  && !empty($email) ){
+            if( !empty($matricule) && !empty($semestre) && !empty($code) ){
                 $req = mysqli_query($conn, "UPDATE inscription SET  id_etud = '$matricule' , id_semestre = '$semestre'  ,id_matiere = '$code' WHERE id_insc = '$id_insc'");
                 if($req){
                     header("location: inscription.php");
+                    $_SESSION['modifier_reussi'] = true;
                 }else {
                     $message = $semestre."Inscription non modifié";
                 }

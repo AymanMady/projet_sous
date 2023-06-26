@@ -20,6 +20,5 @@ if(count($_POST)>0)
         $msg = 4;
      }
 }
-  #Redirect to list students
   
  header ("Location: matiere.php");

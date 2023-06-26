@@ -21,9 +21,7 @@ include "../nav_bar.php";
 
     <!-- sweetalert2 links -->
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
+    <script src="../JS/sweetalert2.js"></script>
 
 
 </head>
@@ -92,8 +90,8 @@ include "../nav_bar.php";
             <?php 
                     include_once "../connexion.php";
                     $req = mysqli_query($conn , "SELECT * FROM semestre
-                     INNER JOIN inscription ON inscription.id_semestre = semestre.id_semestre INNER JOIN
-                      matiere ON inscription.id_matiere = matiere.id_matiere INNER JOIN 
+                     INNER JOIN inscription ON inscription.id_semestre = semestre.id_semestre 
+                     INNER JOIN matiere ON inscription.id_matiere = matiere.id_matiere INNER JOIN 
                       etudiant ON inscription.id_etud = etudiant.id_etud;");
                     if(mysqli_num_rows($req) == 0){
                         echo "Il n'y a pas encore  des inscriptions ajouter !" ;
@@ -138,7 +136,6 @@ include "../nav_bar.php";
 <?php
 //if (isset($_GET['succes']) && $_GET['succes'] == 1) {
 
-// Dans la partie où vous affichez le contenu de la page inscription.php
 if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
     echo "<script>
     Swal.fire({
@@ -152,6 +149,38 @@ if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
 
     // Supprimer l'indicateur de succès de la session
     unset($_SESSION['ajout_reussi']);
+}
+
+
+if (isset($_SESSION['supp_reussi']) && $_SESSION['supp_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Suppression réussi !',
+        text: 'L\'inscription a été supprimer avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['supp_reussi']);
+}
+
+
+if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Modification réussi !',
+        text: 'L\'inscription a été modifier avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['modifier_reussi']);
 }
 
 ?>
@@ -170,7 +199,7 @@ liensArchiver.forEach(function(lien) {
     Swal.fire({
       title: "Voulez-vous vraiment supprimer cette inscription ?",
       text: "",
-      icon: "warning",
+      icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3099d6",
       cancelButtonColor: "#d33",
@@ -179,26 +208,24 @@ liensArchiver.forEach(function(lien) {
     }).then((result) => {
       if (result.isConfirmed) {
         // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
-        Swal.fire({
-          title: "Suppression réussie !",
-          text: "L'inscription a été supprimée avec succès.",
-          icon: "success",
-          confirmButtonColor: "#3099d6",
-          confirmButtonText: "OK",
+        //Swal.fire({
+        //   title: "Suppression réussie !",
+        //   text: "L'inscription a été supprimée avec succès.",
+        //   icon: "success",
+        //   confirmButtonColor: "#3099d6",
+        //   confirmButtonText: "OK",
           //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
           //timerProgressBar: true,
-          showConfirmButton: true
-        }).then(() => {
+         // showConfirmButton: true
+       // }).then(() => {
           // Redirection après le délai
           window.location.href = this.href;
+            }
         });
-      }
+      });
     });
-  });
-});
+//   });
+// });
 
-    
-  //});
-//});
-
+   
 </script>

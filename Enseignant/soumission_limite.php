@@ -1,5 +1,5 @@
 
-<br><br><br>
+<br>
 <?php
  session_start() ;
  $email = $_SESSION['email'];
@@ -12,13 +12,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- sweetalert2 links -->
+
+    <script src="../JS/sweetalert2.js"></script>
+
+
 </head>
 <body>
  
 <?php 
 include "../nav_bar.php";
 ?>
-</br></br></br>
+</br></br>
 <div class="container">
     <div class="row">
         <div class="col-lg-12"> 
@@ -32,37 +38,55 @@ include "../nav_bar.php";
         </div>
     </div>
     <?php 
-            $ens = "SELECT * FROM matiere ";
-            $ens_qry = mysqli_query($conn, $ens);
+           $ens = "SELECT DISTINCT matiere.* FROM matiere 
+           INNER JOIN soumission ON soumission.id_matiere = matiere.id_matiere ";
+           $matiere_filtre_qry = mysqli_query($conn, $ens);
+
+                       
+           $type_sous = "SELECT * FROM type_soumission";
+           $type_sous_qry = mysqli_query($conn, $type_sous);
+
             ?>
-    <div class="form-group">
-    <div style="overflow-x:auto;">
-    <form action="" method="post">
-    
-                    <label class="col-md-3"> . </label>
-                    <div class="col-md-3">
-                    <select  name="code" id="modi" class = "form-control">
-                        <option selected disabled> Filtre par code </option>
-                                <?php  while ($row_ens = mysqli_fetch_assoc($ens_qry)) :?>
-                                <option value="<?= $row_ens['code']; ?>"> <?= $row_ens['code'] ?> </option>  
-                            <?php endwhile;?>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                    <select  name="soul" id="modi1" class = "form-control">
-                        <option selected disabled> Filtre par type de matière</option>
-                                <option value="examen">examen</option>
-                                <option value="devoir">devoir</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" value="filtre" name="toutouu">
+
+
+<div class="row">
+        <div class="col-lg-12">
+            <div class="well">
+                <form action="" method="post">
+                    <fieldset class="fsStyle">
+                        <div class="collapse in" id="demo">
+                            <div class="search-box">
+
+                                <div class="form-group">
+                                        <label class="col-md-3" style="color:aliceblue;">. </label>
+                                        <div class="col-md-3">
+                                        <select  name="code" id="modi" class = "form-control">
+                                            <option selected disabled> Code matière </option>
+                                                    <?php  while ($row_ens = mysqli_fetch_assoc($matiere_filtre_qry)) :?>
+                                                    <option value="<?= $row_ens['code']; ?>"> <?= $row_ens['code'] ?> </option>  
+                                                <?php endwhile;?>
+                                              </select>
+
+                                        </div>
+                                        <div class="col-md-3">
+                                        <select  name="soul" id="modi1" class = "form-control">
+                                                <option selected disabled> Type soumission </option>
+                                                <?php while ($row_type_sous = mysqli_fetch_assoc($type_sous_qry)) : ?>
+                                                    <option value="<?= $row_type_sous['id_type_sous']; ?>"> <?= $row_type_sous['libelle']; ?> </option>
+                                                <?php endwhile; ?>
+                                            </select>
+                                        </div>
+                          
+                                </div>
+                                <input type="submit" value="filtre" name="filtrer" class="btn btn-info">
+
+                            </div>
                         </div>
-    </div>
-
-
-
-
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div> 
 
 <div style="overflow-x:auto;">
   <table class="table table-striped table-bordered">
@@ -76,16 +100,22 @@ include "../nav_bar.php";
           <?php 
               include_once "../connexion.php";
             //   $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE status = 1 or date_fin <= NOW() ";
-            if(isset($_POST['toutouu'])){
+            if(isset($_POST['filtrer'])){
                 if(!empty($_POST['code']) && empty($_POST['soul'])){
                 $code=$_POST['code'];
-                $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE   date_fin <= NOW() OR status = 1 AND code='$code'  ORDER BY date_fin DESC  ";
+                $req_sous =  "SELECT * FROM soumission
+                 inner join matiere using(id_matiere)  
+                 WHERE   date_fin <= NOW() OR status = 1 AND code='$code' 
+                  ORDER BY date_fin DESC  ";
                 $req = mysqli_query($conn , $req_sous);
                 }
                 elseif(empty($code) && !empty($_POST['soul'])){
                     $type=$_POST['soul'];
                     
-                    $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin <= NOW() OR status = 1 AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
+                    $req_sous =  "SELECT * FROM soumission
+                     inner join matiere using(id_matiere) 
+                      WHERE  date_fin <= NOW() OR status = 1 AND id_type_sous = $type
+                       ORDER BY date_fin DESC ";
                     $req = mysqli_query($conn , $req_sous);
                
                
@@ -95,14 +125,28 @@ include "../nav_bar.php";
                     $type=$_POST['soul'];
                  
                         $type=$_POST['soul'];
-                            $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE   date_fin <= NOW() OR status = 1  AND code='$code' AND id_sous in (SELECT id_sous FROM $type ) ORDER BY date_fin DESC ";
+                            $req_sous =  "SELECT * FROM soumission
+                             inner join matiere using(id_matiere)  
+                             WHERE   date_fin <= NOW() OR status = 1  AND
+                              code='$code' AND id_type_sous = $type
+                               ORDER BY date_fin DESC ";
                             $req = mysqli_query($conn , $req_sous);
                  
+                }
+                else{
+                  echo '<div class="alert alert-info" row-md-15" id="success-alert">
+                  <span aria-hidden="true">&times;</span>
+                  <strong>Aucun séléction !</strong>
+                  </div>';
+                  exit;
                 }
               }
               else{ 
                 
-                  $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin <= NOW() OR status = 1 ORDER BY date_fin DESC ";
+                  $req_sous =  "SELECT * FROM soumission 
+                  inner join matiere using(id_matiere)  
+                  WHERE  date_fin <= NOW() OR status = 1 
+                  ORDER BY date_fin DESC ";
                   $req = mysqli_query($conn , $req_sous);
                                     }
             $req = mysqli_query($conn , $req_sous);
@@ -118,9 +162,10 @@ include "../nav_bar.php";
                           <td><?=$row['date_debut']?></td>
                           <td <?php if (strtotime($row['date_fin']) - time() <= 600) echo 'style="color: red;"'; ?>>
                             <input type="datetime-local" id="date-fin-<?=$row['id_sous']?>" value="<?=$row['date_fin']?>" onchange="modifierDateFin(<?=$row['id_sous']?>, this.value)" style="border: none;" >
-                        </td>                          
-                        <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
-                          <td><a href="archiver.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
+                    
+                          </td>                          
+                          <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
+                          <td><a href="archiver_soumission_terminer.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
                       </tr>
                     <?php
                   }
@@ -132,9 +177,54 @@ include "../nav_bar.php";
 </div>
 </body>
 </html>
+<?php
 
+
+if (isset($_SESSION['archive_reussi']) && $_SESSION['archive_reussi'] === true) {
+  echo "<script>
+  Swal.fire({
+      title: 'Archive réussi !',
+      text: 'La soumission a été archiver avec succès.',
+      icon: 'success',
+      confirmButtonColor: '#3099d6',
+      confirmButtonText: 'OK'
+  });
+  </script>";
+
+  // Supprimer l'indicateur de succès de la session
+  unset($_SESSION['archive_reussi']);
+}
+
+?>
 
 <script> 
+
+
+var liensArchiver = document.querySelectorAll("#archiver");
+
+// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
+liensArchiver.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "Voulez-vous vraiment archiver cette soumission ?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Archiver"
+    }).then((result) => {
+      
+          if (result.isConfirmed) {
+            window.location.href = this.href; 
+          }
+        });
+      });
+    });
+
+
 
 
 // Fonction pour modifier la date de fin

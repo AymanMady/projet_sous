@@ -38,7 +38,7 @@ include "../nav_bar.php";
                 </tr>
                 <?php
                 include_once "../connexion.php";
-                $req_ens_mail =  "SELECT * FROM reponses, soumission, matiere,etudiant WHERE reponses.id_etud=etudiant.id_etud AND reponses.id_sous=soumission.id_sous AND soumission.id_matiere=matiere.id_matiere AND email='$email'";
+                $req_ens_mail =  "SELECT * FROM reponses, soumission, matiere,etudiant WHERE reponses.id_etud=etudiant.id_etud AND reponses.id_sous=soumission.id_sous AND soumission.id_matiere=matiere.id_matiere AND email='$email' AND render = 1 ";
                 $req = mysqli_query($conn, $req_ens_mail);
                 if (mysqli_num_rows($req) == 0) {
                     echo "Il n'y a pas encore de matières ajoutées !";

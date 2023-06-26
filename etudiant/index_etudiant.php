@@ -6,6 +6,12 @@ if ($_SESSION["role"] != "etudiant") {
     exit;
 }
 include "../nav_bar.php";
+include_once "../connexion.php";
+
+// $sql_etud = "SELECT * FROM etudiant WHERE email = $email";
+// $etud_qry = mysqli_query($conn, $sql_etud);
+// $row_etud = mysqli_fetch_assoc($etud_qry);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -31,7 +37,7 @@ include "../nav_bar.php";
             <div class="col-lg-12">
                 <ol class="breadcrumb">
                     <li><a href="acceuil.php">Accueil</a></li>
-                    <li>Les matières inscrites par l'étudiant <?php //echo $nom_ens ?></li>
+                    <li>Les matières inscrites par l'étudiant <?php //echo $row_etud['nom']." ".$row_etud['prenom'] ?></li>
                 </ol>
             </div>
         </div>
@@ -44,7 +50,6 @@ include "../nav_bar.php";
                     <th>Action</th>
                 </tr>
                 <?php
-                include_once "../connexion.php";
                 $req_ens_mail =  "SELECT * FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email='$email'";
                 $req = mysqli_query($conn, $req_ens_mail);
                 if (mysqli_num_rows($req) == 0) {

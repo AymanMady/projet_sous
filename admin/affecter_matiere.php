@@ -1,9 +1,9 @@
 <?php
 session_start() ;
 $email = $_SESSION['email'];
-// if($_SESSION["role"]!="admin"){
-//     header("location:authentification.php");
-// } 
+if($_SESSION["role"]!="admin"){
+    header("location:authentification.php");
+} 
 ?>
 
 <?php
@@ -30,7 +30,8 @@ $id_matiere = $_GET['id_matiere'];
 
 
     if (isset($_POST['button'])) {
-    
+
+
         // Vérifiez si les champs enseignant et groupe sont des tableaux
         if (isset($_POST['enseignant']) && isset($_POST['groupe']) && isset($_POST['type_matiere']) ) {
             $enseignants = $_POST['enseignant'];
@@ -43,29 +44,41 @@ $id_matiere = $_GET['id_matiere'];
                 $groupe = $groupes[$key];
                 $type_matiere = $type_matieres[$key];
 
-    
-                if (!empty($enseignant) && !empty($groupe)  && !empty($type_matiere)) {
-                    $req = mysqli_query($conn, "INSERT INTO enseigner (`id_matiere`, `id_ens`, `id_groupe`, `id_type_matiere`) VALUES ('$id_matiere', '$enseignant', '$groupe' , '$type_matiere')");
-    
-                        if (!$req) {
-                            $message = "Erreur lors de l'ajout de l'enseignant et du groupe.";
-                            break;
+
+                    // Vérification si l'enseignant est déjà affecter pour cette matière , ce groupe et ce type 
+                    $verification = "SELECT * FROM enseigner WHERE id_matiere = '$id_matiere' AND id_ens = '$enseignant' AND id_groupe = '$groupe' AND id_type_matiere = '$type_matiere'";
+                    $verification_qry = mysqli_query($conn, $verification);
+                
+                    if (mysqli_num_rows($verification_qry) > 0) {
+                        $message = "Cet enseignant est déjà affecter à cette matière pour ce groupe et ce type de matière ";
+                    } else {
+                            
+                            if (!empty($enseignant) && !empty($groupe)  && !empty($type_matiere)) {
+                                $req = mysqli_query($conn, "INSERT INTO enseigner (`id_matiere`, `id_ens`, `id_groupe`, `id_type_matiere`) VALUES ('$id_matiere', '$enseignant', '$groupe' , '$type_matiere')");
+                
+                                    if (!$req) {
+                                        $message = "Erreur lors de l'ajout de l'enseignant et du groupe.";
+                                        break;
+                                    }
+                            } else {
+                                $message = "Veuillez remplir tous les champs.";
+                                break;
+                            }
+            
+                    
+                            if (!isset($message)) {
+                                header("location: matiere.php");
+                                $_SESSION['affecter_reussi'] = true;
+                                exit();
+                            }
+                                        
                         }
-                } else {
-                    $message = "Veuillez remplir tous les champs.";
-                    break;
-                }
-            }
-    
-            if (!isset($message)) {
-                header("location: matiere.php");
-                exit();
-            }
+                    
+                    }
         } else {
             $message = "Veuillez sélectionner au moins un enseignant et un groupe et une type de matiere .";
         }
-    }
-
+}
 include "../nav_bar.php";
 
 ?>

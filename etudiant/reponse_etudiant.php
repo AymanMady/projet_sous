@@ -131,18 +131,16 @@ include "../nav_bar.php";
         $data = stripcslashes($data);
         return $data;
     }
-    if(isset($_POST['button'])){
-            $descri=test_input($_POST['description_sous']);
-            $files = $_FILES['file'];
-        if( !empty($descri) ){
-            $sql="UPDATE reponses set description_rep = '$descri' ,  `date` = NOW() where id_sous = '$id_sous' and id_etud=(select id_etud from etudiant where email = '$email') ";
-    
-            $req = mysqli_query($conn,$sql);
- 
-    
-        }
 
+    if (isset($_POST['button'])) {
+        $descri=test_input($_POST['description_sous']);
+        $files = $_FILES['file'];
+        if( !empty($descri) or !empty($files) ){
+        $sql="UPDATE reponses set description_rep = '$descri' ,  `date` = NOW() where id_sous = $id_sous and id_etud=(select id_etud from etudiant where email = '$email') ";
+    
+        $req1 = mysqli_query($conn,$sql);
         
+        $id_rep = mysqli_insert_id($conn);
         foreach ($files['tmp_name'] as $key => $tmp_name) {
             $file_name = $files['name'][$key];
             $file_tmp = $files['tmp_name'][$key];
@@ -153,11 +151,11 @@ include "../nav_bar.php";
             if ($file_error === 0) {
                 $new_file_name = uniqid('', true) . '.' . $file_ext;
     
-                $sql3 = "SELECT matricule FROM etudiant WHERE `etudiant`.`email` = '$email'";
+                $sql3 = "SELECT matricule FROM etudiant WHERE etudiant.email = '$email'";
                 $code_matiere_result = mysqli_query($conn, $sql3);
                 $row = mysqli_fetch_assoc($code_matiere_result);
-                $code_matire = $row['matricule'];
-                $matricule_directory = 'C:\wamp64\www\projet_sous-main\Files\\' . $code_matire;
+                $matricule = $row['matricule'];
+                $matricule_directory = 'C:\wamp64\www\projet_sous-main\Files\\' . $matricule;
     
                 // Créer le dossier s'il n'exist pas
                 if (!is_dir($matricule_directory)) {
@@ -169,10 +167,22 @@ include "../nav_bar.php";
                 move_uploaded_file($file_tmp, $destination);
     
                 // Insérer les info dans la base de donnéez
-                $sql2 = "UPDATE fichiers_reponses set nom_fichiere`='$file_name',chemin_fichiere='$destination'  where `id_rep`=(SELECT reponses.id_rep FROM reponses NATURAL JOIN etudiant WHERE etudiant.email='$email') ";
-                mysqli_query($conn, $sql2);
+                $sql3 = "DELETE FROM fichiers_reponses  where `id_rep`=(SELECT id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email') ";
+                $req3 = mysqli_query($conn, $sql3);
+                $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ((SELECT id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email'), '$file_name', '$destination')";
+                $req2 = mysqli_query($conn, $sql2);
+
+                
+                if($req1 && $req2){
+                    header("location:index_etudiant.php");
+                    $_SESSION['ajout_reussi'] = true;
+                }else{
+                    mysqli_connect_error();
+                }
+                
             }
         }
+    }
     }
     include "../nav_bar.php";
     $sql = "SELECT * FROM reponses  WHERE  id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email')";

@@ -13,6 +13,7 @@
  $req = mysqli_query($conn, "UPDATE soumission SET status = 1 WHERE id_sous = '$id_sous'");
         if($req){
             header('location:soumission_en_ligne.php');
+            $_SESSION['cloture_reussi'] = true;
             }else {
             $message = "Soumission non modifié";
             }

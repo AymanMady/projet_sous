@@ -8,7 +8,9 @@ if($_SESSION["role"]!="ens"){
 <?php
     $id_rep=$_GET['id_rep'];
     include "../nav_bar.php";
-    $req_detail="SELECT * FROM `reponses`,`etudiant`,`fichiers_reponses` WHERE reponses.id_etud=etudiant.id_etud and reponses.id_rep=fichiers_reponses.id_rep and reponses.id_rep='$id_rep'";
+    $req_detail="SELECT * FROM `reponses`,`etudiant`,`fichiers_reponses`
+     WHERE reponses.id_etud=etudiant.id_etud and
+      reponses.id_rep=fichiers_reponses.id_rep and reponses.id_rep='$id_rep'";
     $req = mysqli_query($conn , $req_detail);
     $row=mysqli_fetch_assoc($req);
 ?>
@@ -70,7 +72,8 @@ if($_SESSION["role"]!="ens"){
                 }else {
                     while($row2=mysqli_fetch_assoc($req2)){
                         ?>
-                        <a href="<?=$row2['chemin_fichiere']?>"><?=$row2['nom_fichiere']?></a><br><br>
+           
+           <a href="<?=$row2['chemin_fichiere']?>"><?=$row2['nom_fichiere']?></a><br><br>
                         <?php
                     }
                 }
@@ -83,7 +86,11 @@ if($_SESSION["role"]!="ens"){
     </p>
 
 </div>
+<div style="display: flex ; justify-content: space-between;">
+<a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary mr-25">donne une Note</a>
 </div>
+</div>
+
 
 </body>
 </html>

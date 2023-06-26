@@ -34,6 +34,7 @@ if($_SESSION["role"]!="admin"){
             
                 if(mysqli_query($conn , $req)){
                     header('location:enseignant.php');
+                    $_SESSION['ajout_reussi'] = true;
                 }else {
                     $message = "Enseignant non ajouté";
                 }

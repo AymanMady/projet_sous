@@ -22,6 +22,7 @@ if($_SESSION["role"]!="admin"){
                 $req = mysqli_query($conn , "INSERT INTO groupe(`libelle`, `filiere`) VALUES('$libelle', '$filiere')");
                 if($req){
                     header("location: groupe.php");
+                    $_SESSION['ajout_reussi'] = true;
                 }else {
                     $message = "groupe non ajouté";
                 }

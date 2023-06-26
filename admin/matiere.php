@@ -8,6 +8,13 @@ if($_SESSION["role"]!="admin"){
 
 include "../nav_bar.php";
 ?>
+
+
+    <!-- sweetalert2 links -->
+
+    <script src="../JS/sweetalert2.js"></script>
+
+
 </br></br></br>
 <div class="container">
     <div class="row">
@@ -63,6 +70,7 @@ include "../nav_bar.php";
         <tr>
             <th>Code</th>
             <th>Libelle</th>
+            <th>Semestre</th>
             <th>Specialite</th>
             <th colspan="4">Actions</th>
         </tr>
@@ -72,7 +80,7 @@ include_once "../connexion.php";
 
 
 // Vérification si des matières existent
-$matiere_query = "SELECT * FROM matiere"; 
+$matiere_query = "SELECT * FROM matiere INNER JOIN semestre USING(id_semestre)"; 
 $matiere_result = mysqli_query($conn, $matiere_query);
 
 if (mysqli_num_rows($matiere_result) == 0) {
@@ -86,10 +94,11 @@ if (mysqli_num_rows($matiere_result) == 0) {
             <tr>
                 <td><?= $row['code'] ?></td>
                 <td><?= $row['libelle'] ?></td>
+                <td><?= $row['nom_semestre'] ?></td>
                 <td><?= $row['specialite'] ?></td>               
                 <td><a href="detail_matiere.php?id_matiere=<?= $row['id_matiere'] ?>">Details</a></td>
                 <td><a href="affecter_matiere.php?id_matiere=<?= $row['id_matiere'] ?>">Affecter</a></td>
-                <td><a href="supprimer_matiere.php?id_matiere=<?= $row['id_matiere'] ?>" onclick="return confirm('Voulez-vous vraiment supprimer cette matière ?')">Supprimer</a></td>
+                <td><a href="supprimer_matiere.php?id_matiere=<?= $row['id_matiere'] ?>" id="supprimer">Supprimer</a></td>
             </tr>
             <?php
         }
@@ -98,7 +107,117 @@ if (mysqli_num_rows($matiere_result) == 0) {
     <?php
 }
 ?>
+
+<?php
+//if (isset($_GET['succes']) && $_GET['succes'] == 1) {
+
+if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Ajout réussi !',
+        text: 'La matiére a été ajouté avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['ajout_reussi']);
+}
+
+
+if (isset($_SESSION['supp_reussi']) && $_SESSION['supp_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Suppression réussi !',
+        text: 'La matiére a été supprimer avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['supp_reussi']);
+}
+
+
+if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Modification réussi !',
+        text: 'La matiére a été modifier avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['modifier_reussi']);
+}
+
+
+
+if (isset($_SESSION['affecter_reussi']) && $_SESSION['affecter_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Affectation réussi !',
+        text: 'La matiére a été affecter avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['affecter_reussi']);
+}
+
+?>
 </div>
 </body>
 </html>
 
+
+<script>
+var liensArchiver = document.querySelectorAll("#supprimer");
+
+// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
+liensArchiver.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "Voulez-vous vraiment supprimer cette matière ?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Supprimer"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
+        //Swal.fire({
+        //   title: "Suppression réussie !",
+        //   text: "L'inscription a été supprimée avec succès.",
+        //   icon: "success",
+        //   confirmButtonColor: "#3099d6",
+        //   confirmButtonText: "OK",
+          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
+          //timerProgressBar: true,
+         // showConfirmButton: true
+       // }).then(() => {
+          // Redirection après le délai
+          window.location.href = this.href;
+            }
+        });
+      });
+    });
+//   });
+// });
+
+   
+</script>

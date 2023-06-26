@@ -70,7 +70,8 @@ if($_SESSION["role"]!="ens"){
                 }else {
                     while($row2=mysqli_fetch_assoc($req2)){
                         ?>
-                        <a href="<?=$row2['chemin_fichiere']?>"><?=$row2['nom_fichiere']?></a><br><br>
+           
+           <a href="<?=$row2['chemin_fichiere']?>"><?=$row2['nom_fichiere']?></a><br><br>
                         <?php
                     }
                 }
@@ -83,7 +84,11 @@ if($_SESSION["role"]!="ens"){
     </p>
 
 </div>
+<div style="display: flex ; justify-content: space-between;">
+<a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary mr-25">donne une Note</a>
 </div>
+</div>
+
 
 </body>
 </html>

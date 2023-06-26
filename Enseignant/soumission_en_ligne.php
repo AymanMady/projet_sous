@@ -97,7 +97,7 @@ include "../nav_bar.php";
           </tr>
           <?php 
               include_once "../connexion.php";
-              // $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE date_debut <= NOW() AND date_fin >= NOW() AND status = 0  ";
+              // $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE      status = 0  ";
             //   $update = "UPDATE soumission SET status = 1 where date_fin <= NOW()";
             //   $req_update = mysqli_query($conn , $update);
     
@@ -108,33 +108,33 @@ include "../nav_bar.php";
                 $code=$_POST['code'];
 
 
-                $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND code='$code' AND id_ens = (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC  ";
+                $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE       status = 0 AND code='$code' AND id_ens = (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC  ";
                 $req1 = mysqli_query($conn , $req_sous1);
-                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND code='$code' AND id_ens != (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC  ";
+                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE       status = 0 AND code='$code' AND id_ens != (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC  ";
                 $req2 = mysqli_query($conn , $req_sous2);
             }
             elseif(empty($code) && !empty($_POST['soul'])){
                 $type=$_POST['soul'];
                 
-                $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND id_sous in (SELECT id_sous FROM $type )  AND id_ens = (select id_ens from enseignant where email = '$email')   ORDER BY date_fin DESC ";
+                $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE       status = 0 AND id_sous in (SELECT id_sous FROM $type )  AND id_ens = (select id_ens from enseignant where email = '$email')   ORDER BY date_fin DESC ";
                 $req1 = mysqli_query($conn , $req_sous1);
-                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0 AND id_sous in (SELECT id_sous FROM $type )AND id_ens != (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
+                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE       status = 0 AND id_sous in (SELECT id_sous FROM $type )AND id_ens != (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
                 $req2 = mysqli_query($conn , $req_sous2);
             }
             elseif(!empty($_POST['code']) && !empty($_POST['soul'])){
                 $code=$_POST['code'];
                 $type=$_POST['soul'];
              
-                $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0  AND code='$code' AND id_sous in (SELECT id_sous FROM $type )  AND id_ens = (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC ";
+                $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE       status = 0  AND code='$code' AND id_sous in (SELECT id_sous FROM $type )  AND id_ens = (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC ";
                 $req1 = mysqli_query($conn , $req_sous1);
-                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_debut <= NOW() AND date_fin >= NOW() AND status = 0  AND code='$code' AND id_sous in (SELECT id_sous FROM $type ) AND id_ens != (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC ";
+                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE       status = 0  AND code='$code' AND id_sous in (SELECT id_sous FROM $type ) AND id_ens != (select id_ens from enseignant where email = '$email')  ORDER BY date_fin DESC ";
                 $req2 = mysqli_query($conn , $req_sous2);
             }
         }else{ 
             
-              $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin >= NOW() AND status = 0 AND id_ens = (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
+              $req_sous1 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE    status = 0 AND id_ens = (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
               $req1 = mysqli_query($conn , $req_sous1);
-              $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  date_fin >= NOW() AND status = 0 AND id_ens != (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
+              $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE    status = 0 AND id_ens != (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
               $req2 = mysqli_query($conn , $req_sous2);
         }
 

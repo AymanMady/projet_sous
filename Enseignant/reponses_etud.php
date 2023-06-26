@@ -27,7 +27,7 @@
     $req1 = mysqli_query($conn , $sql1);
     $nbr1 = mysqli_num_rows($req1);
 
-    $sql2 = "select * from  inscription NATURAL JOIN matiere NATURAL JOIN soumission where id_sous = $id_sous; ";
+    $sql2 = "SELECT * FROM inscription WHERE id_matiere = (SELECT matiere.id_matiere FROM soumission NATURAL JOIN matiere WHERE soumission.id_sous=$id_sous); ";
     $req2 = mysqli_query($conn , $sql2);
     $nbr2 = mysqli_num_rows($req2);
 

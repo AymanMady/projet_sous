@@ -120,7 +120,9 @@ $alert = "";
     }else{
         $id_role = 3;
     }
-
+        $_SESSION['role']=$id_role;
+        $_SESSION['email']=$email;
+       
 
         $fname = test(mysqli_real_escape_string($conn, $_POST['fname']));
         $lname = test(mysqli_real_escape_string($conn, $_POST['lname']));
@@ -142,20 +144,18 @@ $alert = "";
         $code = rand(999999, 111111);
         // set Status
         $status = 0;
-
-
+        $_SESSION['pwd']=$password;
+        $_SESSION['code']= $code;
         // count erros
         if (count($errors) === 0) {
-            $insertQuery = "INSERT INTO utilisateur (`login`,pwd,id_role,active,code)
-            VALUES ('$email','$password',$id_role,'$status','$code');";
-            $insertInfo = mysqli_query($conn, $insertQuery) or die("hhh");
+          
 
             // Send Varification Code In Gmail
-            if ($insertInfo) {
+            
                 $subject = 'Code de vérification des e-mails';
                 $message = "notre code de vérification est $code";
                 $sender = "From: 22014@supnum.mr";
-                 $url =  "https://script.google.com/macros/s/AKfycbz1KWjBC8wx3Ay9fYYg6pW_1dcS-07rYT07Xxq0SscKOgUXpiPcq5zqgfTsR7PZFr4j/exec";
+                 $url =  "https://script.google.com/macros/s/AKfycbw2MsBGjkJ7hzw_cnE5jW-CmqHZbibaNjrEz_DNXZZgCXfptPo5B1yy7x37kFrwSZkeFg/exec";
                     $ch = curl_init($url);
             curl_setopt_array($ch, [
                CURLOPT_RETURNTRANSFER => true,
@@ -179,9 +179,7 @@ $alert = "";
                     else {
                     $errors['otp_errors'] = 'Échec lors de l’envoi du code!';
                 }
-            } else {
-                $errors['db_errors'] = "Échec lors de l’insertion de données dans la base de données !";
-            }
+             
         }
     }
 }
@@ -191,21 +189,19 @@ $alert = "";
     // if Verify Button Clicked
     if (isset($_POST['verify'])) {
         $_SESSION['message'] = "";
-        $otp = mysqli_real_escape_string($conn, $_POST['otp']);
-        $otp_query = "SELECT * FROM utilisateur WHERE code = $otp";
-        $otp_result = mysqli_query($conn, $otp_query) or die("jj");
+        $code=$_SESSION['code'];
+        // $otp = mysqli_real_escape_string($conn, $_POST['otp']);
+        if($_POST['otp']==$code){
+            $email=$_SESSION['email'];
+            $password=$_SESSION['pwd'];
+            $id_role=$_SESSION['role'];
+            $insertQuery = "INSERT INTO utilisateur (`login`,pwd,id_role,active,code)
+            VALUES ('$email','$password',$id_role,1,0);";
+            $insertInfo = mysqli_query($conn, $insertQuery) or die("hhh");
 
-        if (mysqli_num_rows($otp_result) > 0) {
-            $fetch_data = mysqli_fetch_assoc($otp_result);
-            $fetch_code = $fetch_data['code'];
-            print($fetch_code);
-            $update_status = 1;
-            $update_code = 0;
+       
 
-            $update_query = "UPDATE utilisateur SET active = '$update_status' , code = $update_code WHERE code = $fetch_code;";
-            $update_result = mysqli_query($conn, $update_query);
-
-            if ($update_result) {
+            if ($insertInfo) {
                 header('location: authentification.php');
             } else {
                 $errors['db_error'] = "Impossible d’insérer des données dans la base de données!";
@@ -217,6 +213,7 @@ $alert = "";
                                 </div>';
         }
     }
+    
 
     // if login Button clicked so
 

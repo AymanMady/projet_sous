@@ -46,7 +46,7 @@ include "../nav_bar.php";
           </tr>
           <?php 
               include_once "../connexion.php";
-              $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE  status = 2 ";
+              $req_sous =  "SELECT DISTINCT soumission.*,matiere.* FROM soumission ,matiere,enseignant WHERE  soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and  status = 2  and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')  ORDER BY date_fin DESC  ";
               $req = mysqli_query($conn , $req_sous);
               if(mysqli_num_rows($req) == 0){
                   echo "Il n'y a pas encore des soumission archiver !" ;

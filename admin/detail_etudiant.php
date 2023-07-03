@@ -68,9 +68,7 @@ while($row=mysqli_fetch_assoc($req)){
                                                             <br><?php echo "<strong class='font-weight-bold'>Date de naissance : </strong>".$row['Date_naiss']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>Lieu de naissance : </strong>". $row['lieu_naiss']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>E-mail : </strong>".$row['email']; ?><br>
-                                                            <?php echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['nom_semestre']; ?><br>
-                                                            <?php echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['libelle']; ?><br>
-                                                            <?php echo "<strong class='font-weight-bold'>Année : </strong>".$row['annee']; ?>
+                                                            <?php echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['nom_semestre']; ?><br>                                                            <?php echo "<strong class='font-weight-bold'>Année : </strong>".$row['annee']; ?>
                                                         </h4>
                                                 
                                                 </fieldset>
@@ -93,6 +91,10 @@ while($row=mysqli_fetch_assoc($req)){
 
   <p>
         <a href="etudiant.php" class = "btn btn-primary" >Retour</a>
+        </p>
+        <br>
+        <p>
+        <a href="desactive.php?id_etud=<?=$id_etud?>" class = "btn btn-primary" >desactive</a>
         </p>
 <?php
     

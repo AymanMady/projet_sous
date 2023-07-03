@@ -45,7 +45,7 @@ include_once "../connexion.php";
             <table class="table table-striped table-bordered">
                 <tr>
                     <th>Code</th>
-                    <th>Semestre</th>
+                    <th>Libelle de la matiére</th>
                     <th>Spécialité</th>
                     <th>Action</th>
                 </tr>
@@ -59,7 +59,7 @@ include_once "../connexion.php";
                         ?>
                         <tr onclick="redirectToDetails(<?php echo $row['id_matiere']; ?>)">
                             <td><?= $row['code'] ?></td>
-                            <td><?= $row['id_semestre'] ?></td>
+                            <td><?= $row['libelle'] ?></td>
                             <td><?= $row['specialite'] ?></td>
                             <td>Details</td>
                         </tr>

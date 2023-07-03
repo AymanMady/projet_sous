@@ -7,6 +7,10 @@
  }
  include_once "../connexion.php";
     $id_sous = $_GET['id_sous'];
+    if(isset($_POST['sou'])){
+        $sql="UPDATE reponses set render=1 WHERE id_sous=' $id_sous'";
+        mysqli_query($conn,$sql);
+    }
 ?>
 </br></br></br>
 <div class="container">
@@ -23,13 +27,13 @@
     $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere),enseignant WHERE id_sous = $id_sous and soumission.id_ens=enseignant.id_ens ";
     $req = mysqli_query($conn , $req_detail);
     $row=mysqli_fetch_assoc($req);
-    $sql1 = "select * from reponses where id_sous = $id_sous ";
+    $sql1 = "select count(*) as num_rep from reponses where id_sous = $id_sous ";
     $req1 = mysqli_query($conn , $sql1);
-    $nbr1 = mysqli_num_rows($req1);
+    $row1=mysqli_fetch_assoc($req1);
 
-    $sql2 = "SELECT * FROM inscription WHERE id_matiere = (SELECT matiere.id_matiere FROM soumission NATURAL JOIN matiere WHERE soumission.id_sous=$id_sous); ";
+    $sql2 = "select count(*) as num_insc from  inscription,matiere,soumission where inscription.id_matiere=matiere.id_matiere and matiere.id_matiere=soumission.id_matiere and  id_sous = $id_sous; ";
     $req2 = mysqli_query($conn , $sql2);
-    $nbr2 = mysqli_num_rows($req2);
+    $row2=mysqli_fetch_assoc($req2);
 
     ?>
 <style>
@@ -93,10 +97,15 @@
     </div>
     <div class="response-count">
         <h3>Nombre d'étudiants ayant répondu</h3>
-        <div class="nbr_etud"><?php echo $nbr1."/".$nbr2; ?></div>
+        <div class="nbr_etud"><?php echo $row1['num_rep']."/".$row2['num_insc']; ?></div>
     </div>
 </div>
 <br>
+<div style="display: flex ; justify-content: end ;widh">
+<form action="" method="POST">
+    <input type="submit" class="btn btn-primary ml-25" value="render" name="sou">
+    </form>
+ </div>
 <div style="overflow-x:auto;"  >
   <table class="table table-striped table-bordered">
           <tr>

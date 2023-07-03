@@ -131,7 +131,24 @@ include "../nav_bar.php";
                 $type=$_POST['soul'];
                 $req_sous1 =  "SELECT DISTINCT soumission.*,matiere.* FROM soumission ,matiere,enseignant,enseigner WHERE enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email='$email' AND soumission.id_type_sous = $type and status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')   ORDER BY date_fin DESC ";
                 $req1 = mysqli_query($conn , $req_sous1);
+<<<<<<< HEAD
                 $req_sous2 =  "SELECT DISTINCT soumission.*,matiere.* FROM soumission ,matiere,enseignant,enseigner WHERE enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email!='$email' and status = 0 AND soumission.id_type_sous = $type and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email') ORDER BY date_fin DESC ";
+=======
+                $req_sous2 =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE       status = 0 AND id_sous in (SELECT id_sous FROM $type )AND id_ens != (select id_ens from enseignant where email = '$email') ORDER BY date_fin DESC ";
+                $req_sous1 =  "SELECT * FROM soumission 
+                inner join matiere using(id_matiere) 
+                 WHERE  
+                  status = 0 AND id_type_sous = $type  AND
+                   id_ens = (select id_ens from enseignant 
+                   where email = '$email')   ORDER BY date_fin DESC ";
+                $req1 = mysqli_query($conn , $req_sous1);
+                $req_sous2 =  "SELECT * FROM soumission 
+                inner join matiere using(id_matiere)  
+                WHERE  
+                 status = 0 AND id_type_sous = $type AND
+                  id_ens != (select id_ens from enseignant 
+                    where email = '$email') ORDER BY date_fin DESC ";
+>>>>>>> 839a3fd287a53294b55429782a73f2b52e674446
 
                 $req2 = mysqli_query($conn , $req_sous2);
             }
@@ -152,18 +169,36 @@ include "../nav_bar.php";
               }
         }else{ 
             
+<<<<<<< HEAD
           $req_sous1 = "SELECT DISTINCT soumission.*,matiere.* FROM soumission ,matiere,enseignant,enseigner WHERE enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email='$email' and status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')
+=======
+              
+          $req_sous1 = "SELECT * FROM soumission
+          INNER JOIN matiere USING(id_matiere)
+          WHERE  status = 0
+          AND id_ens = (SELECT id_ens FROM enseignant WHERE email = '$email')
+>>>>>>> 839a3fd287a53294b55429782a73f2b52e674446
           ORDER BY date_fin DESC";
 
           $req1 = mysqli_query($conn , $req_sous1);
 
           
+<<<<<<< HEAD
           $req_sous2 = "SELECT DISTINCT soumission.*,matiere.* FROM soumission ,matiere,enseignant,enseigner WHERE enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email!='$email' and status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')
           ORDER BY date_fin DESC";
 
           $req2 = mysqli_query($conn , $req_sous2);
 
     
+=======
+          $req_sous2 = "SELECT * FROM soumission
+          INNER JOIN matiere USING(id_matiere)
+          WHERE status = 0
+          AND id_ens != (SELECT id_ens FROM enseignant WHERE email = '$email')
+          ORDER BY date_fin DESC";
+
+          $req2 = mysqli_query($conn , $req_sous2);
+>>>>>>> 839a3fd287a53294b55429782a73f2b52e674446
         }
 
               // $req_sous2 =  "SELECT * FROM soumission
@@ -173,8 +208,14 @@ include "../nav_bar.php";
               //   where email = '$email') ORDER BY date_fin DESC ";
               // $req2 = mysqli_query($conn , $req_sous2);
 
+<<<<<<< HEAD
               
 
+=======
+
+
+        
+>>>>>>> 839a3fd287a53294b55429782a73f2b52e674446
       
 
               if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
@@ -243,7 +284,7 @@ if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
 
 
 
-if (isset($_SESSION['cloture_reussi']) && $_SESSION['cloture_reussi'] === true) {
+else if (isset($_SESSION['cloture_reussi']) && $_SESSION['cloture_reussi'] === true) {
   echo "<script>
   Swal.fire({
       title: 'clôture réussi !',
@@ -260,7 +301,7 @@ if (isset($_SESSION['cloture_reussi']) && $_SESSION['cloture_reussi'] === true) 
 
 
 
-if (isset($_SESSION['archive_reussi_ligne']) && $_SESSION['archive_reussi_ligne'] === true) {
+else if (isset($_SESSION['archive_reussi_ligne']) && $_SESSION['archive_reussi_ligne'] === true) {
   echo "<script>
   Swal.fire({
       title: 'Archive réussi !',
@@ -274,6 +315,24 @@ if (isset($_SESSION['archive_reussi_ligne']) && $_SESSION['archive_reussi_ligne'
   // Supprimer l'indicateur de succès de la session
   unset($_SESSION['archive_reussi_ligne']);
 }
+
+
+else if (isset($_SESSION['prolongement_reussi']) && $_SESSION['prolongement_reussi'] === true) {
+  echo "<script>
+  Swal.fire({
+      title: 'prolongement réussi !',
+      text: 'La soumission a été prolonger avec succès.',
+      icon: 'success',
+      confirmButtonColor: '#3099d6',
+      confirmButtonText: 'OK'
+  });
+  </script>";
+
+  // Supprimer l'indicateur de succès de la session
+  unset($_SESSION['archive_reussi']);
+}
+
+
 ?>
 <script>
         function redirectToDetails(id_matiere) {

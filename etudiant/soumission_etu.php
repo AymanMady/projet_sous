@@ -25,7 +25,7 @@
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
                 <li><a href="acceuil.php">Acceuil</a></li>
-                <li>Détails sur la soumission   </li>
+                <li>Détails sur la soumission</li>
             </ol>
         </div>
     </div>
@@ -49,36 +49,35 @@
                 <?php echo "<strong>Description : </strong>". $row['description_sous'];  ?><br><br>
                 <?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?><br><br>
                 <?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?><br><br>
-
-           
-        <br>
-        <?php
-     // ID du fichier que vous souhaitez récupérer
-     $fileId = $row['id_sous'];
-$sql = "SELECT chemin_fichier FROM fichiers_soumission WHERE id_sous = $fileId";
-$result = mysqli_query($conn, $sql);
-
-if (mysqli_num_rows($result) > 0) {
-    while ($row1 = mysqli_fetch_assoc($result)) {
-        $filePath = $row1['chemin_fichier'];
-
-        // Faites quelque chose avec chaque fichier, par exemple les afficher ou les traiter
-        echo '<strong><a href="' . $filePath . '" target="_blank">' . $filePath . '</a></strong><br><br>';
-    }
-} else {
-    echo "Aucun fichier trouvé pour cette soumission";
-}
-
-?>
-     </h4>
-     </fieldset>
-     <br><br>
- </div>
-
+                </h4>
+            </fieldset>
+        <br><br>
+    <?php
+     $id_sous = $row['id_sous'];
+     ?>
+     </div>
+    <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;position:relative;" > 
+            <strong style="position:absolute;top: 2;left: 0;"  >Le(s) Fichier(s)</strong><br><br>
+            <div style="position:absolute;top: 6;left: 2;">
+            <?php
+                $sql2 = "select * from fichiers_soumission where id_sous='$id_sous' ";
+                $req2 = mysqli_query($conn,$sql2);
+                if(mysqli_num_rows($req2) == 0){
+                    echo "Il n'y a pas des fichier ajouter !" ;
+                }else {
+                    while($row2=mysqli_fetch_assoc($req2)){
+                        ?>
+                        <a href="<?=$row2['chemin_fichier']?>"><?=$row2['nom_fichier']?></a><br><br>
+                        <?php
+                    }
+                }
+            ?>
+            </div>
     </div>
     <p>
         <a href="reponse_etudiant.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Rendre le travail</a>
     </p>
+</div>
     <?php
     }
     }else{
@@ -91,7 +90,6 @@ if (mysqli_num_rows($result) > 0) {
     }
     ?>
 </div>
-
 
 </body>
 </html>

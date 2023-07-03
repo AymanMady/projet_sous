@@ -56,7 +56,6 @@
         include("connexion.php");
         $req = mysqli_query($conn, "SELECT * FROM enseignant WHERE email = '$email'");
         $row = mysqli_fetch_assoc($req);
-
 ?>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -218,37 +217,17 @@
                      
 
                         <li id="potfolio" class="dropdown">   
-                                <a href="index_etudiant.php" >acceil</a>
+                                <a href="index_etudiant.php" >Acceil</a>
                         </li>
                         <li id="potfolio" class="dropdown">   
-                                <a href="soumission_etu.php" >soumission</a>
+                                <a href="notes.php" >Notes</a>
                         </li>
-                            <!-- <ul class="dropdown-menu">
-                                <li>
-                                <a href="enseignant.php">Gestion des enseignants</a>
-                                </li>
-                                <li>
-                                    <a href="etudiant.php">Gestion des etudiants</a>
-                                </li >  
-                                <li >
-                                    <a href="utilisateurs.php">Gestion des utilisateurs</a>
-                                </li>
-                                <li >
-                                    <a href="groupe.php">Gestion des groupe</a>
-                                </li>
-                                <li >
-                                    <a href="matiere.php">Gestion des matiere</a>
-                                </li>
-                            </ul>  -->
-                        <!-- <li  class="dropdown">
+                        <li  class="dropdown">
                                <a href="supprimer_session.php">Se déconnecte</a></div>
-                        </li> -->
-                        
-                     
-                <li  class="dropdown">
+                        </li>   
+                        <!-- <li  class="dropdown">
                                
-                               <!-- <div class="container mt-12"> </div> -->
-                                 <a href="#"><img title="<?=$row_etud['nom']." ".$row_etud['prenom']?>" 
+                                 <a href="#"><img title="<?//=$row['nom']." ".$row['prenom']?>" 
                                  id="myButton" class="style-scope yt-img-shadow" src="../images/supnum.jpg" 
                                  draggable="false" style="width: 32px; height: 32px; border-radius: 50%;"></a>
  
@@ -256,14 +235,14 @@
                                     <li>
                                     <br>
                                         <div class="logo">
-                                            <img title="<?=$row_etud['nom']." ".$row_etud['prenom']?>" 
+                                            <img title="<?//=$row['nom']." ".$row['prenom']?>" 
                                             id="myButton" class="style-scope yt-img-shadow" 
                                             src="../images/photo_ens.jpg" draggable="false" 
                                             style="width: 40px; height: 40px; border-radius: 50%;">
                                             <p></p>
-                                            <a> <strong class='font-weight-bold'><?=$row_etud['nom']." ".$row_etud['prenom']?></strong></a>
+                                            <a> <strong class='font-weight-bold'><?//=$row['nom']." ".$row['prenom']?></strong></a>
                                            
-                                            <p><?=$row_etud['email']?></p>
+                                            <p><?//=$row['email']?></p>
                                         </div> 
                                     </li>
                                     <li>
@@ -276,11 +255,8 @@
                                         <a href="supprimer_session.php">Se déconnecte</a>
                                     </li>
                                 </ul>
-                    </li>
-   
-
-                        
-                </ul>
+                    </li>                               
+                </ul> -->
 
                 
             <!-- /.navbar-collapse -->

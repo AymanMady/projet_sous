@@ -7,7 +7,11 @@ if($_SESSION["role"]!="admin"){
 
  ?>
 
-<?php require '../connexion.php'; ?>
+<?php
+ require '../connexion.php'; 
+ include "../nav_bar.php";
+ ?>
+
  <!DOCTYPE html>
 <html lang="en" dir="ltr">
 	<head> 
@@ -59,9 +63,9 @@ if($_SESSION["role"]!="admin"){
 		if(isset($_POST["import"])){
 			$fileName = $_FILES["file"]["name"];
 			$fileExtension = explode('.', $fileName);
-      $fileExtension = strtolower(end($fileExtension));
+      		$fileExtension = strtolower(end($fileExtension));
 			$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
-
+			
 			$targetDirectory = "uploads/" . $newFileName;
 			move_uploaded_file($_FILES['file']['tmp_name'], $targetDirectory);
 
@@ -71,13 +75,19 @@ if($_SESSION["role"]!="admin"){
 
 			require 'excelReader/excel_reader2.php';
 			require 'excelReader/SpreadsheetReader.php';
-
+			
 			$reader = new SpreadsheetReader($targetDirectory);
-            mysqli_query($conn, "DELETE FROM  inscripsion");
+            // mysqli_query($conn, "DELETE FROM  inscription");
+			echo "Hello";
 			foreach($reader as $key => $row){
-				$groupe_cm = $row[0];
-				$groupe_tp = $row[1];
-				if(mysqli_query($conn, "INSERT INTO inscripsion(`id_matieres`, `id_etudi`) VALUES( (SELECT id_matiere FROM matiere WHERE code = '$groupe_cm'), (SELECT id_etud from etudiant WHERE matricule = '$groupe_tp'))")){
+				$matricule = $row[0];
+				$semestre = $row[1];
+				$code_matiere = $row[2];
+				
+				if(mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_semestre`, `id_matiere`) VALUES
+				((SELECT id_etud from etudiant WHERE matricule = '$matricule'),
+				(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'),
+				 (SELECT id_matiere FROM matiere WHERE code = '$code_matiere'))")){
                     
                     header('location:inscription.php');
 
@@ -92,7 +102,7 @@ if($_SESSION["role"]!="admin"){
 			</script>
 			";
 		}
-		include "../nav_bar.php";
+		
 		?>
         </div>
 	</body>

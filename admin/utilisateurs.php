@@ -67,7 +67,7 @@ include "../nav_bar.php";
             <tr>
                     <th>E-mail</th>
                     <th>Rôle</th>
-                    <th colspan="2">Action</th>
+                    <th colspan="2">Actions</th>
                
             </tr>
 

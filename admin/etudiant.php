@@ -74,7 +74,7 @@ include "../nav_bar.php";
     <th>Nom et Prénom</th>
     <th>Semestre</th>
     <th>E-mail</th>
-    <th colspan="2">Action</th>
+    <th colspan="2">Actions</th>
     </tr>
     <?php 
                     include_once "../connexion.php";

@@ -39,7 +39,7 @@ if($_SESSION["role"]!="admin"){
 
 <div class="form-horizontal">
 <br><br>
-<form action="" method="POST" enctype="multipart/form-data">
+	<form action="" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label class="col-md-1">Sélectionner un fichier Excel : </label>
             <div class="col-md-6">
@@ -73,26 +73,34 @@ if($_SESSION["role"]!="admin"){
 			require 'excelReader/SpreadsheetReader.php';
 
 			$reader = new SpreadsheetReader($targetDirectory);
-            mysqli_query($conn, "DELETE FROM  inscription");
+            // mysqli_query($conn, "DELETE FROM  inscripsion");
 			foreach($reader as $key => $row){
-				$matricule = $row[0];
-				$code = $row[1];
-				$semester=$row[2];
-
-				$resu=mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_matiere`,`id_semestre`) VALUES((SELECT id_etud from etudiant WHERE matricule = '$matricule'),(SELECT id_matiere FROM matiere WHERE code = '$code'),(SELECT id_semestre FROM semestre WHERE nom_semestre='$semester'))");
-				if($resu){
+				$etud = $row[0];
+				$matiere = $row[1];
+				$semestre = $row[2];
+				$sql = "INSERT INTO inscripsion(`id_etud`,`id_matiere`, `id_semestre`) VALUES( (SELECT id_etud from etudiant WHERE matricule = '$etud'), (SELECT id_matiere FROM matiere WHERE code = '$matiere'),(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'))";
+				if(mysqli_query($conn,$sql)){
                     
-                    echo "bonne";
-                }
+                    header('location:inscription.php');
+					echo
+					"
+					<script>
+					alert('Succesfully Imported');
+					document.location.href = '';
+					</script>
+					";
+
+                }else{
+					echo
+					"
+					<script>
+					alert(' Imported Error');
+					document.location.href = '';
+					</script>
+					";
+				}
 			}
 
-			echo
-			"
-			<script>
-			alert('Succesfully Imported');
-			document.location.href = '';
-			</script>
-			";
 		}
 		include "../nav_bar.php";
 		?>

@@ -1,5 +1,4 @@
 
-
 <?php
 
 use function PHPSTORM_META\type;
@@ -25,7 +24,7 @@ use function PHPSTORM_META\type;
 <body>
     <style>
         /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */
-        .click:hover {
+        tr:hover {
             cursor: pointer;
             background-color: aliceblue;
         }
@@ -112,9 +111,6 @@ include "../nav_bar.php";
           </tr>
           <?php 
               include_once "../connexion.php";
-              // $req_sous =  "SELECT * FROM soumission inner join matiere using(id_matiere)  WHERE      status = 0  ";
-            //   $update = "UPDATE soumission SET status = 1 where date_fin <= NOW()";
-            //   $req_update = mysqli_query($conn , $update);
     
 
         if(isset($_POST['filtrer'])){

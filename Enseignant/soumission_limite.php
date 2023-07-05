@@ -19,6 +19,13 @@
 
 
 </head>
+    <style>
+        /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */
+        tr:hover {
+            cursor: pointer;
+            background-color: aliceblue;
+        }
+    </style>
 <body>
  
 <?php 
@@ -149,7 +156,6 @@ include "../nav_bar.php";
                           <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)" ><?=$row['date_debut']?></td>
                           <td <?php if (strtotime($row['date_fin']) - time() <= 600) echo 'style="color: red;"'; ?>>
                             <input type="datetime-local" id="date-fin-<?=$row['id_sous']?>" value="<?=$row['date_fin']?>" onchange="modifierDateFin(<?=$row['id_sous']?>, this.value)" style="border: none;" >
-                    
                           </td>                          
                           <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
                           <td><a href="archiver_soumission_terminer.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>

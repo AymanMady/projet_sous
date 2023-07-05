@@ -32,11 +32,11 @@
     <?php
 
     include_once "../connexion.php";
-    $id_matiere = $_GET['id_matiere'];
+    $id_sous = $_GET['id_sous'];
 
-    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and status=0 ";
+    $req_detail = "SELECT * FROM soumission  WHERE id_sous = $id_sous and status=0 ";
     $req = mysqli_query($conn , $req_detail);
-    if (mysqli_num_rows($req) > 0) {
+    mysqli_num_rows($req);
 
     while($row=mysqli_fetch_assoc($req)){
     ?>
@@ -52,13 +52,11 @@
                 </h4>
             </fieldset>
         <br><br>
-    <?php
-     $id_sous = $row['id_sous'];
-     ?>
+
      </div>
     <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;position:relative;" > 
             <strong style="position:absolute;top: 2;left: 0;"  >Le(s) Fichier(s)</strong><br><br>
-            <div style="position:absolute;top: 6;left: 2;">
+            <div style="position:absolute;top: 6;left: 2;width: 380px;">
             <?php
                 $sql2 = "select * from fichiers_soumission where id_sous='$id_sous' ";
                 $req2 = mysqli_query($conn,$sql2);
@@ -66,8 +64,19 @@
                     echo "Il n'y a pas des fichier ajouter !" ;
                 }else {
                     while($row2=mysqli_fetch_assoc($req2)){
+                        $file_chemin = $row2['chemin_fichier'];
                         ?>
-                        <a href="<?=$row2['chemin_fichier']?>"><?=$row2['nom_fichier']?></a><br><br>
+                        <div style="display: flex ; justify-content: space-between; " >
+                        <div>
+                        <p><?=$row2['nom_fichier']?> </p>
+                        </div>
+                        <div>
+                        <form action="open_file.php" method="post">
+                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
+                            <button name="view" class="btn btn-primary ">View file</button>
+                        </form>
+                        </div>
+                        </div>
                         <?php
                     }
                 }
@@ -80,14 +89,7 @@
 </div>
     <?php
     }
-    }else{
-    ?>
-    <div class="col-xs-12 center">
-        <h1 class="red-text">Il n'y a pas de soumission en ligne dans cette matière</h1>
-    </div>
 
-    <?php
-    }
     ?>
 </div>
 

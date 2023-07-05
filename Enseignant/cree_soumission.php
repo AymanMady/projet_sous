@@ -56,7 +56,7 @@ if (isset($_POST['button'])) {
 			$code_matiere_result = mysqli_query($conn, $sql3);
 			$row = mysqli_fetch_assoc($code_matiere_result);
 			$code_matire = $row['code'];
-            $matiere_directory = 'C:\wamp64\www\projet_sous-main\Files\\' . $code_matire;
+            $matiere_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $code_matire;
 
             // Créer le dossier s'il n'exist pas
             if (!is_dir($matiere_directory)) {
@@ -64,7 +64,7 @@ if (isset($_POST['button'])) {
             }
 
             // Chemin complet 
-            $destination = $matiere_directory . '\\' . $new_file_name;
+            $destination = $matiere_directory . '/' . $new_file_name;
             move_uploaded_file($file_tmp, $destination);
 
             // Insérer les info dans la base de donnéez

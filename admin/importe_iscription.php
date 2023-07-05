@@ -57,7 +57,7 @@ if($_SESSION["role"]!="admin"){
         </div>
 	</form>
 </div>
-</div>
+</div> 
 
 		<?php
 		if(isset($_POST["import"])){
@@ -104,6 +104,8 @@ if($_SESSION["role"]!="admin"){
 		}
 		
 		?>
-        </div>
+        <!-- </div>
 	</body>
-</html>
+</html> -->
+
+

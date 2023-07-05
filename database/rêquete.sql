@@ -224,7 +224,7 @@ CREATE TABLE reponses(
   id_rep int(10) AUTO_INCREMENT PRIMARY key ,
   description_rep varchar(200) ,
   date datetime DEFAULT NOW(),
-  render bool DEFAULT NULL,
+  render bool DEFAULT 0,
   note float(10) DEFAULT 0,
   id_sous INT(10) not NULL,
   id_etud INT(10) not NULL,

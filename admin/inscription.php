@@ -81,7 +81,7 @@ include "../nav_bar.php";
         <table class="table table-striped table-bordered">
             <tr>
                     <th>Matricule de l'etudiant</th>
-                    <th>Nom du semestre</th>
+                    <th>Semestre</th>
                     <th>Code matiere</th>
                     <th colspan="2">Actions</th>
             </tr>

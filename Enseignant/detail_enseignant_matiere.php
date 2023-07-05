@@ -61,7 +61,7 @@ if($_SESSION["role"]!="ens"){
                 INNER JOIN enseignant ON enseignant.id_ens = enseigner.id_ens
                 WHERE matiere.id_matiere = $id_matiere";
     $req = mysqli_query($conn , $req_detail);
-    while($row=mysqli_fetch_assoc($req)){
+    $row=mysqli_fetch_assoc($req);
     ?>
 
     <div class="row justify-content-center">
@@ -82,14 +82,17 @@ if($_SESSION["role"]!="ens"){
         </div>
     </div>
 
+
+    <div style="display: flex ; justify-content: space-between;">
+    <div>
+    <a href="list_etudiant.php?id_matiere=<?=$row['id_matiere']?>" class = "btn btn-primary" >List des etudiant s'inscrire</a>
+    </div>
+    <div>
+    <a href="../index_enseignant.php" class="btn btn-primary">Retour</a>
+    </div>
     <?php
-    }
     include "../nav_bar.php";
     ?>
-    <p>
-        <a href="../index_enseignant.php" class="btn btn-primary">Retour</a>
-    </p>
-
 </div> <!-- Fermeture de la div container -->
 
 </body>

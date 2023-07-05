@@ -63,7 +63,7 @@ if($_SESSION["role"]!="ens"){
         </div>
             <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;position:relative;" >
                 <strong style="position:absolute;top: 2;left: 0;"  >Le(s) Fichier(s)</strong><br><br>
-                <div style="position:absolute;top: 6;left: 2;">
+                <div style="position:absolute;top: 6;left: 2; width: 380px;">
                 <?php
                 $sql2 = "select * from fichiers_reponses where id_rep='$id_rep' ";
                 $req2 = mysqli_query($conn,$sql2);
@@ -72,21 +72,35 @@ if($_SESSION["role"]!="ens"){
                 }else {
                     while($row2=mysqli_fetch_assoc($req2)){
                         ?>
-           
-           <a href="<?=$row2['chemin_fichiere']?>"><?=$row2['nom_fichiere']?></a><br><br>
-                        <?php
+                        <?php 
+                        $file_chemin = $row2['chemin_fichiere'];
+                        ?>
+                        <div style="display: flex ; justify-content: space-between; " >
+                        <div>
+                        <strong><p><?=$row2['nom_fichiere']?></p></strong>
+                        </div>
+                        <div>
+                        <form action="open_file.php" method="post">
+                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
+                            <button name="view" class="btn btn-primary">View file</button>
+                        </form>
+                        </div>
+                        </div>
+                       <?php
                     }
                 }
                 ?>
                 </div>
             </div>
         </div>
-        <p>
-        <a href="reponses_etud.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Retour</a>
-    </p>
+
+
 
 </div>
 <div style="display: flex ; justify-content: space-between;">
+<div>
+<a href="reponses_etud.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Retour</a>
+</div>
 <a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary mr-25">donne une Note</a>
 </div>
 </div>

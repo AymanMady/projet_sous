@@ -101,16 +101,21 @@
     </div>
 </div>
 <br>
-<div style="display: flex ; justify-content: end ;widh">
+<div style="display: flex ; justify-content: space-between;">
+<div>
+<a href="list_etudiant.php?id_matiere=<?=$row['id_matiere']?>" class = "btn btn-primary" >List des etudiant s'inscrire</a>
+</div>
+<div>
 <form action="" method="POST">
-    <input type="submit" class="btn btn-primary ml-25" value="render" name="sou">
-    </form>
+    <input type="submit" class="btn btn-primary ml-25" value="Envoie les Notes" name="sou">
+</form>
  </div>
+</div>
 <div style="overflow-x:auto;"  >
   <table class="table table-striped table-bordered">
           <tr>
               <th>Matricule</th>
-            <th>Description de la reponse</th>
+              <th>Description de la reponse</th>
               <th>Date</th>
               <th>Details</th>
           </tr>
@@ -129,7 +134,6 @@
                           <td><?=$row['description_rep']?></td>
                           <td><?=$row['date']?></td>
                           <td><a href="consiltation_de_reponse.php?id_rep=<?=$row['id_rep']?>">Details</Details></a></td>
-                          
                       </tr>
                     <?php
                   }

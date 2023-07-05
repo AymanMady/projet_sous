@@ -84,8 +84,46 @@ include "../nav_bar.php";
                 <th colspan="3">Action</th>
             </tr>
 
+<<<<<<< HEAD
+<table class="table table-striped table-bordered">
+    <tr>
+    <th>Matricule</th>
+    <th>Nom et Prénom</th>
+    <th>Semestre</th>
+    <th>E-mail</th>
+    <th colspan="2">Actions</th>
+    </tr>
+    <?php 
+                    include_once "../connexion.php";
+                    $req = mysqli_query($conn , "SELECT * FROM etudiant INNER JOIN semestre USING(id_semestre) ORDER by matricule asc;");
+
+
+                    if(mysqli_num_rows($req) == 0){
+                        echo "Il n'y a pas encore des etudiants ajouter !" ;
+                        
+                    }else {
+                        while($row=mysqli_fetch_assoc($req)){
+                            ?>
+                            <tr>
+                                <td><?=$row['matricule']?></td>
+                                <td><?=$row['nom']?>
+                                <?=$row['prenom']?></td>
+                                <?php $row['lieu_naiss']?>
+                                <?php $row['Date_naiss']?>
+                                <td><?=$row['nom_semestre']?></td>
+                                <?php $row['annee']?>
+                                <td><?=$row['email']?></td>
+                                <td><a href="detail_etudiant.php?id_etud=<?=$row['id_etud']?>">Dètails</a></td>
+                                <td><a href="modifier_etudiant.php?id_etud=<?=$row['id_etud']?>">Modifier</a></td>
+                                <td><a href="supprimer_etudiant.php?id_etud=<?=$row['id_etud']?>" id="supprimer">Supprimer</a></td>
+                            </tr>
+                            <?php
+                        }
+                    }
+=======
             <?php
             while($row = mysqli_fetch_array($req)) {
+>>>>>>> 81a8a4a3f551e3e22d0af3e7d67025313c6abb30
                 ?>
                 <tr>
                     <td><?=$row['matricule']?></td>

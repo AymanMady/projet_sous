@@ -217,17 +217,15 @@
                      
 
                         <li id="potfolio" class="dropdown">   
-                                <a href="index_etudiant.php" >Acceil</a>
+                                <a href="index_etudiant.php" >Accueil</a>
                         </li>
                         <li id="potfolio" class="dropdown">   
                                 <a href="notes.php" >Notes</a>
                         </li>
+                        
                         <li  class="dropdown">
-                               <a href="supprimer_session.php">Se déconnecte</a></div>
-                        </li>   
-                        <!-- <li  class="dropdown">
                                
-                                 <a href="#"><img title="<?//=$row['nom']." ".$row['prenom']?>" 
+                                 <a href="#"><img title="<?=$row_etud['nom']." ".$row_etud['prenom']?>" 
                                  id="myButton" class="style-scope yt-img-shadow" src="../images/supnum.jpg" 
                                  draggable="false" style="width: 32px; height: 32px; border-radius: 50%;"></a>
  
@@ -235,14 +233,14 @@
                                     <li>
                                     <br>
                                         <div class="logo">
-                                            <img title="<?//=$row['nom']." ".$row['prenom']?>" 
+                                            <img title="<?=$row_etud['nom']." ".$row_etud['prenom']?>" 
                                             id="myButton" class="style-scope yt-img-shadow" 
                                             src="../images/photo_ens.jpg" draggable="false" 
                                             style="width: 40px; height: 40px; border-radius: 50%;">
                                             <p></p>
-                                            <a> <strong class='font-weight-bold'><?//=$row['nom']." ".$row['prenom']?></strong></a>
+                                            <a> <strong class='font-weight-bold'><?=$row_etud['nom']." ".$row_etud['prenom']?></strong></a>
                                            
-                                            <p><?//=$row['email']?></p>
+                                            <p><?=$row_etud['email']?></p>
                                         </div> 
                                     </li>
                                     <li>
@@ -256,7 +254,8 @@
                                     </li>
                                 </ul>
                     </li>                               
-                </ul> -->
+                </ul>
+            </ul>
 
                 
             <!-- /.navbar-collapse -->

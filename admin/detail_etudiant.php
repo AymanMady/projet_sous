@@ -47,7 +47,7 @@ while($row=mysqli_fetch_assoc($req)){
                 
                     <fieldset class="fsStyle">
                         <legend class="legendStyle">
-                            <a data-toggle="collapse" data-target="#demo" href="#">Détails sur l'etudiant <?= $row['nom']?></a>
+                            <a data-toggle="collapse" data-target="#demo" href="#">Détails sur l'etudiant <?= $row['nom']." ".$row['prenom']?></a>
                         </legend>
                         <div class="collapse in" id="demo">
                             <div class="search-box">
@@ -68,7 +68,13 @@ while($row=mysqli_fetch_assoc($req)){
                                                             <br><?php echo "<strong class='font-weight-bold'>Date de naissance : </strong>".$row['Date_naiss']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>Lieu de naissance : </strong>". $row['lieu_naiss']; ?><br>
                                                             <?php echo "<strong class='font-weight-bold'>E-mail : </strong>".$row['email']; ?><br>
+<<<<<<< HEAD
+                                                            <?php echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['nom_semestre']; ?><br>
+                                                            <!-- <?php //echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['libelle']; ?><br> -->
+                                                            <?php echo "<strong class='font-weight-bold'>Année : </strong>".$row['annee']; ?>
+=======
                                                             <?php echo "<strong class='font-weight-bold'>Semestre : </strong>".$row['nom_semestre']; ?><br>                                                            <?php echo "<strong class='font-weight-bold'>Année : </strong>".$row['annee']; ?>
+>>>>>>> 087515973c078192fd849c95d6f6c4c956a87824
                                                         </h4>
                                                 
                                                 </fieldset>

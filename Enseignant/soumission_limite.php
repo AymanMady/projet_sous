@@ -189,6 +189,21 @@ if (isset($_SESSION['archive_reussi']) && $_SESSION['archive_reussi'] === true) 
   unset($_SESSION['archive_reussi']);
 }
 
+if (isset($_SESSION['prolongement_reussi']) && $_SESSION['prolongement_reussi'] === true) {
+  echo "<script>
+  Swal.fire({
+      title: 'prolongement réussi !',
+      text: 'La soumission a été prolonger avec succès.',
+      icon: 'success',
+      confirmButtonColor: '#3099d6',
+      confirmButtonText: 'OK'
+  });
+  </script>";
+
+  // Supprimer l'indicateur de succès de la session
+  unset($_SESSION['prolongement_reussi']);
+}
+
 ?>
 
 <script> 
@@ -260,12 +275,11 @@ function modifierDateFin(id_sous, nouvelle_date_fin) {
 }
 
 
-</script>
-<script>
+
+
         function redirectToDetails(id_matiere) {
             window.location.href = "reponses_etud.php?id_sous=" + id_matiere;
         }
-   
 
 var liensArchiver = document.querySelectorAll("#prolonger");
 

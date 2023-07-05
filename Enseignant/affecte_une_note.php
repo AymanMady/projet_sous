@@ -29,7 +29,7 @@ include "../nav_bar.php";
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
                 <li><a href="#">Acceuil</a></li>
-                <li>afectation du note </li>
+                <li>Afectation du note </li>
                    
             </ol>
         </div>

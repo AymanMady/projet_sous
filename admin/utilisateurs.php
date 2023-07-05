@@ -72,7 +72,7 @@ $req = mysqli_query($conn , "SELECT * FROM utilisateur inner join role using(id_
             <tr>
                     <th>E-mail</th>
                     <th>Rôle</th>
-                    <th colspan="2">Action</th>
+                    <th colspan="2">Actions</th>
                
             </tr>
 

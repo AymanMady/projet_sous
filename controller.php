@@ -64,7 +64,7 @@ $alert = "";
                 $role =  $_POST['role'];
                 $email = $_POST['email'];
                 if($role=="enseignant"){
-                    $sql_ens=mysqli_query($conn,"select * from enseignant where login='$email'");
+                    $sql_ens=mysqli_query($conn,"select * from enseignant where email='$email'");
                     $query1="select id_role from enseignant where email='$email' limit 1";
                     $query=mysqli_query($conn,$query1);
                     $droit=mysqli_fetch_assoc($query); 
@@ -170,7 +170,7 @@ $alert = "";
                 if ($result) {
                     $message = '<div class="alert alert-success row-md-15" id="success-alert">
                                 <span aria-hidden="true">&times;</span>
-                                <strong>Nous avons envoyé un code de vérification à votre adresse e-mail  $email </strong>
+                                <strong>Nous avons envoyé un code de vérification à votre adresse e-mail   </strong>
                                 </div>';
 
                     $_SESSION['message'] = $message;

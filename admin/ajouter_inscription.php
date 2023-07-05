@@ -11,8 +11,17 @@ $etudiant = "SELECT * FROM etudiant ";
 $etudiant_qry = mysqli_query($conn, $etudiant); 
 $semestre = "SELECT * FROM semestre ";
 $semestre_qry = mysqli_query($conn, $semestre);
-$matiere = "SELECT * FROM matiere ";
-$matiere_qry = mysqli_query($conn, $matiere);
+//$matiere = "SELECT * FROM matiere ";
+
+// Récupère l'ID du semestre sélectionné depuis le formulaire
+
+// $semestre_id = $_POST['semestre']; 
+
+// $matiere = "SELECT m.*
+//             FROM matiere m
+//             INNER JOIN matiere_semestre ms ON m.id_matiere = ms.id_matiere
+//             WHERE ms.id_semestre = '$semestre_id'";
+// $matiere_qry = mysqli_query($conn, $matiere);
 
 
 ?>
@@ -109,7 +118,7 @@ $matiere_qry = mysqli_query($conn, $matiere);
             <div class="form-group">
                 <label class="col-md-1">Matricule</label>
                 <div class="col-md-6">
-                    <select class = "form-control" id="academic" value="Matricules" name="matricule">
+                    <select class = "form-control"  id="matriculeSelect" value="Matricules" name="matricule">
                         <option selected disabled> Les Matricules </option>
                                 <?php while ($row_etudiant = mysqli_fetch_assoc($etudiant_qry)) : ?>
                             <option value="<?= $row_etudiant['id_etud']; ?>"> <?= $row_etudiant['matricule']; ?> </option>
@@ -120,7 +129,8 @@ $matiere_qry = mysqli_query($conn, $matiere);
             <div class="form-group">
                 <label class="col-md-1" >Semester</label>
                 <div class="col-md-6">
-                    <select class = "form-control" id="academic" value="Semestres" name="semestre">
+                    <!-- id="academic" -->
+                    <select class = "form-control" id="semestreSelect"  value="Semestres" name="semestre">
                         <option selected disabled> Semesters </option>
                                 <?php while ($row_semestre = mysqli_fetch_assoc($semestre_qry)) : ?>
                             <option value="<?= $row_semestre['id_semestre']; ?>"> <?= $row_semestre['nom_semestre']; ?> </option>
@@ -129,16 +139,24 @@ $matiere_qry = mysqli_query($conn, $matiere);
                 </div>
             </div>
             <div class="form-group">
+                    <label class="col-md-1">Code</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="matiereSelect" value="Codes" name="code">
+                            <option selected disabled> Les codes </option>
+                        </select>
+                    </div>
+                </div>
+            <!-- <div class="form-group">
                 <label class="col-md-1" >Code</label>
                 <div class="col-md-6" >
                         <select class = "form-control" id="academic" value="Codes" name="code">
                             <option selected disabled> Les codes </option>
-                                    <?php while ($row_matiere = mysqli_fetch_assoc($matiere_qry)) : ?>
-                                <option value="<?= $row_matiere['id_matiere']; ?>"> <?= $row_matiere['code']; ?> </option>
-                            <?php endwhile; ?> 
+                                    <?php //while ($row_matiere = mysqli_fetch_assoc($matiere_qry)) : ?>
+                                <option value="<?//= $row_matiere['id_matiere']; ?>"> <?//= $row_matiere['code']; ?> </option>
+                            <?php //endwhile; ?> 
                         </select>             
                 </div>
-            </div>
+            </div> -->
             
             <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
@@ -158,3 +176,26 @@ $matiere_qry = mysqli_query($conn, $matiere);
 
 </body>
 </html>
+
+
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var semestreSelect = document.getElementById('semestreSelect');
+            var matiereSelect = document.getElementById('matiereSelect');
+
+            semestreSelect.addEventListener('change', function() {
+                var semestre_id = this.value;
+
+                // Requête AJAX pour récupérer les matières du semestre sélectionné
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        matiereSelect.innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.open('GET', 'get_matiere.php?semestre_id=' + semestre_id, true);
+                xhr.send();
+            });
+        });
+    </script>

@@ -65,7 +65,7 @@
 </div>
 <script>
     function redirectToDetails(id_matiere) {
-        window.location.href = "reponses_etud.php?id_matiere=" + id_matiere;
+        // window.location.href = "reponses_etud.php?id_matiere=" + id_matiere;
     }
 </script>
 </body>

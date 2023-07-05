@@ -55,5 +55,6 @@
     include "../nav_bar.php";
     ?>
 </div>
+
 </body>
 </html>

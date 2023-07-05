@@ -1,29 +1,40 @@
+<?php
+include_once "../connexion.php";
+
+// Récupération de la valeur de recherche envoyée en GET
+$recherche = $_GET["recherche"];
+
+// Construction de la requête SQL SELECT
+$sql = "SELECT etudiant.matricule,etudiant.nom,etudiant.prenom,etudiant.email,etudiant.annee   FROM etudiant WHERE nom LIKE '".$recherche."%' OR prenom LIKE '".$recherche."%'";
+
+// Exécution de la requête SQL
+$result = mysqli_query($conn, $sql);
+
+// Affichage des résultats de la recherche
+if (mysqli_num_rows($result) > 0) {
+    echo "<table>";
+    echo "<tr><th>Matricule</th><th>Nom</th><th>Prénom</th><th>Semestre</th><th>Email</th></tr>";
+    while($row = mysqli_fetch_assoc($result)) {
+        echo "<tr><td>" . $row["matricule"]. "</td><td>" . $row["nom"]. "</td><td>" . $row["prenom"]. "</td><td>" . $row["annee"]. "</td><td>" . $row["email"]. "</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "Aucun résultat trouvé";
+}
+
+// Fermeture de la connexion à la base de données
+mysqli_close($conn);
+?>
+
 
 <?php
-    session_start() ;
-    
+session_start() ;
 $email = $_SESSION['email'];
 if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
-include_once "../connexion.php";
-include "../nav_bar.php";
-$searched = false;
 
-if(isset($_POST['search'])) {
-    $search = $_POST['search'];
-    $req1 =  "SELECT * FROM enseignant  WHERE nom LIKE '%{$search}%' OR prenom LIKE '%{$search}%' OR num_tel LIKE '%{$search}%' OR email LIKE '%{$search}%' ORDER by nom asc;";
-    if( $search!=""){
-    $searched = true;
-    }
-    else{
-        $searched = false;
-    }
-   
-} else {
-$req1 = "SELECT * FROM enseignant  ORDER BY nom ASC ;";
-}
-$req = mysqli_query($conn , $req1);
+include "../nav_bar.php";
 ?>
 
 
@@ -32,94 +43,103 @@ $req = mysqli_query($conn , $req1);
     <script src="../JS/sweetalert2.js"></script>
 
 
+
 </br></br></br>
-<?php if (!$searched) { ?>
-        <div class="container">
+<div class="container">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12"> 
             <ol class="breadcrumb">
-                <li><a href="acceuil.php">Acceuil</a></li>
-                <li>Gestion des enseignant</li>
+                <li><a href="acceuil.php">Acceuil</a>
+                    
+                </li>
+                    <li>Gestion des etudiants</li>
+                   
             </ol>
         </div>
     </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="well">
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="well">
+                
                     <fieldset class="fsStyle">
                         <legend class="legendStyle">
                             <a data-toggle="collapse" data-target="#demo" href="#">Filtre</a>
                         </legend>
                         <div class="collapse in" id="demo">
-                            <form method="POST">
-                                <div class="search-box">
-                                    <div class="form-group">
-                                        <div class="col-md-4 col-sm-3">
-                                            <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
-                                        </div>
+                            <div class="search-box">
+
+                                <div class="form-group">
+                                    <div class="col-md-4 col-sm-3">
+                                        <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
                                     </div>
                                 </div>
-                            </form>
+                                <button type="submit" class="btn btn-info">Filtre</button>
+
+                            </div>
                         </div>
                     </fieldset>
-                </div>
             </div>
         </div>
-        <br>
-        <div style="display: flex ; justify-content: space-between;">
-        <a href="ajouter_enseignant.php" class = "btn btn-primary" >Nouveau</a>
-        <a href="import_enseignant.php"  class="btn btn-primary ml-25">importer</a>
+    </div>
+
+    <br>
+    <div style="display: flex ; justify-content: space-between;">
+        <a href="ajouter_etudiant.php" class = "btn btn-primary mr-25" >Nouveau</a>
+        <a href="change_semestre.php" class = "btn btn-primary mr-25" >Changement de semestre</a>
+        <a href="importer_etudiant.php"  class="btn btn-primary ml-25">importer</a>
     </div>
     <br>
-    <?php } ?>
 
-    <br>
+
+
+
+
     <div style="overflow-x:auto;">
 
-        <table class="table table-striped table-bordered">
-                <tr>
-                    <th>Nom et Prénom</th>
-                    <th>E-mail</th>
-                    <th>Tel et Whatsapp</th>
-                    <th colspan="3">Action</th>
-                </tr>
+<table class="table table-striped table-bordered">
+    <tr>
+    <th>Matricule</th>
+    <th>Nom et Prénom</th>
+    <th>Semestre</th>
+    <th>E-mail</th>
+    <th colspan="2">Action</th>
+    </tr>
+    <?php 
+                    include_once "../connexion.php";
+                    $req = mysqli_query($conn , "SELECT * FROM etudiant INNER JOIN semestre USING(id_semestre) ORDER by matricule asc;");
 
 
-            <?php 
-
-                    
-                    
-                  
                     if(mysqli_num_rows($req) == 0){
-                        echo "Il n'y a pas encore des enseignant ajouter !" ;
+                        echo "Il n'y a pas encore des etudiants ajouter !" ;
+                        
                     }else {
                         while($row=mysqli_fetch_assoc($req)){
                             ?>
-                           <tr>
+                            <tr>
+                                <td><?=$row['matricule']?></td>
                                 <td><?=$row['nom']?>
                                 <?=$row['prenom']?></td>
+                                <?php $row['lieu_naiss']?>
+                                <?php $row['Date_naiss']?>
+                                <td><?=$row['nom_semestre']?></td>
+                                <?php $row['annee']?>
                                 <td><?=$row['email']?></td>
-                                <td><?=$row['num_tel']?>
-                                <?=$row['num_whatsapp']?></td>
-                                <td><a href="detail_enseignant.php?id_ens=<?=$row['id_ens']?>">Détails</a></td>
-                                <td><a href="modifier_enseignant.php?id_ens=<?=$row['id_ens']?>">Modifier</a></td>
-                                <td><a href="supprimer_enseignant.php?id_ens=<?=$row['id_ens']?>" id="supprimer">Supprimer</a></td>
+                                <td><a href="detail_etudiant.php?id_etud=<?=$row['id_etud']?>">Dètails</a></td>
+                                <td><a href="modifier_etudiant.php?id_etud=<?=$row['id_etud']?>">Modifier</a></td>
+                                <td><a href="supprimer_etudiant.php?id_etud=<?=$row['id_etud']?>" id="supprimer">Supprimer</a></td>
                             </tr>
-                                                       
                             <?php
                         }
                     }
-                    
-                        ?>
+                ?>
 
-
-
-        </table>
+</table>
+</div>
+<div class="pager">
     </div>
-    <div class="pager">
-            </div>
 
-
+</div>
 <?php
 //if (isset($_GET['succes']) && $_GET['succes'] == 1) {
 
@@ -127,7 +147,7 @@ if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
     echo "<script>
     Swal.fire({
         title: 'Ajout réussi !',
-        text: 'L\'enseignant a été ajouté avec succès.',
+        text: 'L\'etudiant a été ajouté avec succès.',
         icon: 'success',
         confirmButtonColor: '#3099d6',
         confirmButtonText: 'OK'
@@ -143,7 +163,7 @@ if (isset($_SESSION['supp_reussi']) && $_SESSION['supp_reussi'] === true) {
     echo "<script>
     Swal.fire({
         title: 'Suppression réussi !',
-        text: 'L\'enseignant a été supprimer avec succès.',
+        text: 'L\'etudiant a été supprimer avec succès.',
         icon: 'success',
         confirmButtonColor: '#3099d6',
         confirmButtonText: 'OK'
@@ -159,7 +179,7 @@ if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true
     echo "<script>
     Swal.fire({
         title: 'Modification réussi !',
-        text: 'L\'enseignant a été modifier avec succès.',
+        text: 'L\'etudiant a été modifier avec succès.',
         icon: 'success',
         confirmButtonColor: '#3099d6',
         confirmButtonText: 'OK'
@@ -172,12 +192,8 @@ if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true
 
 ?>
 
-</div>
 </body>
-
 </html>
-
-
 
 
 <script>
@@ -188,7 +204,7 @@ liensArchiver.forEach(function(lien) {
   lien.addEventListener("click", function(event) {
     event.preventDefault();
     Swal.fire({
-      title: "voulez-vous vraiment supprimé ce enseignant ?",
+      title: "voulez-vous vraiment supprimé ce etudiant ?",
       text: "",
       icon: "question",
       showCancelButton: true,
@@ -219,29 +235,4 @@ liensArchiver.forEach(function(lien) {
 // });
 
    
-</script>
-<script>
-$(document).ready(function(){
-    $('.search-text').on('input', function(){
-        var search = $(this).val();
-        if(search != '') {
-            $.ajax({
-                url:'enseignant.php',
-                method:'POST',
-                data:{search:search},
-                success:function(response){
-                    $('tbody').html(response);
-                }
-            });
-        } else {
-            $.ajax({
-                url:'enseignant.php',
-                method:'POST',
-                success:function(response){
-                    $('tbody').html(response);
-                }
-            });
-        }
-    });
-});
 </script>

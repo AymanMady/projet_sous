@@ -92,10 +92,7 @@ while($row=mysqli_fetch_assoc($req)){
   <p>
         <a href="etudiant.php" class = "btn btn-primary" >Retour</a>
         </p>
-        <br>
-        <p>
-        <a href="desactive.php?id_etud=<?=$id_etud?>" class = "btn btn-primary" >desactive</a>
-        </p>
+        
 <?php
     
 }

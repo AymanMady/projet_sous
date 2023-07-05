@@ -87,7 +87,7 @@ if($_SESSION["role"]!="ens"){
     include "../nav_bar.php";
     ?>
     <p>
-        <a href="../index_enseignant.php" class="btn btn-primary">Retour</a>
+        <a href="index_enseignant.php" class="btn btn-primary">Retour</a>
     </p>
 
 </div> <!-- Fermeture de la div container -->

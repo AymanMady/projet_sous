@@ -73,14 +73,16 @@ if($_SESSION["role"]!="admin"){
 			require 'excelReader/SpreadsheetReader.php';
 
 			$reader = new SpreadsheetReader($targetDirectory);
-            mysqli_query($conn, "DELETE FROM  inscripsion");
+            mysqli_query($conn, "DELETE FROM  inscription");
 			foreach($reader as $key => $row){
-				$groupe_cm = $row[0];
-				$groupe_tp = $row[1];
-				if(mysqli_query($conn, "INSERT INTO inscripsion(`id_matieres`, `id_etudi`) VALUES( (SELECT id_matiere FROM matiere WHERE code = '$groupe_cm'), (SELECT id_etud from etudiant WHERE matricule = '$groupe_tp'))")){
-                    
-                    header('location:inscription.php');
+				$matricule = $row[0];
+				$code = $row[1];
+				$semester=$row[2];
 
+				$resu=mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_matiere`,`id_semestre`) VALUES((SELECT id_etud from etudiant WHERE matricule = '$matricule'),(SELECT id_matiere FROM matiere WHERE code = '$code'),(SELECT id_semestre FROM semestre WHERE nom_semestre='$semester'))");
+				if($resu){
+                    
+                    echo "bonne";
                 }
 			}
 

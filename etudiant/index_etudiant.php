@@ -73,7 +73,7 @@ include_once "../connexion.php";
 
     <script>
         function redirectToDetails(id_matiere) {
-            window.location.href = "soumission_etu.php?id_matiere=" + id_matiere;
+            window.location.href = "soumission_etu_par_matiere.php?id_matiere=" + id_matiere;
         }
     </script>
 </body>

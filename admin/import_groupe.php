@@ -43,10 +43,6 @@ require '../connexion.php';
 </div>
 </div>
 
-
-
-
-
 		
 		<?php
 		if(isset($_POST["import"])){

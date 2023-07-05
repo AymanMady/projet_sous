@@ -81,8 +81,8 @@ include "../nav_bar.php";
         <table class="table table-striped table-bordered">
             <tr>
                     <th>Matricule de l'etudiant</th>
-                    <th>Semestre</th>
                     <th>Code matiere</th>
+                    <th>Semestre</th>
                     <th colspan="2">Actions</th>
             </tr>
 
@@ -98,27 +98,11 @@ include "../nav_bar.php";
                         
                     }else {
                         while($row=mysqli_fetch_assoc($req)){
-                            // $id_matiere=$row['id_matiere'];
-                            // $id_etud=$row['id_etud'];
-                            // $id_semestre=$row['id_semestre'];
-                            // $req_matiere = mysqli_query($conn , "SELECT * FROM matiere where id_matiere = $id_matiere");
-                            // $req_etudiant = mysqli_query($conn , "SELECT * FROM etudiant where id_etud =$id_etud ");
-                            // $req_semestre = mysqli_query($conn , "SELECT * FROM semestre where id_semestre =$id_semestre ");
-
-                            // try{
-                            // $row_matiere=mysqli_fetch_assoc($req_matiere);
-                            // $row_etudiant=mysqli_fetch_assoc($req_etudiant);
-                            // $row_semestre=mysqli_fetch_assoc($req_semestre);
-                            // }
-                            // catch(Exception){
-
-                            // }
                             ?>
                             <tr>
                             <td><?=$row['matricule']?></td>
-                            <td><?=$row['nom_semestre']?></td>
                             <td><?=$row['code']?></td>
-                            
+                            <td><?=$row['nom_semestre']?></td>
                             <td><a href="modifier_inscription.php?id_insc=<?=$row['id_insc']?>">Modifier</a></td>
                             <td><a href="supprimer_inscription.php?id_insc=<?=$row['id_insc']?>" id="supprimer"> Supprimer</a></td>
                             </tr>

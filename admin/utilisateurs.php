@@ -5,6 +5,19 @@ if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
 include "../nav_bar.php";
+include_once "../connexion.php";
+$searched = false;
+
+if(isset($_POST['search'])) {
+    $search = $_POST['search'];
+    $req = mysqli_query($conn, "SELECT * FROM utilisateur inner join role using(id_role) WHERE login LIKE '%{$search}%' or profile LIKE '%{$search}%'  ORDER by login asc;");
+    if( $search!=""){
+    $searched = true;
+    }
+   
+} else {
+$req = mysqli_query($conn , "SELECT * FROM utilisateur inner join role using(id_role)");
+}
 ?>
 
 
@@ -15,52 +28,44 @@ include "../nav_bar.php";
 
 
 </br></br></br>
-<div class="container">
+<?php if (!$searched) { ?>
+        <div class="container">
     <div class="row">
-        <div class="col-lg-12"> 
+        <div class="col-lg-12">
             <ol class="breadcrumb">
-                <li><a href="acceuil.php">Acceuil</a>
-                    
-                </li>
-                <li>Gestion des utilisateurs</li>
-                   
+                <li><a href="acceuil.php">Acceuil</a></li>
+                <li>Gestion des utilisataires</li>
             </ol>
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="well">
-                
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well">
                     <fieldset class="fsStyle">
                         <legend class="legendStyle">
                             <a data-toggle="collapse" data-target="#demo" href="#">Filtre</a>
                         </legend>
                         <div class="collapse in" id="demo">
-                            <div class="search-box">
-
-                                <div class="form-group">
-                                    <div class="col-md-4 col-sm-3">
-                                        <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
+                            <form method="POST">
+                                <div class="search-box">
+                                    <div class="form-group">
+                                        <div class="col-md-4 col-sm-3">
+                                            <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
+                                        </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-info">Filtre</button>
-
-                            </div>
+                            </form>
                         </div>
                     </fieldset>
-                
+                </div>
             </div>
-            <!-- /well -->
         </div>
-    </div>
-    <div class="text-center">
-       
+        <br>
+        <div style="display: flex ; justify-content: space-between;">
+        <a href="ajouter_utilisateur.php" class = "btn btn-primary" >Nouveau</a>
     </div>
     <br>
-    <p>
-        <a href="ajouter_utilisateur.php" class = "btn btn-primary" >Nouveau</a>
-    </p>   
+    <?php } ?>
     <div style="overflow-x:auto;">
 
         <table class="table table-striped table-bordered">
@@ -73,8 +78,7 @@ include "../nav_bar.php";
 
 
             <?php 
-                    include_once "../connexion.php";
-                    $req = mysqli_query($conn , "SELECT * FROM utilisateur inner join role using(id_role)");
+                    
                     if(mysqli_num_rows($req) == 0){
                         echo "Il n'y a pas encore des utilisateur ajouter !" ;
                     }else {
@@ -85,6 +89,7 @@ include "../nav_bar.php";
                                 <td><?=$row['profile']?></td>
                                 <td><a href="modifier_utilisateur.php?id_user=<?=$row['id_user']?>">Modifier</a></td>
                                 <td><a href="supprimer_utilisateur.php?id_user=<?=$row['id_user']?>" id="supprimer"> Supprimer</a></td>
+                                <td><a href="desactive.php?id_user=<?=$row['id_user']?>" id="desactive"> desactive</a></td>
                             </tr>
                             <?php
                         }
@@ -174,10 +179,67 @@ liensArchiver.forEach(function(lien) {
     });
   });
 });
+var liensArchivers = document.querySelectorAll("#desactive");
 
+// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
+liensArchivers.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "Voulez-vous vraiment desactive ce utilisateur ?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "desactive"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
+        Swal.fire({
+          title: "desactivation réussie !",
+          text: "L'utilisateur a été desactive avec succès.",
+          icon: "success",
+          confirmButtonColor: "#3099d6",
+          confirmButtonText: "OK",
+          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
+          //timerProgressBar: true,
+          showConfirmButton: true
+        }).then(() => {
+          // Redirection après le délai
+          window.location.href = this.href;
+        });
+      }
+    });
+  });
+});
     
   //});
 //});
+$(document).ready(function(){
+    $('.search-text').on('input', function(){
+        var search = $(this).val();
+        if(search != '') {
+            $.ajax({
+                url:'utilisateurs.php',
+                method:'POST',
+                data:{search:search},
+                success:function(response){
+                    $('tbody').html(response);
+                }
+            });
+        } else {
+            $.ajax({
+                url:'utilisateurs.php',
+                method:'POST',
+                success:function(response){
+                    $('tbody').html(response);
+                }
+            });
+        }
+    });
+});
 
 
 </script>

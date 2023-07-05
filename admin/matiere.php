@@ -7,6 +7,19 @@ if($_SESSION["role"]!="admin"){
 }
 
 include "../nav_bar.php";
+include_once "../connexion.php";
+$searched = false;
+
+if(isset($_POST['search'])) {
+    $search = $_POST['search'];
+    $matiere_query = "SELECT * FROM matiere INNER JOIN semestre USING(id_semestre) WHERE code LIKE '%{$search}%' or libelle LIKE '%{$search}%' or specialite LIKE '%{$search}%' or nom_semestre LIKE '%{$search}%'  ORDER by code asc";
+    if( $search!=""){
+    $searched = true;
+    }
+   
+} else {
+$matiere_query = "SELECT * FROM matiere INNER JOIN semestre USING(id_semestre)"; 
+}
 ?>
 
 
@@ -16,54 +29,46 @@ include "../nav_bar.php";
 
 
 </br></br></br>
-<div class="container">
+<?php if (!$searched) { ?>
+        <div class="container">
     <div class="row">
-        <div class="col-lg-12"> 
+        <div class="col-lg-12">
             <ol class="breadcrumb">
-                <li><a href="acceuil.php">Acceuil</a>
-                          
-                </li>
-                <li>Gestion des matiéres</li>
-
+                <li><a href="acceuil.php">Acceuil</a></li>
+                <li>Gestion des matiere</li>
             </ol>
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="well">
-                
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well">
                     <fieldset class="fsStyle">
                         <legend class="legendStyle">
                             <a data-toggle="collapse" data-target="#demo" href="#">Filtre</a>
                         </legend>
                         <div class="collapse in" id="demo">
-                            <div class="search-box">
-
-                                <div class="form-group">
-                                    <div class="col-md-4 col-sm-3">
-                                       
-                                        <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
+                            <form method="POST">
+                                <div class="search-box">
+                                    <div class="form-group">
+                                        <div class="col-md-4 col-sm-3">
+                                            <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
+                                        </div>
                                     </div>
                                 </div>
-                                <button  type="submit" class="btn btn-info">Filtre</button>
-
-                            </div>
+                            </form>
                         </div>
                     </fieldset>
-                
+                </div>
             </div>
         </div>
-    </div>
-    <div class="text-center">
-       
-    </div> 
-   
-    <br>
-    <div style="display: flex ; justify-content: space-between;">
+        <br>
+        <div style="display: flex ; justify-content: space-between;">
         <a href="ajoute_matiere.php" class = "btn btn-primary" >Nouveau</a>
         <a href="importe_matiere.php"  class="btn btn-primary ml-25">Importer</a>
     </div>
+    <br>
+    <?php } ?>
+
     <br>
     <div style="overflow-x:auto;">
   <table class="table table-striped table-bordered">
@@ -75,12 +80,7 @@ include "../nav_bar.php";
             <th colspan="4">Actions</th>
         </tr>
     <?php
-include_once "../connexion.php";
 
-
-
-// Vérification si des matières existent
-$matiere_query = "SELECT * FROM matiere INNER JOIN semestre USING(id_semestre)"; 
 $matiere_result = mysqli_query($conn, $matiere_query);
 
 if (mysqli_num_rows($matiere_result) == 0) {
@@ -218,6 +218,28 @@ liensArchiver.forEach(function(lien) {
     });
 //   });
 // });
-
+$(document).ready(function(){
+    $('.search-text').on('input', function(){
+        var search = $(this).val();
+        if(search != '') {
+            $.ajax({
+                url:'matiere.php',
+                method:'POST',
+                data:{search:search},
+                success:function(response){
+                    $('tbody').html(response);
+                }
+            });
+        } else {
+            $.ajax({
+                url:'matiere.php',
+                method:'POST',
+                success:function(response){
+                    $('tbody').html(response);
+                }
+            });
+        }
+    });
+});
    
 </script>

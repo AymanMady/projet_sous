@@ -4,15 +4,11 @@ $email = $_SESSION['email'];
 if($_SESSION["role"] != "admin"){
     header("location:authentification.php");
 }
-$id_etud =$_GET['id_etud'];
-include_once "../connexion.php";
-$sql="SELECT * FROM etudiant WHERE id_etud=$id_etud";
-$req=mysqli_query($conn,$sql);
-$row=mysqli_fetch_assoc($req);
-$email=$row['email'];
-$sql2="UPDATE utilisateur SET utilisateur.active=0 WHERE utilisateur.login='$email'";
+  include_once "../connexion.php";
+  $id_user= $_GET['id_user'];
+$sql2="UPDATE utilisateur SET utilisateur.active=0 WHERE `utilisateur`.`id_user`= $id_user";
 $req1=mysqli_query($conn,$sql2);
 if($req1){
-    header("location:etudiant.php");
+    header("location:utilisateurs.php");
 }
 ?>

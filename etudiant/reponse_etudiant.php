@@ -67,7 +67,7 @@ if (isset($_POST['button'])) {
 			$code_matiere_result = mysqli_query($conn, $sql3);
 			$row = mysqli_fetch_assoc($code_matiere_result);
 			$matricule = $row['matricule'];
-            $matricule_directory = 'C:\wamp64\www\projet_sous-main\Files\\' . $matricule;
+            $matricule_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $matricule;
 
             // Créer le dossier s'il n'exist pas
             if (!is_dir($matricule_directory)) {
@@ -75,7 +75,7 @@ if (isset($_POST['button'])) {
             }
 
             // Chemin complet 
-            $destination = $matricule_directory . '\\' . $new_file_name;
+            $destination = $matricule_directory . '/' . $new_file_name;
             move_uploaded_file($file_tmp, $destination);
 
             // Insérer les info dans la base de donnéez
@@ -155,7 +155,7 @@ include "../nav_bar.php";
                 $code_matiere_result = mysqli_query($conn, $sql3);
                 $row = mysqli_fetch_assoc($code_matiere_result);
                 $matricule = $row['matricule'];
-                $matricule_directory = 'C:\wamp64\www\projet_sous-main\Files\\' . $matricule;
+                $matricule_directory = 'C:/wamp64/www/projet_sous-main/Files/' . $matricule;
     
                 // Créer le dossier s'il n'exist pas
                 if (!is_dir($matricule_directory)) {
@@ -163,7 +163,7 @@ include "../nav_bar.php";
                 }
     
                 // Chemin complet 
-                $destination = $matricule_directory . '\\' . $new_file_name;
+                $destination = $matricule_directory . '/' . $new_file_name;
                 move_uploaded_file($file_tmp, $destination);
     
                 // Insérer les info dans la base de donnéez

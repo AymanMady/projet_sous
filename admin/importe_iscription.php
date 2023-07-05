@@ -43,7 +43,7 @@ if($_SESSION["role"]!="admin"){
 
 <div class="form-horizontal">
 <br><br>
-<form action="" method="POST" enctype="multipart/form-data">
+	<form action="" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label class="col-md-1">Sélectionner un fichier Excel : </label>
             <div class="col-md-6">
@@ -77,6 +77,7 @@ if($_SESSION["role"]!="admin"){
 			require 'excelReader/SpreadsheetReader.php';
 			
 			$reader = new SpreadsheetReader($targetDirectory);
+<<<<<<< HEAD
             // mysqli_query($conn, "DELETE FROM  inscription");
 			echo "Hello";
 			foreach($reader as $key => $row){
@@ -88,19 +89,36 @@ if($_SESSION["role"]!="admin"){
 				((SELECT id_etud from etudiant WHERE matricule = '$matricule'),
 				(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'),
 				 (SELECT id_matiere FROM matiere WHERE code = '$code_matiere'))")){
+=======
+            // mysqli_query($conn, "DELETE FROM  inscripsion");
+			foreach($reader as $key => $row){
+				$etud = $row[0];
+				$matiere = $row[1];
+				$semestre = $row[2];
+				$sql = "INSERT INTO inscripsion(`id_etud`,`id_matiere`, `id_semestre`) VALUES( (SELECT id_etud from etudiant WHERE matricule = '$etud'), (SELECT id_matiere FROM matiere WHERE code = '$matiere'),(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'))";
+				if(mysqli_query($conn,$sql)){
+>>>>>>> 81a8a4a3f551e3e22d0af3e7d67025313c6abb30
                     
                     header('location:inscription.php');
+					echo
+					"
+					<script>
+					alert('Succesfully Imported');
+					document.location.href = '';
+					</script>
+					";
 
-                }
+                }else{
+					echo
+					"
+					<script>
+					alert(' Imported Error');
+					document.location.href = '';
+					</script>
+					";
+				}
 			}
 
-			echo
-			"
-			<script>
-			alert('Succesfully Imported');
-			document.location.href = '';
-			</script>
-			";
 		}
 		
 		?>

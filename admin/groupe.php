@@ -4,7 +4,19 @@ $email = $_SESSION['email'];
 if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
+include_once "../connexion.php";
+$searched = false;
 
+if(isset($_POST['search'])) {
+    $search = $_POST['search'];
+    $req = mysqli_query($conn , "SELECT * FROM groupe  WHERE filiere LIKE '%{$search}%' or libelle LIKE '%{$search}%'  ORDER by libelle asc;");
+    if( $search!=""){
+    $searched = true;
+    }
+   
+} else {
+ $req = mysqli_query($conn , "SELECT * FROM groupe");
+}
 include "../nav_bar.php";
 
 ?>
@@ -28,54 +40,45 @@ include "../nav_bar.php";
 </head>
 <body>
 </br></br></br>
-<div class="container">
+<?php if (!$searched) { ?>
+        <div class="container">
     <div class="row">
-        <div class="col-lg-12"> 
+        <div class="col-lg-12">
             <ol class="breadcrumb">
-                <li><a href="acceuil.php">Acceuil</a>
-                    
-                </li>
-                <li>Gestion des groupes</li>
-                   
+                <li><a href="acceuil.php">Acceuil</a></li>
+                <li>Gestion des groupe</li>
             </ol>
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="well">
-                
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well">
                     <fieldset class="fsStyle">
                         <legend class="legendStyle">
                             <a data-toggle="collapse" data-target="#demo" href="#">Filtre</a>
                         </legend>
                         <div class="collapse in" id="demo">
-                            <div class="search-box">
-                                <div class="form-group">
-                                    <div class="col-md-4 col-sm-3">
-                                        <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
+                            <form method="POST">
+                                <div class="search-box">
+                                    <div class="form-group">
+                                        <div class="col-md-4 col-sm-3">
+                                            <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
+                                        </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-info">Filtre</button>
-
-                            </div>
+                            </form>
                         </div>
                     </fieldset>
-                
+                </div>
             </div>
         </div>
-    </div>
-    <div class="text-center">
-       
-    </div>
-    <br>
-
-    <div style="display: flex ; justify-content: space-between;">
+        <br>
+        <div style="display: flex ; justify-content: space-between;">
         <a href="ajouter_groupe.php" class = "btn btn-primary" >Nouveau</a>
         <a href="import_groupe.php"  class="btn btn-primary ml-25">importer</a>
     </div>
     <br>
-    <div style="overflow-x:auto;">
+    <?php } ?>
 
         <table class="table table-striped table-bordered">
             <tr>
@@ -86,8 +89,7 @@ include "../nav_bar.php";
 
 
             <?php 
-                    include_once "../connexion.php";
-                    $req = mysqli_query($conn , "SELECT * FROM groupe");
+                    
                     if(mysqli_num_rows($req) == 0){
                         echo "Il n'y a pas encore des groupes ajouter !" ;
                         
@@ -207,5 +209,28 @@ liensArchiver.forEach(function(lien) {
 //   });
 // });
 
-   
-</script>
+
+$(document).ready(function(){
+    $('.search-text').on('input', function(){
+        var search = $(this).val();
+        if(search != '') {
+            $.ajax({
+                url:'groupe.php',
+                method:'POST',
+                data:{search:search},
+                success:function(response){
+                    $('tbody').html(response);
+                }
+            });
+        } else {
+            $.ajax({
+                url:'groupe.php',
+                method:'POST',
+                success:function(response){
+                    $('tbody').html(response);
+                }
+            });
+        }
+    });
+});
+</script>  

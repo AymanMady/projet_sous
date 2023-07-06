@@ -9,13 +9,14 @@ $searched = false;
 
 if(isset($_POST['search'])) {
     $search = $_POST['search'];
-    $req = mysqli_query($conn , "SELECT * FROM groupe  WHERE filiere LIKE '%{$search}%' or libelle LIKE '%{$search}%'  ORDER by libelle asc;");
+    $req = mysqli_query($conn , "SELECT * FROM groupe g, departement d WHERE g.id_dep = d.id and ( code LIKE '%{$search}%' or libelle LIKE '%{$search}%')  ORDER by libelle asc;");
     if( $search!=""){
     $searched = true;
     }
    
 } else {
- $req = mysqli_query($conn , "SELECT * FROM groupe g, departement d WHERE g.id_dep = d.id");
+    $sql ="SELECT * FROM groupe g, departement d WHERE g.id_dep = d.id";
+ $req = mysqli_query($conn , $sql);
 }
 include "../nav_bar.php";
 

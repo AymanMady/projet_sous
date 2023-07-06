@@ -60,56 +60,6 @@ if($_SESSION["role"]!="admin"){
 </div> 
 
 		<?php
-<<<<<<< HEAD
-=======
-		if(isset($_POST["import"])){
-			$fileName = $_FILES["file"]["name"];
-			$fileExtension = explode('.', $fileName);
-      		$fileExtension = strtolower(end($fileExtension));
-			$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
-			
-			$targetDirectory = "uploads/" . $newFileName;
-			move_uploaded_file($_FILES['file']['tmp_name'], $targetDirectory);
-
-
-			error_reporting(0);
-			ini_set('display_errors', 0);
-
-			require 'excelReader/excel_reader2.php';
-			require 'excelReader/SpreadsheetReader.php';
-			
-			$reader = new SpreadsheetReader($targetDirectory);
-            // mysqli_query($conn, "DELETE FROM  inscripsion");
-			foreach($reader as $key => $row){
-				$etud = $row[0];
-				$matiere = $row[1];
-				$semestre = $row[2];
-				$sql = "INSERT INTO inscripsion(`id_etud`,`id_matiere`, `id_semestre`) VALUES( (SELECT id_etud from etudiant WHERE matricule = '$etud'), (SELECT id_matiere FROM matiere WHERE code = '$matiere'),(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'))";
-				if(mysqli_query($conn,$sql)){
-                    
-                    header('location:inscription.php');
-					echo
-					"
-					<script>
-					alert('Succesfully Imported');
-					document.location.href = '';
-					</script>
-					";
-
-                }else{
-					echo
-					"
-					<script>
-					alert(' Imported Error');
-					document.location.href = '';
-					</script>
-					";
-				}
-			}
-
-		}
->>>>>>> 1270a76982af15d527f7aea36cfbc777bcb637d1
-		
 
 			if (isset($_POST["import"])) {
 
@@ -146,13 +96,6 @@ if($_SESSION["role"]!="admin"){
 
 					}
 				
-				
-				// echo "
-				// <script>
-				// alert('Successfully Imported');
-				// document.location.href = 'inscription.php';
-				// </script>
-				// ";
 		
 		}
 		include "../nav_bar.php";

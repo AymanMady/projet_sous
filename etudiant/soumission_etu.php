@@ -90,15 +90,29 @@
                 }
             ?>
             </div>
+            <?php
+            $id_sous= $row['id_sous'];
+    }
+    ?>
     </div>
+    <?php
+    $sql = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
+    $req = mysqli_query($conn,$sql);
+    if (mysqli_num_rows($req) == 0) {
+    ?>
     <p>
-        <a href="reponse_etudiant.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Rendre le travail</a>
+        <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
     </p>
-</div>
+    <?php
+    }else{
+    ?>
+    <p>
+        <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Modifier le travail</a>
+    </p>
     <?php
     }
-
     ?>
+</div>
 </div>
 
 </body>

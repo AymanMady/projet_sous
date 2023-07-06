@@ -171,9 +171,12 @@ if($_SESSION["role"]!="ens"){
 <br>
 <br>
 <br>
+<?php
+
+    ?>
 <div style="display: flex ; justify-content: space-between;">
 <div>
-<a href="reponses_etud.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Retour</a>
+<a href="reponses_etud.php?id_sous=<?=$row1['id_sous']?>" class="btn btn-primary">Retour</a>
 </div>
 <a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary mr-25">donne une Note</a>
 </div>

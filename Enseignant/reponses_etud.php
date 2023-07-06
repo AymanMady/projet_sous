@@ -8,7 +8,7 @@
  include_once "../connexion.php";
     $id_sous = $_GET['id_sous'];
     if(isset($_POST['sou'])){
-        $sql="UPDATE reponses set render=1 WHERE id_sous=' $id_sous'";
+        $sql="UPDATE reponses set render=1 WHERE id_sous='$id_sous'";
         mysqli_query($conn,$sql);
     }
 ?>

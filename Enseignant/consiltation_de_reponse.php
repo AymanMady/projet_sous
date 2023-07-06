@@ -105,9 +105,12 @@ if($_SESSION["role"]!="ens"){
             <br><br>
             <?php
     }
+    // $req_detail = "SELECT * FROM reponses inner join etudiant using(id_etud) WHERE id_rep = $id_rep  ";
+    // $req = mysqli_query($conn , $req_detail);
+    // $row=mysqli_fetch_assoc($req)
     $req_detail = "SELECT * FROM reponses inner join etudiant using(id_etud) WHERE id_rep = $id_rep  ";
     $req = mysqli_query($conn , $req_detail);
-    $row=mysqli_fetch_assoc($req)
+    $row1=mysqli_fetch_assoc($req)
     ?>
         </div>
             <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;position:relative;" >
@@ -155,8 +158,8 @@ if($_SESSION["role"]!="ens"){
         <div class="response-count">
         <h3>le note de l'etudiant = </h3>
         <div class="nbr_etud"><?php
-        if($row['note']!=NULL){
-        echo $row['note'] ;
+        if($row1['note']!=NULL){
+        echo $row1['note'] ;
     }
     else {
         echo "NULL";
@@ -169,9 +172,12 @@ if($_SESSION["role"]!="ens"){
 <br>
 <br>
 <br>
+<?php
+
+    ?>
 <div style="display: flex ; justify-content: space-between;">
 <div>
-<a href="reponses_etud.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Retour</a>
+<a href="reponses_etud.php?id_sous=<?=$row1['id_sous']?>" class="btn btn-primary">Retour</a>
 </div>
 <a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary mr-25">donne une Note</a>
 </div>

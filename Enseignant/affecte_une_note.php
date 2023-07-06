@@ -22,8 +22,19 @@ include "../nav_bar.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        p {
+    font-size: 18px;
+    color: #333;
+    font-family: Arial, sans-serif;
+    color: red;
+    margin-left: 700px;
+}
+    </style>
 </head>
 <body>
+    <br>
+    <br>
 <div class="container">
     <div class="row">
         <div class="col-lg-12"> 
@@ -47,6 +58,10 @@ include "../nav_bar.php";
     </form>
 </div>
 </div>
+<br>
+<br>
+<br>
+<p>NB : Virgule dans le nombre représentée par un point   (, = .)</p>
 </body>
 </html>
 <?php

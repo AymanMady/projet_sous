@@ -88,8 +88,9 @@ include "../nav_bar.php";
         window.location.href = url;
     }
 </script>
-
 <body>
+<br><br><br>
+
     <div class="container">
         <div class="row">
             <div class="col-lg-12">

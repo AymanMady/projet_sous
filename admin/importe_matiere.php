@@ -4,9 +4,9 @@ $email = $_SESSION['email'];
 if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
-include "../nav_bar.php";
 
 require '../connexion.php';
+require 'vendor/autoload.php';
  ?>
 
 </br>
@@ -20,7 +20,7 @@ require '../connexion.php';
                     
                     </li>
                     <li>Gestion des matiére</li>
-                    <li class="active">importer des matiére</li>
+                    <li>importer des matiére</li>
             </ol>
         </div>
     </div>
@@ -31,7 +31,7 @@ require '../connexion.php';
         <div class="form-group">
             <label class="col-md-1">Sélectionner un fichier Excel : </label>
             <div class="col-md-6">
-                <input type="file" name="file" class = "form-control" accept=".xlsx" required>
+                <input type="file" name="excel" class = "form-control" accept=".xlsx" required>
             </div>
         </div>
 		<div class="form-group">
@@ -44,39 +44,49 @@ require '../connexion.php';
 </div>
 		
 		<?php
-		if(isset($_POST["import"])){
-			$fileName = $_FILES["file"]["name"];
-			$fileExtension = explode('.', $fileName);
-      		$fileExtension = strtolower(end($fileExtension));
-			$newFileName = date("d.m.y") . " - " . date("h.i.sa") . "." . $fileExtension;
+		
 
+		if (isset($_POST["import"])) {
+
+			$fileName = $_FILES["excel"]["name"];
+			$fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+			$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
+		
 			$targetDirectory = "uploads/" . $newFileName;
-			move_uploaded_file($_FILES['file']['tmp_name'], $targetDirectory);
+			move_uploaded_file($_FILES['excel']['tmp_name'], $targetDirectory);
+		
+			$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($targetDirectory);
+			$worksheet = $spreadsheet->getActiveSheet();
+			$data = $worksheet->toArray();
+
+
 			
-			error_reporting(0);
-			ini_set('display_errors', 0);
-
-			require 'excelReader/excel_reader2.php';
-			require 'excelReader/SpreadsheetReader.php';
-
-			$reader = new SpreadsheetReader($targetDirectory);
-			foreach($reader as $key => $row){
+			foreach ($data as $key => $row) {
+				if ($key === 0) {
+					continue; // Skip the header row
+				}
+		
 				$code = $row[0];
                 $libelle = $row[1];
-                $specialite = $row[2];
-                $id_module = $row[3];
-                $id_semestre = $row[4];
-
-
-			if(mysqli_query($conn, "INSERT INTO ( 
-					`			 `code`, `libelle`,
-								`specialite`,`id_module` ,
-								`id_semestre`)
+				$semestre = $row[2];
+                $specialite = $row[3];
+                $module = $row[4];
+				
+                              
+ 				$sql = "INSERT INTO matiere( 
+								`code`, `libelle`,
+								`id_semestre`,
+								`specialite`, id_module )
 								VALUES(
-								'$code','$libelle','$specialite',
-								'$id_module', '$id_semestre')")){
+									'$code','$libelle',
+								(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'), '$specialite', 
+								(SELECT id_module FROM module WHERE nom_module = '$module'))";
+			if(mysqli_query($conn,$sql)){
                 		header("location:matiere.php");
-            }	
+        	 }	
+			else{
+				echo "Ereur lors de l'importation !";
+			}
             }
 
 			echo
@@ -86,7 +96,10 @@ require '../connexion.php';
 			document.location.href = '';
 			</script>
 			";
+			
 		}
+		include "../nav_bar.php";
+		
 		?>
         </div>
 	</body>

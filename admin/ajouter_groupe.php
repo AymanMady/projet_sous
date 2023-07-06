@@ -4,10 +4,14 @@ $email = $_SESSION['email'];
 if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
+
 ?>
 
     <?php
           include_once "../connexion.php";
+          $dep = "SELECT * FROM departement ";
+          $dep_qry = mysqli_query($conn, $dep);
+
         function test_input($data){
                 $data = htmlspecialchars($data);
                 $data = trim($data);
@@ -19,7 +23,7 @@ if($_SESSION["role"]!="admin"){
         $libelle = test_input($_POST['libelle']);
         $filiere = test_input($_POST['Filiere']); 
            if( !empty($libelle) && !empty($filiere) ){
-                $req = mysqli_query($conn , "INSERT INTO groupe(`libelle`, `filiere`) VALUES('$libelle', '$filiere')");
+                $req = mysqli_query($conn , "INSERT INTO groupe(`libelle`, `id_dep`) VALUES('$libelle', '$filiere')");
                 if($req){
                     header("location: groupe.php");
                     $_SESSION['ajout_reussi'] = true;
@@ -73,7 +77,13 @@ if($_SESSION["role"]!="admin"){
         <div class="form-group">
             <label class="col-md-1" >Filiére</label>
             <div class="col-md-6">
-            <input type="text" name="Filiere" class = "form-control">
+            <select class = "form-control" id="academic" value="Filiere" name="Filiere">
+                    <option selected disabled> Semesters </option>
+                            <?php while ($row = mysqli_fetch_assoc($dep_qry)) : ?>
+                        <option value="<?= $row['id']; ?>"> <?= $row['nom']; ?> </option>
+                    <?php endwhile; ?> 
+                </select>   
+            <!-- <input type="text" name="Filiere" class = "form-control"> -->
             </div>
         </div>
         <div class="form-group">

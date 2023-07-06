@@ -11,18 +11,6 @@ $etudiant = "SELECT * FROM etudiant ";
 $etudiant_qry = mysqli_query($conn, $etudiant); 
 $semestre = "SELECT * FROM semestre ";
 $semestre_qry = mysqli_query($conn, $semestre);
-//$matiere = "SELECT * FROM matiere ";
-
-// Récupère l'ID du semestre sélectionné depuis le formulaire
-
-// $semestre_id = $_POST['semestre']; 
-
-// $matiere = "SELECT m.*
-//             FROM matiere m
-//             INNER JOIN matiere_semestre ms ON m.id_matiere = ms.id_matiere
-//             WHERE ms.id_semestre = '$semestre_id'";
-// $matiere_qry = mysqli_query($conn, $matiere);
-
 
 ?>
 

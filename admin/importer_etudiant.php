@@ -5,10 +5,12 @@ if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
 
-include "../nav_bar.php";
 ?>
 
-<?php require '../connexion.php'; ?>
+<?php 
+require '../connexion.php'; 
+ require 'vendor/autoload.php';
+?>
 
 </br>
 </br></br></br>
@@ -32,7 +34,7 @@ include "../nav_bar.php";
         <div class="form-group">
             <label class="col-md-1">Sélectionner un fichier Excel : </label>
             <div class="col-md-6">
-                <input type="file" name="file" class = "form-control" accept=".xlsx" required>
+                <input type="file" name="excel" class = "form-control" accept=".xlsx" required>
             </div>
         </div>
 		<div class="form-group">
@@ -47,23 +49,26 @@ include "../nav_bar.php";
 
 		
 	<?php
-	if(isset($_POST["import"])){
-		$fileName = $_FILES["file"]["name"];
-		$fileExtension = explode('.', $fileName);
-		$fileExtension = strtolower(end($fileExtension));
-		$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
 
-		$targetDirectory = "uploads/" . $newFileName;
-		move_uploaded_file($_FILES['file']['tmp_name'], $targetDirectory);
+if (isset($_POST["import"])) {
 
-		error_reporting(0);
-		ini_set('display_errors', 0);
+	$fileName = $_FILES["excel"]["name"];
+	$fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+	$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
 
-		require 'excelReader/excel_reader2.php';
-		require 'excelReader/SpreadsheetReader.php';
+	$targetDirectory = "uploads/" . $newFileName;
+	move_uploaded_file($_FILES['excel']['tmp_name'], $targetDirectory);
 
-		$reader = new SpreadsheetReader($targetDirectory);
-		foreach($reader as $key => $row){
+	$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($targetDirectory);
+	$worksheet = $spreadsheet->getActiveSheet();
+	$data = $worksheet->toArray();
+
+
+	foreach ($data as $key => $row) {
+		if ($key === 0) {
+			continue; // Skip the header row
+		}
+
 			$matricule = $row[0];
 			$nom = $row[1];
 			$prenom = $row[2];
@@ -72,11 +77,13 @@ include "../nav_bar.php";
 			$semestre = $row[5];
 			$annee = $row[6];
 			$email = $row[7];
+			$groupe = $row[8];
 
 		if(mysqli_query($conn, "INSERT INTO etudiant
-		(`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`) VALUES
+		(`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`, `id_groupe`) VALUES
 		('$matricule', '$nom','$prenom', '$lieu_naiss','$Date_naiss', 
-		(select id_semestre from semestre where nom_semestre = '$semestre'), '$annee','$email',3)")){
+		(select id_semestre from semestre where nom_semestre = '$semestre'), '$annee','$email',3,
+		(SELECT id_groupe FROM groupe WHERE libelle = '$groupe') )")){
 			header("location:etudiant.php");
 		}	
 		}
@@ -89,6 +96,9 @@ include "../nav_bar.php";
 		</script>
 		";
 	}
+
+	
+	include "../nav_bar.php";
 	?>
 </body>
 </html>

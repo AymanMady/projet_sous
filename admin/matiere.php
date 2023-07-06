@@ -199,25 +199,13 @@ liensArchiver.forEach(function(lien) {
       confirmButtonText: "Supprimer"
     }).then((result) => {
       if (result.isConfirmed) {
-        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
-        //Swal.fire({
-        //   title: "Suppression réussie !",
-        //   text: "L'inscription a été supprimée avec succès.",
-        //   icon: "success",
-        //   confirmButtonColor: "#3099d6",
-        //   confirmButtonText: "OK",
-          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
-          //timerProgressBar: true,
-         // showConfirmButton: true
-       // }).then(() => {
-          // Redirection après le délai
           window.location.href = this.href;
             }
         });
       });
     });
-//   });
-// });
+
+    
 $(document).ready(function(){
     $('.search-text').on('input', function(){
         var search = $(this).val();

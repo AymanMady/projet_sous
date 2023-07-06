@@ -9,7 +9,7 @@ if($_SESSION["role"]!="admin"){
 
 <?php
  require '../connexion.php'; 
- include "../nav_bar.php";
+ require 'vendor/autoload.php';
  ?>
 
  <!DOCTYPE html>
@@ -47,7 +47,7 @@ if($_SESSION["role"]!="admin"){
         <div class="form-group">
             <label class="col-md-1">Sélectionner un fichier Excel : </label>
             <div class="col-md-6">
-                <input type="file" name="file" class = "form-control" accept=".xlsx" required>
+                <input type="file" name="excel" class = "form-control" accept=".xlsx" required value="">
             </div>
         </div>
 		<div class="form-group">
@@ -60,60 +60,57 @@ if($_SESSION["role"]!="admin"){
 </div> 
 
 		<?php
-		if(isset($_POST["import"])){
-			$fileName = $_FILES["file"]["name"];
-			$fileExtension = explode('.', $fileName);
-      		$fileExtension = strtolower(end($fileExtension));
-			$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
-			
-			$targetDirectory = "uploads/" . $newFileName;
-			move_uploaded_file($_FILES['file']['tmp_name'], $targetDirectory);
-
-
-			error_reporting(0);
-			ini_set('display_errors', 0);
-
-			require 'excelReader/excel_reader2.php';
-			require 'excelReader/SpreadsheetReader.php';
-			
-			$reader = new SpreadsheetReader($targetDirectory);
-            // mysqli_query($conn, "DELETE FROM  inscription");
-			echo "Hello";
-			foreach($reader as $key => $row){
-				$matricule = $row[0];
-				$semestre = $row[1];
-				$code_matiere = $row[2];
-				
-				if(mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_semestre`, `id_matiere`) VALUES
-				((SELECT id_etud from etudiant WHERE matricule = '$matricule'),
-				(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'),
-				 (SELECT id_matiere FROM matiere WHERE code = '$code_matiere'))")){
-                    
-                    header('location:inscription.php');
-					echo
-					"
-					<script>
-					alert('Succesfully Imported');
-					document.location.href = '';
-					</script>
-					";
-
-                }else{
-					echo
-					"
-					<script>
-					alert(' Imported Error');
-					document.location.href = '';
-					</script>
-					";
-				}
-			}
-
-		}
 		
-		?>
-        <!-- </div>
+
+			if (isset($_POST["import"])) {
+
+				$fileName = $_FILES["excel"]["name"];
+				$fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+				$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
+			
+				$targetDirectory = "uploads/" . $newFileName;
+				move_uploaded_file($_FILES['excel']['tmp_name'], $targetDirectory);
+			
+				$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($targetDirectory);
+				$worksheet = $spreadsheet->getActiveSheet();
+				$data = $worksheet->toArray();
+
+				foreach ($data as $key => $row) {
+					if ($key === 0) {
+						continue; // Skip the header row
+					}
+			
+					$matricule = $row[0];
+					$code_matiere = $row[1];
+					$semestre = $row[2];
+					
+
+						
+					if(mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_matiere`, `id_semestre`) VALUES
+									((SELECT id_etud from etudiant WHERE matricule = '$matricule'),
+									(SELECT id_matiere FROM matiere WHERE code = '$code_matiere'),
+									(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'))")){
+										
+								header('location:inscription.php');
+								$_SESSION['import_reussi'] = true;
+						}
+
+					}
+				
+				
+				// echo "
+				// <script>
+				// alert('Successfully Imported');
+				// document.location.href = 'inscription.php';
+				// </script>
+				// ";
+		
+		}
+		include "../nav_bar.php";
+	?>
+	
+        </div>
 	</body>
-</html> -->
+</html>
 
 

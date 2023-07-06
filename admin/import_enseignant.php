@@ -4,9 +4,9 @@ $email = $_SESSION['email'];
 if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
-include "../nav_bar.php";
 
 require '../connexion.php';
+require 'vendor/autoload.php';
  ?>
 
 </br>
@@ -20,7 +20,7 @@ require '../connexion.php';
                     
                     </li>
                     <li>Gestion des enseignants</li>
-                    <li class="active">importer des enseignants</li>
+                    <li>importer des enseignants</li>
             </ol>
         </div>
     </div>
@@ -31,7 +31,7 @@ require '../connexion.php';
         <div class="form-group">
             <label class="col-md-1">Sélectionner un fichier Excel : </label>
             <div class="col-md-6">
-                <input type="file" name="file" class = "form-control" accept=".xlsx" required>
+                <input type="file" name="excel" class = "form-control" accept=".xlsx" required>
             </div>
         </div>
 		<div class="form-group">
@@ -49,38 +49,41 @@ require '../connexion.php';
 
 
 	<?php
-	if(isset($_POST["import"])){
-		$fileName = $_FILES["file"]["name"];
-		$fileExtension = explode('.', $fileName);
-		$fileExtension = strtolower(end($fileExtension));
-		$newFileName = date("d.m.y") . " - " . date("h.i.sa") . "." . $fileExtension;
 
-		$targetDirectory = "uploads/" . $newFileName;
-		move_uploaded_file($_FILES['file']['tmp_name'], $targetDirectory);
-		
-		error_reporting(0);
-		ini_set('display_errors', 0);
+if (isset($_POST["import"])) {
 
-		require 'excelReader/excel_reader2.php';
-		require 'excelReader/SpreadsheetReader.php';
+	$fileName = $_FILES["excel"]["name"];
+	$fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+	$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
 
-		$reader = new SpreadsheetReader($targetDirectory);
-		foreach($reader as $key => $row){
-			$nom = $row[1];
-			$prenom = $row[2];
-			$Date_naiss = $row[3];
-			$lieu_naiss = $row[4];
-			$email = $row[5];
+	$targetDirectory = "uploads/" . $newFileName;
+	move_uploaded_file($_FILES['excel']['tmp_name'], $targetDirectory);
+
+	$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($targetDirectory);
+	$worksheet = $spreadsheet->getActiveSheet();
+	$data = $worksheet->toArray();
 
 
-		if(mysqli_query($conn, "INSERT INTO enseignant( 
-				`			 `nom`, `prenom`,
-							`Date_naiss`,`lieu_naiss` ,
-							`email`,`id_role`)
+	foreach ($data as $key => $row) {
+		if ($key === 0) {
+			continue; // Skip the header row
+		}
+			$nom = $row[0];
+			$prenom = $row[1];
+			$Date_naiss = $row[2];
+			$lieu_naiss = $row[3];
+			$email = $row[4];
+			$num_tel = $row[5];
+			$num_wts = $row[6];
+			$diplome = $row[7];
+			$grade = $row[8];
+			
+
+
+		if(mysqli_query($conn, "INSERT INTO enseignant( `nom`, `prenom`,`Date_naiss`,`lieu_naiss` ,
+								`email`,`num_tel`, `num_whatsapp`,`diplome`, `grade`,`id_role`)
 							VALUES(
-							'$nom','$prenom',
-							'$Date_naiss', '$lieu_naiss', 
-							'$email',2)")){
+							'$nom','$prenom','$Date_naiss', '$lieu_naiss', '$email','$num_tel', '$num_wts','$diplome', '$grade', 2)")){
 					header("location:enseignant.php");
 		}	
 		}
@@ -93,6 +96,8 @@ require '../connexion.php';
 		</script>
 		";
 	}
+	include "../nav_bar.php";
+
 	?>
 </body>
 </html>

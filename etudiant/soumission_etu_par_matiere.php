@@ -59,7 +59,7 @@ include_once "../connexion.php";
 
     while($row=mysqli_fetch_assoc($req)){
         ?>
-        <tr onclick="redirectToDetails(<?php echo $row['id_matiere']; ?>)">
+        <tr onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
             <td><?= $row['code'] ?></td>
             <td><?= $row['id_semestre'] ?></td>
             <td><?= $row['specialite'] ?></td>
@@ -73,7 +73,7 @@ include_once "../connexion.php";
 }
     ?>
 <script>
-      function redirectToDetails(id_matiere) {
-            window.location.href = "soumission_etu.php?id_matiere=" + id_matiere;
+      function redirectToDetails(id_sous) {
+            window.location.href = "soumission_etu.php?id_sous=" + id_sous;
         }
 </script>

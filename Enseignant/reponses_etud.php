@@ -133,7 +133,7 @@
                           <td><?=$row['matricule']?></td>
                           <td><?=$row['description_rep']?></td>
                           <td><?=$row['date']?></td>
-                          <td><a href="consiltation_de_reponse.php?id_rep=<?=$row['id_rep']?>">Details</Details></a></td>
+                          <td><a href="consiltation_de_reponse.php?id_rep=<?=$row['id_rep']?>">consilter</Details></a></td>
                       </tr>
                     <?php
                   }

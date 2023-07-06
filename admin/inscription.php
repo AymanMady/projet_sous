@@ -6,6 +6,26 @@ if($_SESSION["role"]!="admin"){
 }
 
 include "../nav_bar.php";
+
+include_once "../connexion.php";
+$searched = false;
+
+if(isset($_POST['search'])) {
+    $search = $_POST['search'];
+    $req = mysqli_query($conn, "SELECT * FROM semestre
+    INNER JOIN inscription ON inscription.id_semestre = semestre.id_semestre 
+    INNER JOIN matiere ON inscription.id_matiere = matiere.id_matiere INNER JOIN 
+     etudiant ON inscription.id_etud = etudiant.id_etud where nom_semestre LIKE '%{$search}%' OR code LIKE '%{$search}%' OR matricule LIKE '%{$search}%' ORDER by matricule asc;");
+    if( $search!=""){
+    $searched = true;
+    }
+   
+} else {
+$req = mysqli_query($conn , "SELECT * FROM semestre
+ INNER JOIN inscription ON inscription.id_semestre = semestre.id_semestre 
+ INNER JOIN matiere ON inscription.id_matiere = matiere.id_matiere INNER JOIN 
+  etudiant ON inscription.id_etud = etudiant.id_etud;");
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,52 +48,49 @@ include "../nav_bar.php";
 <body>
 </br></br></br>
 <div class="container">
+    
+    
+    <?php if (!$searched) { ?>
+        <div class="container">
     <div class="row">
-        <div class="col-lg-12"> 
+        <div class="col-lg-12">
             <ol class="breadcrumb">
-                <li><a href="acceuil.php">Acceuil</a>
-                    
-                </li>
-                <li>Inscription</li>
-                   
+                <li><a href="acceuil.php">Acceuil</a></li>
+                <li>Gestion des inscription</li>
             </ol>
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="well">
-                
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="well">
                     <fieldset class="fsStyle">
                         <legend class="legendStyle">
                             <a data-toggle="collapse" data-target="#demo" href="#">Filtre</a>
                         </legend>
                         <div class="collapse in" id="demo">
-                            <div class="search-box">
-                                <div class="form-group">
-                                    <div class="col-md-4 col-sm-3">
-                                        <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
+                            <form method="POST">
+                                <div class="search-box">
+                                    <div class="form-group">
+                                        <div class="col-md-4 col-sm-3">
+                                            <input type="text" name="search" value="" class="search-text form-control" placeholder="Chercher..." />
+                                        </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-info">Filtre</button>
-
-                            </div>
+                            </form>
                         </div>
                     </fieldset>
-                
+                </div>
             </div>
         </div>
-    </div>
-    <div class="text-center">
-       
-    </div>
-   
-    <br>
-    <div style="display: flex ; justify-content: space-between;">
+        <br>
+        <div style="display: flex ; justify-content: space-between;">
         <a href="ajouter_inscription.php" class = "btn btn-primary mr-25" >Nouveau</a>
         <a href="importe_iscription.php"  class="btn btn-primary ml-25">Importer</a>
     </div>
     <br>
+    <?php } ?>
+
+ 
 
     
     <div style="overflow-x:auto;">
@@ -88,11 +105,7 @@ include "../nav_bar.php";
 
 
             <?php 
-                    include_once "../connexion.php";
-                    $req = mysqli_query($conn , "SELECT * FROM semestre
-                     INNER JOIN inscription ON inscription.id_semestre = semestre.id_semestre 
-                     INNER JOIN matiere ON inscription.id_matiere = matiere.id_matiere INNER JOIN 
-                      etudiant ON inscription.id_etud = etudiant.id_etud;");
+                   
                     if(mysqli_num_rows($req) == 0){
                         echo "Il n'y a pas encore  des inscriptions ajouter !" ;
                         
@@ -210,6 +223,28 @@ liensArchiver.forEach(function(lien) {
     });
 //   });
 // });
-
+$(document).ready(function(){
+    $('.search-text').on('input', function(){
+        var search = $(this).val();
+        if(search != '') {
+            $.ajax({
+                url:'inscription.php',
+                method:'POST',
+                data:{search:search},
+                success:function(response){
+                    $('tbody').html(response);
+                }
+            });
+        } else {
+            $.ajax({
+                url:'inscription.php',
+                method:'POST',
+                success:function(response){
+                    $('tbody').html(response);
+                }
+            });
+        }
+    });
+});
    
 </script>

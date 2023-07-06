@@ -51,6 +51,7 @@ if($_SESSION["role"]!="ens"){
         cursor: pointer;
         position: relative;
         overflow: hidden;
+        margin-left: 50px;
     }
     .nbr_etud {
         font-size: 50px;
@@ -70,7 +71,7 @@ if($_SESSION["role"]!="ens"){
 
 </head>
 <body>
-</br></br></br>
+</br></br>
 <div class="container">
     <div class="row">
         <div class="col-lg-12"> 
@@ -81,6 +82,7 @@ if($_SESSION["role"]!="ens"){
             </ol>
         </div>
     </div>
+    <br>
     <br>
     <br>
 <div class="container">
@@ -104,11 +106,11 @@ if($_SESSION["role"]!="ens"){
             </fieldset>
             <br><br>
             <?php
-    }
-    $req_detail = "SELECT * FROM reponses inner join etudiant using(id_etud) WHERE id_rep = $id_rep  ";
-    $req = mysqli_query($conn , $req_detail);
-    $row=mysqli_fetch_assoc($req)
-    ?>
+                }
+                $req_detail = "SELECT * FROM reponses inner join etudiant using(id_etud) WHERE id_rep = $id_rep  ";
+                $req = mysqli_query($conn , $req_detail);
+                $row=mysqli_fetch_assoc($req)
+            ?>
         </div>
             <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;position:relative;" >
                 <strong style="position:absolute;top: 2;left: 0;"  >Le(s) Fichier(s)</strong><br><br>
@@ -151,18 +153,18 @@ if($_SESSION["role"]!="ens"){
             </div>
  </div>
 
-   
-        <div class="response-count">
-        <h3>le note de l'etudiant = </h3>
-        <div class="nbr_etud"><?php
-        if($row['note']!=NULL){
-        echo $row['note'] ;
-    }
-    else {
-        echo "NULL";
-    }
-        
-        ?></div>
+
+        <div class="response-count" >
+            <h3>le note de l'etudiant = </h3>
+            <div class="nbr_etud">
+            <?php
+            if($row['note']!=NULL){
+            echo $row['note'] ;
+            }
+            else {
+                echo "NULL";
+            }?>
+            </div>
         </div>
     </div>
 </div>

@@ -24,13 +24,13 @@ include "../nav_bar.php";
     <title>Document</title>
 </head>
 <body>
+<br><br><br>
 <div class="container">
     <div class="row">
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
                 <li><a href="#">Acceuil</a></li>
                 <li>Afectation du note </li>
-                   
             </ol>
         </div>
     </div>
@@ -39,10 +39,10 @@ include "../nav_bar.php";
         <div class="form-group">
             <label class="col-md-1">Note</label>
             <div class="col-md-6">
-                <input type="float" name="Note" class = "form-control">
+            <input type="float" name="Note" class = "form-control">
         </div>
         <div class="col-md-2">
-                <input type="submit" value="affecter" name="fin" class="btn-primary">
+            <input type="submit" value="affecter" name="fin" class="btn-primary">
         </div>
     </form>
 </div>

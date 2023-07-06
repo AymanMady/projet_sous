@@ -105,6 +105,11 @@ $req = mysqli_query($conn , "SELECT * FROM semestre
 
 
             <?php 
+                    include_once "../connexion.php";
+                    $req = mysqli_query($conn , "SELECT * FROM semestre
+                     INNER JOIN inscription ON inscription.id_semestre = semestre.id_semestre 
+                     INNER JOIN matiere ON inscription.id_matiere = matiere.id_matiere INNER JOIN 
+                      etudiant ON inscription.id_etud = etudiant.id_etud ORDER BY matricule ASC;");
                    
                     if(mysqli_num_rows($req) == 0){
                         echo "Il n'y a pas encore  des inscriptions ajouter !" ;
@@ -219,25 +224,13 @@ liensArchiver.forEach(function(lien) {
       confirmButtonText: "Supprimer"
     }).then((result) => {
       if (result.isConfirmed) {
-        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
-        //Swal.fire({
-        //   title: "Suppression réussie !",
-        //   text: "L'inscription a été supprimée avec succès.",
-        //   icon: "success",
-        //   confirmButtonColor: "#3099d6",
-        //   confirmButtonText: "OK",
-          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
-          //timerProgressBar: true,
-         // showConfirmButton: true
-       // }).then(() => {
-          // Redirection après le délai
+
           window.location.href = this.href;
             }
         });
       });
     });
-//   });
-// });
+
 $(document).ready(function(){
     $('.search-text').on('input', function(){
         var search = $(this).val();

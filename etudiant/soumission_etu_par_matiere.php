@@ -61,7 +61,7 @@ include_once "../connexion.php";
         ?>
         <tr onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)">
             <td><?= $row['code'] ?></td>
-            <td><?= $row['id_semestre'] ?></td>
+            <td><?= $row['titre_sous'] ?></td>
             <td><?= $row['specialite'] ?></td>
             <td><?= $row['date_debut'] ?></td>
             <td><?= $row['date_fin'] ?></td>

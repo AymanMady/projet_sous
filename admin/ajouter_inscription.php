@@ -13,18 +13,6 @@ $semestre = "SELECT * FROM semestre ";
 $semestre_qry = mysqli_query($conn, $semestre);
 $code="SELECT * FROM matiere";
 $code_qry = mysqli_query($conn, $code);
-//$matiere = "SELECT * FROM matiere ";
-
-// Récupère l'ID du semestre sélectionné depuis le formulaire
-
-// $semestre_id = $_POST['semestre']; 
-
-// $matiere = "SELECT m.*
-//             FROM matiere m
-//             INNER JOIN matiere_semestre ms ON m.id_matiere = ms.id_matiere
-//             WHERE ms.id_semestre = '$semestre_id'";
-// $matiere_qry = mysqli_query($conn, $matiere);
-
 
 ?>
 
@@ -151,17 +139,6 @@ $code_qry = mysqli_query($conn, $code);
                         </select>
                     </div>
                 </div>
-            <!-- <div class="form-group">
-                <label class="col-md-1" >Code</label>
-                <div class="col-md-6" >
-                        <select class = "form-control" id="academic" value="Codes" name="code">
-                            <option selected disabled> Les codes </option>
-                                    <?php //while ($row_matiere = mysqli_fetch_assoc($matiere_qry)) : ?>
-                                <option value="<?//= $row_matiere['id_matiere']; ?>"> <?//= $row_matiere['code']; ?> </option>
-                            <?php //endwhile; ?> 
-                        </select>             
-                </div>
-            </div> -->
             
             <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
@@ -171,12 +148,7 @@ $code_qry = mysqli_query($conn, $code);
             </div>
     </form>
 </div>
-    <!-- </div>
-</div>
 
-
-</div>
-</div> -->
 
 
 </body>

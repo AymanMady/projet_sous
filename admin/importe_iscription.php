@@ -60,7 +60,6 @@ if($_SESSION["role"]!="admin"){
 </div> 
 
 		<?php
-		
 
 			if (isset($_POST["import"])) {
 
@@ -97,13 +96,6 @@ if($_SESSION["role"]!="admin"){
 
 					}
 				
-				
-				// echo "
-				// <script>
-				// alert('Successfully Imported');
-				// document.location.href = 'inscription.php';
-				// </script>
-				// ";
 		
 		}
 		include "../nav_bar.php";

@@ -255,9 +255,6 @@
 </div>
 <p class="mt-5 mb-3 text-body-secondary">&copy; 2022–2023</p>
 </main>
-
-
-    
   </body>
 </html>
 

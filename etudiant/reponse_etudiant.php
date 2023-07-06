@@ -201,18 +201,108 @@ include "../nav_bar.php";
             </ol>
         </div>
     </div>
-<div class="form-horizontal" >
+</div>
+<div class="container">
+    <div class="row " >
+            <div class="col-lg-12" >
+                <div class="well" >
+                    <fieldset class="fsStyle" style="width: 2000px;">
+                       
+                        <div class="collapse in" id="demo">
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                <div class="search-box">
+                                        <div class="col-md-4 col-sm-2">
+                                            <div class="form-group " style="width: 600px;">
+                                                <label class="col-md-4">Description </label>
+                                                <br><br>
+                                                <div class="col-md-6" style="width: 490px;">
+                                                    <textarea name="description_sous" id="" class = "form-control" cols="30" rows="10" ><?=$row['description_rep']?></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="margin-left:600px; width:1000px;">
+                                                <div class="col-md-6">
+                                                        <div class="alert alert-info" style="margin-left:50px;"> 
+                                                            <strong   >Le(s) Fichier(s)</strong><br><br>
+                                                            <div >
+                                                            <?php
+                                                                $sql2 = "select * from fichiers_reponses,reponses,etudiant where fichiers_reponses.id_rep=reponses.id_rep and reponses.id_etud=etudiant.id_etud AND email='$email' And reponses.id_sous= '$id_sous';";
+                                                                $req2 = mysqli_query($conn,$sql2);
+                                                                if(mysqli_num_rows($req2) == 0){
+                                                                    echo "Il n'y a pas des fichier ajouter !" ;
+                                                                }else {
+                                                                    while($row2=mysqli_fetch_assoc($req2)){
+                                                                        ?>
+                                                                        <?php 
+                                                                        $file_chemin = $row2['chemin_fichiere'];
+                                                                        $file_name = $row2['nom_fichiere'];
+                                                                        ?>
+                                                                        <!-- style="display: flex ; justify-content: space-between; "  -->
+                                                                        <div style="display: flex ; justify-content: space-between;">
+                                                                        <div>
+                                                                        <p><?=$row2['nom_fichiere']?></p>
+                                                                        </div>
+                                                                        <div>
+                                                                        <form action="open_file.php" method="post">
+                                                                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
+                                                                            <button name="view" class="btn btn-primary ">View file</button>
+                                                                        </form>
+                                                                        </div>
+                                                                        <div>
+                                                                        <form action="telecharger_fichier.php" method="post">
+                                                                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
+                                                                            <input type="text" style="display:none" value="<?=$file_name?>" name="file_name">
+                                                                            <button name="view" class="btn btn-primary ">Telecharger</button>
+                                                                        </form>
+                                                                        </div>
+                                                                        </div>
+                                                                        <br>
+
+                                                                        <?php
+                                                                    }
+                                                                }
+                                                            ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <br><br><br>
+                                                <div class="form-group" style="width: 600px;" >
+                                                    <label class="col-md-4" style="margin-top: 30px;">Sélectionnez un fichier : </label>
+                                                    <br><br>
+                                                    <div class="col-md-6" style="margin-top: 30px;">
+                                                        <input type="file" id="fichier" name="file[]" class="form-control" multiple>
+                                                    </div>
+                                                </div>
+                                                
+
+                                                <div class="form-group" style="margin-left:100px; ">
+                                                    <div class="col-md-6" style="margin-top: 50px;">
+                                                        <input type="submit" name="button" value="Enregistrer" class="btn-primary" />
+                                                    </div>
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+<!-- <div class="form-horizontal" >
     <br /><br />
         <p class="erreur_message">
-            <?php 
-            if(isset($message)){
-                echo $message;
-            }
+        <?php 
+            // if(isset($message)){
+            //     echo $message;
+            // }
             ?>
         </p>
         <form action="" method="POST" enctype="multipart/form-data">
-        <div style="display: flex ; justify-content: space-between;">
-        <div style="width:2000px">
+        <div style="display: flex ; justify-content: space-between;"> -->
+        <!-- <div style="width:200px">
         <div class="form-group" style="min-width:100%">
             <label class="col-md-1">Description </label>
             <div class="col-md-4">
@@ -224,28 +314,28 @@ include "../nav_bar.php";
             <div class="col-md-4">
                 <input type="file" id="fichier" name="file[]" class="form-control" multiple>
             </div>
-        </div>
-        </div>
+        </div>  -->
+        <!-- </div>
         <div class="alert alert-info" style=" width:400px; height:300px;position:relative;right:0;" > 
-            <strong style="position:absolute;top: 2;left: 0;"  >Le(s) Fichier(s)</strong><br><br>
-            <div style="position:absolute;top: 6;left: 2;width: 380px;">
+            <strong style="position:absolute; top: 2; left: 20;"  >Le(s) Fichier(s)</strong><br><br>
+            <div style="position:absolute;top: 6;left: 2;width: 380px;"> -->
             <?php
-                $sql2 = "select * from fichiers_reponses,reponses,etudiant where fichiers_reponses.id_rep=reponses.id_rep and reponses.id_etud=etudiant.id_etud AND email='$email' And reponses.id_sous= '$id_sous';";
-                $req2 = mysqli_query($conn,$sql2);
-                if(mysqli_num_rows($req2) == 0){
-                    echo "Il n'y a pas des fichier ajouter !" ;
-                }else {
-                    while($row2=mysqli_fetch_assoc($req2)){
+                // $sql2 = "select * from fichiers_reponses,reponses,etudiant where fichiers_reponses.id_rep=reponses.id_rep and reponses.id_etud=etudiant.id_etud AND email='$email' And reponses.id_sous= '$id_sous';";
+                // $req2 = mysqli_query($conn,$sql2);
+                // if(mysqli_num_rows($req2) == 0){
+                //     echo "Il n'y a pas des fichier ajouter !" ;
+                // }else {
+                //     while($row2=mysqli_fetch_assoc($req2)){
                         ?>
                         <?php 
-                        $file_chemin = $row2['chemin_fichiere'];
-                        $file_name = $row2['nom_fichiere'];
+                        // $file_chemin = $row2['chemin_fichiere'];
+                        // $file_name = $row2['nom_fichiere'];
                         ?>
-                        <div style="display: flex ; justify-content: space-between; " >
-                        <div>
-                        <p><?=$row2['nom_fichiere']?></p>
+                        <!-- <div style="display: flex ; justify-content: space-between; " >
+                        <div> -->
+                        <p><?//=$row2['nom_fichiere']?></p>
                         </div>
-                        <div>
+                        <!-- <div>
                         <form action="open_file.php" method="post">
                             <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
                             <button name="view" class="btn btn-primary ">View file</button>
@@ -259,13 +349,13 @@ include "../nav_bar.php";
                         </form>
                         </div>
                         </div>
-                        <br>
+                        <br> -->
 
                         <?php
-                    }
-                }
+                //     }
+                // }
             ?>
-            </div>
+            <!-- </div>
         </div>
         </div>
 
@@ -277,7 +367,7 @@ include "../nav_bar.php";
         </div>
 </form>
 </div>
-</div>
+</div> -->
 <?php
 }
 ?>

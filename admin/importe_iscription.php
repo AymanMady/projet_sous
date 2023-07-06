@@ -9,7 +9,7 @@ if($_SESSION["role"]!="admin"){
 
 <?php
  require '../connexion.php'; 
- include "../nav_bar.php";
+ require 'vendor/autoload.php';
  ?>
 
  <!DOCTYPE html>
@@ -47,7 +47,7 @@ if($_SESSION["role"]!="admin"){
         <div class="form-group">
             <label class="col-md-1">Sélectionner un fichier Excel : </label>
             <div class="col-md-6">
-                <input type="file" name="file" class = "form-control" accept=".xlsx" required>
+                <input type="file" name="excel" class = "form-control" accept=".xlsx" required value="">
             </div>
         </div>
 		<div class="form-group">
@@ -60,6 +60,8 @@ if($_SESSION["role"]!="admin"){
 </div> 
 
 		<?php
+<<<<<<< HEAD
+=======
 		if(isset($_POST["import"])){
 			$fileName = $_FILES["file"]["name"];
 			$fileExtension = explode('.', $fileName);
@@ -106,10 +108,58 @@ if($_SESSION["role"]!="admin"){
 			}
 
 		}
+>>>>>>> 1270a76982af15d527f7aea36cfbc777bcb637d1
 		
-		?>
-        <!-- </div>
+
+			if (isset($_POST["import"])) {
+
+				$fileName = $_FILES["excel"]["name"];
+				$fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+				$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
+			
+				$targetDirectory = "uploads/" . $newFileName;
+				move_uploaded_file($_FILES['excel']['tmp_name'], $targetDirectory);
+			
+				$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($targetDirectory);
+				$worksheet = $spreadsheet->getActiveSheet();
+				$data = $worksheet->toArray();
+
+				foreach ($data as $key => $row) {
+					if ($key === 0) {
+						continue; // Skip the header row
+					}
+			
+					$matricule = $row[0];
+					$code_matiere = $row[1];
+					$semestre = $row[2];
+					
+
+						
+					if(mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_matiere`, `id_semestre`) VALUES
+									((SELECT id_etud from etudiant WHERE matricule = '$matricule'),
+									(SELECT id_matiere FROM matiere WHERE code = '$code_matiere'),
+									(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'))")){
+										
+								header('location:inscription.php');
+								$_SESSION['import_reussi'] = true;
+						}
+
+					}
+				
+				
+				// echo "
+				// <script>
+				// alert('Successfully Imported');
+				// document.location.href = 'inscription.php';
+				// </script>
+				// ";
+		
+		}
+		include "../nav_bar.php";
+	?>
+	
+        </div>
 	</body>
-</html> -->
+</html>
 
 

@@ -11,6 +11,8 @@ $etudiant = "SELECT * FROM etudiant ";
 $etudiant_qry = mysqli_query($conn, $etudiant); 
 $semestre = "SELECT * FROM semestre ";
 $semestre_qry = mysqli_query($conn, $semestre);
+<<<<<<< HEAD
+=======
 $code="SELECT * FROM matiere";
 $code_qry = mysqli_query($conn, $code);
 //$matiere = "SELECT * FROM matiere ";
@@ -25,6 +27,7 @@ $code_qry = mysqli_query($conn, $code);
 //             WHERE ms.id_semestre = '$semestre_id'";
 // $matiere_qry = mysqli_query($conn, $matiere);
 
+>>>>>>> 1270a76982af15d527f7aea36cfbc777bcb637d1
 
 ?>
 

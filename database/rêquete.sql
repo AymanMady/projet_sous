@@ -9,12 +9,13 @@ CREATE TABLE `departement` (
 );
 
 
+
 CREATE TABLE `groupe` (
 `id_groupe` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `libelle` varchar(50) DEFAULT NULL,
-`filiere` varchar(50) DEFAULT NULL
+`id_dep` int(10),
+FOREIGN KEY (id_dep) REFERENCES departement(id)
 );
-
 
 
 CREATE TABLE `role` (
@@ -26,7 +27,7 @@ CREATE TABLE `utilisateur` (
 `id_user` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `login` varchar(50) DEFAULT NULL,
 `pwd` varchar(50) DEFAULT NULL,
-`active` tinyint(1) DEFAULT 0,
+`active` tinyint(1) DEFAULT 0 COMMENT '1=Active | 0=Inactive',
 `code` varchar(20) DEFAULT NULL,
 `id_role` int(10) DEFAULT NULL,
 FOREIGN KEY (id_role) REFERENCES role(id_role)
@@ -54,9 +55,9 @@ CREATE TABLE `matiere` (
 `libelle` varchar(50) DEFAULT NULL,
 `specialite` varchar(20) DEFAULT NULL,
 `charge` INT(20) NOT NULL,
-`id_module` int(10)  NOT NULL,
-`id_semestre` int(10) NOT NULL,
-`id_type_matiere` int(10) NOT NULL,
+`id_module` int(10)  ,
+`id_semestre` int(10) ,
+`id_type_matiere` int(10),
 FOREIGN KEY (id_module) REFERENCES module(id_module),
 FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre),
 FOREIGN KEY (id_type_matiere) REFERENCES type_matiere(id_type_matiere)
@@ -112,39 +113,7 @@ CREATE TABLE IF NOT EXISTS `fichiers_soumission` (
  FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
 );
 
-CREATE TABLE `devoir` (
-`id_devoir` int(10) PRIMARY KEY AUTO_INCREMENT,
-`date_devoir` date DEFAULT NULL,
-`id_sous` int(10) DEFAULT NULL,
-`id_matiere` int(10) DEFAULT NULL,
-FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
-FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
-);
 
-CREATE TABLE `examen` (
-`id_examen` int(10) PRIMARY KEY AUTO_INCREMENT  ,
-`date_examen` date DEFAULT NULL,
-`id_sous` int(10) DEFAULT NULL,
-`id_matiere` int(10) DEFAULT NULL,
-FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
-FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
-);
-
-
-
-CREATE TABLE `ens_devoir` (
-`id_ens` int(10) DEFAULT NULL,
-`id_devoir` int(10) DEFAULT NULL,
-FOREIGN KEY (id_ens) REFERENCES enseignant(id_ens),
-FOREIGN KEY (id_devoir) REFERENCES devoir(id_devoir)
-);
-
-CREATE TABLE `ens_examen` (
-`id_ens` int(10) DEFAULT NULL,
-`id_examen` int(10) DEFAULT NULL,
-FOREIGN KEY (id_ens) REFERENCES enseignant(id_ens),
-FOREIGN KEY (id_examen) REFERENCES examen(id_examen)
-);
 
 CREATE TABLE `etudiant` (
 `id_etud` int(10) PRIMARY KEY AUTO_INCREMENT ,
@@ -165,28 +134,6 @@ FOREIGN KEY (id_groupe) REFERENCES groupe(id_groupe),
 FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
 );
 
-CREATE TABLE `fait_devoir` (
-`id_etud` int(10) DEFAULT NULL,
-`id_devoir` int(10) DEFAULT NULL,
-`note_devoir` float(10) DEFAULT NULL,
-FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud),
-FOREIGN KEY (id_devoir) REFERENCES devoir(id_devoir)
-);
-
-CREATE TABLE `fait_examen` (
-`id_etud` int(10) DEFAULT NULL,
-`id_examen` int(10) DEFAULT NULL,
-`note_examen` float(10) DEFAULT NULL,
-FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud),
-FOREIGN KEY (id_examen) REFERENCES examen(id_examen)
-);
-
-CREATE TABLE `etudie` (
-`id_matiere` int(10) DEFAULT NULL,
-`id_etud` int(10) DEFAULT NULL,
-FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
-FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud)
-);
 
 
 CREATE TABLE `enseigner` (
@@ -202,23 +149,25 @@ FOREIGN KEY (id_ens) REFERENCES enseignant(id_ens)
 
 CREATE TABLE inscription(
 id_insc int AUTO_INCREMENT PRIMARY key ,
-id_etud int(10) NOT NULL ,
-id_matiere INT(10) NOt NULL,
-id_semestre INT(10) NOt NULL,
+id_etud int(10)  ,
+id_matiere INT(10) ,
+id_semestre INT(10) ,
 FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
 FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre),
 FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud)
 );
 
 --
-CREATE TABLE data_test(
-id_data int AUTO_INCREMENT PRIMARY key ,
-data longblob NOT NULL ,
-id_sous INT(10) not NULL,
-FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
+
+CREATE OR REPLACE TABLE matiere_semestre(
+	id_matiere_semestre int(10) PRIMARY KEY AUTO_INCREMENT ,
+    id_matiere int(10),
+    id_semestre int(10),
+    FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
+    FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre)
 );
 
---
+
 
 CREATE TABLE reponses(
   id_rep int(10) AUTO_INCREMENT PRIMARY key ,
@@ -335,10 +284,19 @@ INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'TD');
 -- --------------------------------------------------------
 
 
-INSERT INTO `groupe` (`id_groupe`, `libelle`, `filiere`) VALUES
-(1, 'G1', 'DSI'),
-(2, 'G2', 'CNM'),
-(3, 'G3', 'RSS');
+INSERT INTO `groupe` (`libelle`, `id_dep`) VALUES
+('G1', 1),
+('G3', 1),
+('G2', 1),
+('G1', 2),
+('G2', 2),
+('G3', 2),
+('G1', 3),
+('G2', 3),
+('G3', 3),
+('G1', 4),
+('G2', 4),
+('G3', 4);
 
 
 
@@ -459,7 +417,25 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 
 
 
-
+INSERT INTO `matiere_semestre` (`id_matiere`, `id_semestre`) VALUES 
+('27', '1'),
+ ('31', '1'),
+  ('11', '1'),
+   ('4', '2'), 
+   ('3', '2'), 
+   ('14', '3'),
+    ( '68', '3'), 
+   ('31', '2'), 
+    ( '5', '3'), 
+    ( '47', '4'), 
+    ( '5', '4'), 
+    ('13', '4'),
+     ('27', '5'), 
+     ('66', '5'), 
+     ('17', '5'), 
+     ('77', '6'), 
+     ('13', '6'), 
+     ('28', '6');
 
 
 
@@ -704,21 +680,7 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 -- --------------------------------------------------------------------------------------------------------------------------------
 -- -----------------------------------------------------------------------------------------------------------------------------------
 
-DELIMITER $$
-CREATE PROCEDURE `EnseignantMatiereParGroupe`(id_mat integer)
-BEGIN 
-  SELECT DISTINCT 
-    nom, prenom, 
-    libelle, libelle_type
-    FROM groupe
-    NATURAL JOIN enseigner
-    NATURAL JOIN enseignant
-    NATURAL JOIN type_matiere
-    WHERE id_matiere = id_mat ORDER BY nom, prenom ASC;
-        
-        
-END $$
-DELIMITER ;
+
 
 DROP TABLE IF EXISTS `fichiers_soumission`;
 CREATE TABLE IF NOT EXISTS `fichiers_soumission` (

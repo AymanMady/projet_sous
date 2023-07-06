@@ -61,13 +61,13 @@ include "../nav_bar.php";
         <div class="form-group">
             <label class="col-md-1" >Semesters</label>
             <div class="col-md-6" >
-            <select class = "form-control" id="academic" value="Semesters" name="semester">
+                <select class = "form-control" id="academic" value="Semesters" name="semester">
                     <option selected disabled> Semesters </option>
                             <?php while ($row = mysqli_fetch_assoc($semestre_qry)) : ?>
                         <option value="<?= $row['id_semestre']; ?>"> <?= $row['nom_semestre']; ?> </option>
                     <?php endwhile; ?> 
                 </select>            
-               </div>
+            </div>
         </div>
         <div class="form-group">
             <label class="col-md-1" >Module</label>

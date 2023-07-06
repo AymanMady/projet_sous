@@ -15,7 +15,7 @@ if(isset($_POST['search'])) {
     }
    
 } else {
- $req = mysqli_query($conn , "SELECT * FROM groupe");
+ $req = mysqli_query($conn , "SELECT * FROM groupe g, departement d WHERE g.id_dep = d.id");
 }
 include "../nav_bar.php";
 
@@ -98,7 +98,7 @@ include "../nav_bar.php";
                             ?>
                             <tr>
                                 <td><?=$row['libelle']?></td>
-                                <td><?=$row['filiere']?></td>
+                                <td><?php echo $row['nom']." (".$row['code'].")"?></td>
                                 <td><a href="modifier_groupe.php?id_groupe=<?=$row['id_groupe']?>">Modifier</a></td>
                                 <td><a href="supprimer_groupe.php?id_groupe=<?=$row['id_groupe']?>" id="supprimer"> Supprimer</a></td>
                             </tr>

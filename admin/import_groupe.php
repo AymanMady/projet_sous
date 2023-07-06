@@ -4,9 +4,10 @@ $email = $_SESSION['email'];
 if($_SESSION["role"]!="admin"){
     header("location:authentification.php");
 }
-include "../nav_bar.php";
+
 
 require '../connexion.php';
+require 'vendor/autoload.php';
  ?>
 
 </br>
@@ -20,7 +21,7 @@ require '../connexion.php';
                     
                     </li>
                     <li>Gestion des groupes</li>
-                    <li class="active">Importer des groupes</li>
+                    <li>Importer des groupes</li>
             </ol>
         </div>
     </div>
@@ -31,7 +32,7 @@ require '../connexion.php';
         <div class="form-group">
             <label class="col-md-1">Sélectionner un fichier Excel : </label>
             <div class="col-md-6">
-                <input type="file" name="file" class = "form-control" accept=".xlsx" required>
+                <input type="file" name="excel" class = "form-control" accept=".xlsx" required>
             </div>
         </div>
 		<div class="form-group">
@@ -45,27 +46,27 @@ require '../connexion.php';
 
 		
 		<?php
-		if(isset($_POST["import"])){
-			$fileName = $_FILES["file"]["name"];
-			$fileExtension = explode('.', $fileName);
-      		$fileExtension = strtolower(end($fileExtension));
-			$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
 
-			$targetDirectory = "uploads/" . $newFileName;
-			move_uploaded_file($_FILES['file']['tmp_name'], $targetDirectory);
+if (isset($_POST["import"])) {
 
+	$fileName = $_FILES["excel"]["name"];
+	$fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+	$newFileName = date("Y.m.d") . " - " . date("h.i.sa") . "." . $fileExtension;
 
-			error_reporting(0);
-			ini_set('display_errors', 0);
+	$targetDirectory = "uploads/" . $newFileName;
+	move_uploaded_file($_FILES['excel']['tmp_name'], $targetDirectory);
 
-			require 'excelReader/excel_reader2.php';
-			require 'excelReader/SpreadsheetReader.php';
+	$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($targetDirectory);
+	$worksheet = $spreadsheet->getActiveSheet();
+	$data = $worksheet->toArray();
 
-			$reader = new SpreadsheetReader($targetDirectory);
-			foreach($reader as $key => $row){
+	foreach ($data as $key => $row) {
+		if ($key === 0) {
+			continue; // Skip the header row
+		}
 				$libelle = $row[0];
 				$filiere = $row[1];
-				if(mysqli_query($conn, "INSERT INTO groupe(`libelle`, `filiere`) VALUES( '$libelle', '$filiere')")){
+				if(mysqli_query($conn, "INSERT INTO groupe (`libelle`, `id_dep`) VALUES( '$libelle', (SELECT `id` FROM departement WHERE code = '$filiere'))")){
                     header('location:groupe.php');
                 }
 			}
@@ -78,6 +79,8 @@ require '../connexion.php';
 			</script>
 			";
 		}
+
+		include "../nav_bar.php";
 		?>
         </div>
 	</body>

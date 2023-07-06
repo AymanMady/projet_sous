@@ -105,15 +105,7 @@ $req = mysqli_query($conn , "SELECT * FROM semestre
 
 
             <?php 
-<<<<<<< HEAD
-                    include_once "../connexion.php";
-                    $req = mysqli_query($conn , "SELECT * FROM semestre
-                     INNER JOIN inscription ON inscription.id_semestre = semestre.id_semestre 
-                     INNER JOIN matiere ON inscription.id_matiere = matiere.id_matiere INNER JOIN 
-                      etudiant ON inscription.id_etud = etudiant.id_etud ORDER BY matricule ASC;");
-=======
                    
->>>>>>> 1270a76982af15d527f7aea36cfbc777bcb637d1
                     if(mysqli_num_rows($req) == 0){
                         echo "Il n'y a pas encore  des inscriptions ajouter !" ;
                         

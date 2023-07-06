@@ -65,6 +65,7 @@
                 }else {
                     while($row2=mysqli_fetch_assoc($req2)){
                         $file_chemin = $row2['chemin_fichier'];
+                        $file_name=$row2['nom_fichier'];
                         ?>
                         <div style="display: flex ; justify-content: space-between; " >
                         <div>
@@ -74,6 +75,13 @@
                         <form action="open_file.php" method="post">
                             <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
                             <button name="view" class="btn btn-primary ">View file</button>
+                        </form>
+                        </div>
+                        <div>
+                        <form action="telecharger_fichier.php" method="post">
+                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
+                            <input type="text" style="display:none" value="<?=$file_name?>" name="file_name">
+                            <button name="view" class="btn btn-primary ">Telecharger</button>
                         </form>
                         </div>
                         </div>

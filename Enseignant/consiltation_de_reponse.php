@@ -25,6 +25,49 @@ if($_SESSION["role"]!="ens"){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detailler matiere par enseignant </title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+    .submission-div {
+        display: flex;
+        align-items: center;
+        height: 200px;
+    }
+
+    .description { 
+        flex: 1;
+        padding-right: 100px;
+        background-color: aliceblue;
+        min-height: 100%;
+    }
+
+    .response-count {
+        width: 200px;
+        margin-left: 10px;
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .nbr_etud {
+        font-size: 50px;
+    }
+    .descri {
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+    }
+    .descri_contenu{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 15px;
+    }
+</style>
+
 </head>
 <body>
 </br></br></br>
@@ -38,7 +81,10 @@ if($_SESSION["role"]!="ens"){
             </ol>
         </div>
     </div>
+    <br>
+    <br>
 <div class="container">
+<div class="submission-div">
         <div class="row justify-content-center">
         <div class="col-md-10">
             <fieldset>
@@ -59,6 +105,9 @@ if($_SESSION["role"]!="ens"){
             <br><br>
             <?php
     }
+    $req_detail = "SELECT * FROM reponses inner join etudiant using(id_etud) WHERE id_rep = $id_rep  ";
+    $req = mysqli_query($conn , $req_detail);
+    $row=mysqli_fetch_assoc($req)
     ?>
         </div>
             <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;position:relative;" >
@@ -74,6 +123,7 @@ if($_SESSION["role"]!="ens"){
                         ?>
                         <?php 
                         $file_chemin = $row2['chemin_fichiere'];
+                        $file_name=$row2['nom_fichiere'];
                         ?>
                         <div style="display: flex ; justify-content: space-between; " >
                         <div>
@@ -82,7 +132,14 @@ if($_SESSION["role"]!="ens"){
                         <div>
                         <form action="open_file.php" method="post">
                             <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
-                            <button name="view" class="btn btn-primary">View file</button>
+                            <button name="view" class="btn btn-primary ">View file</button>
+                        </form>
+                        </div>
+                        <div>
+                        <form action="telecharger_fichier.php" method="post">
+                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
+                            <input type="text" style="display:none" value="<?=$file_name?>" name="file_name">
+                            <button name="view" class="btn btn-primary ">Telecharger</button>
                         </form>
                         </div>
                         </div>
@@ -92,11 +149,26 @@ if($_SESSION["role"]!="ens"){
                 ?>
                 </div>
             </div>
+ </div>
+
+   
+        <div class="response-count">
+        <h3>le note de l'etudiant = </h3>
+        <div class="nbr_etud"><?php
+        if($row['note']!=NULL){
+        echo $row['note'] ;
+    }
+    else {
+        echo "NULL";
+    }
+        
+        ?></div>
         </div>
-
-
-
+    </div>
 </div>
+<br>
+<br>
+<br>
 <div style="display: flex ; justify-content: space-between;">
 <div>
 <a href="reponses_etud.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Retour</a>

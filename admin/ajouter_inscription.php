@@ -134,7 +134,7 @@ $code_qry = mysqli_query($conn, $code);
                         <select class="form-control" id="matiereSelect" value="Codes" name="code">
                             <option selected disabled> Les codes </option>
                             <?php while ($row_code = mysqli_fetch_assoc($code_qry)) : ?>
-                            <option value="<?= $row_code['id_matiere']; ?>"> <?=$row_code['code']; ?> </option>
+                            <option value="<?= $row_code['id_matiere']; ?>"> <?=" ".$row_code['code']; ?> </option>
                         <?php endwhile; ?>
                         </select>
                     </div>

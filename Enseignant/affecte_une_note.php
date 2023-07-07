@@ -10,7 +10,7 @@ if(isset($_POST['fin'])){
     $note=$_POST['Note'];
     $sql="UPDATE `reponses` SET note=$note WHERE id_rep=$id_rep";
    if( mysqli_query($conn,$sql)){
-    header("location:soumission_en_ligne.php");
+    header("location:consiltation_de_reponse.php");
    }
 }
 

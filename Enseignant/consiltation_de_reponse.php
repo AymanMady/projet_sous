@@ -155,7 +155,7 @@ if($_SESSION["role"]!="ens"){
 
 
         <div class="response-count" >
-            <h3>le note de l'etudiant = </h3>
+            <h3>Note </h3>
             <div class="nbr_etud">
             <?php
             if($row['note']!=NULL){

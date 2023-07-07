@@ -104,8 +104,8 @@ include "../nav_bar.php";
           <tr>
               <th>Code</th>
               <th>Titre de soumission</th>
-              <th>Date debut </th>
-              <th> type_sous </th>
+              <th>Date début </th>
+              <th> Type de Soumission </th>
               <th>Date fin </th>
               <th colspan="4">Actions</th>
           </tr>

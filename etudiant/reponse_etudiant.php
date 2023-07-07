@@ -167,7 +167,8 @@ include "../nav_bar.php";
                 move_uploaded_file($file_tmp, $destination);
     
                 // Insérer les info dans la base de donnéez
-                $sql3 = "DELETE FROM fichiers_reponses  where `id_rep`=(SELECT id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email') ";
+                $sql3 = "DELETE FROM fichiers_reponses  where `id_rep`=(SELECT id_rep FROM reponses,etudiant WHERE 
+                                                    reponses.id_etud=etudiant.id_etud and email='$email') ";
                 $req3 = mysqli_query($conn, $sql3);
                 $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ((SELECT id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email'), '$file_name', '$destination')";
                 $req2 = mysqli_query($conn, $sql2);

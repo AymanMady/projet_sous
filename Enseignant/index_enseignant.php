@@ -37,7 +37,7 @@
           </tr>
           <?php 
               include_once "../connexion.php";
-              $req_ens_mail =  "SELECT * FROM matiere,enseigner,enseignant,semestre WHERE enseignant.id_ens=enseigner.id_ens and matiere.id_semestre=semestre.id_semestre and matiere.id_matiere=enseigner.id_matiere  and enseignant.email ='$email'";
+              $req_ens_mail =  "SELECT matiere.*,semestre.* FROM matiere,enseigner,enseignant,semestre WHERE enseignant.id_ens=enseigner.id_ens and matiere.id_semestre=semestre.id_semestre and matiere.id_matiere=enseigner.id_matiere  and enseignant.email ='$email'";
 
               $req = mysqli_query($conn , $req_ens_mail);
               if(mysqli_num_rows($req) == 0){
@@ -65,7 +65,7 @@
 </div>
 <script>
     function redirectToDetails(id_matiere) {
-        // window.location.href = "reponses_etud.php?id_matiere=" + id_matiere;
+        window.location.href = "soumission_par_matiere.php?id_matiere=" + id_matiere;
     }
 </script>
 </body>

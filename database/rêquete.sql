@@ -27,9 +27,9 @@ CREATE TABLE `utilisateur` (
 `id_user` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `login` varchar(50) DEFAULT NULL,
 `pwd` varchar(50) DEFAULT NULL,
-`active` tinyint(1) DEFAULT 0 COMMENT '1=Active | 0=Inactive',
+`active` tinyint(1) DEFAULT 1 COMMENT '1=Active | 0=Inactive',
 `code` varchar(20) DEFAULT NULL,
-`id_role` int(10) DEFAULT NULL,
+`id_role` int(10) DEFAULT NULL ,
 FOREIGN KEY (id_role) REFERENCES role(id_role)
 );
 
@@ -149,9 +149,9 @@ FOREIGN KEY (id_ens) REFERENCES enseignant(id_ens)
 
 CREATE TABLE inscription(
 id_insc int AUTO_INCREMENT PRIMARY key ,
-id_etud int(10)  ,
-id_matiere INT(10) ,
-id_semestre INT(10) ,
+id_etud int(10) NOT NULL ,
+id_matiere INT(10) NOT NULL ,
+id_semestre INT(10) NOT NULL ,
 FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
 FOREIGN KEY (id_semestre) REFERENCES semestre(id_semestre),
 FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud)

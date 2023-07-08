@@ -34,17 +34,20 @@ include_once "../connexion.php";
         case 'odt':
             $content_type = 'application/vnd.oasis.opendocument.text';
             break;
+        case 'txt':
+            $content_type = 'text/plain';
+            break;
         default:
             // Type de fichier non pris en charge
             die('Erreur : type de fichier non pris en charge');
     }
-
+    
     // Envoi des en-têtes HTTP pour le téléchargement
     header("Content-Type: {$content_type}");
     header("Content-Disposition: attachment; filename=\"{$file_name}\"");
     header("Content-Transfer-Encoding: binary");
     header("Accept-Ranges: bytes");
-
+    
     // Lecture du fichier et envoi de son contenu
     readfile($file_chemin);
     exit;

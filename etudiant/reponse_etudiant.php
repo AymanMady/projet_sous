@@ -166,12 +166,10 @@ include "../nav_bar.php";
                 $destination = $matricule_directory . '/' . $new_file_name;
                 move_uploaded_file($file_tmp, $destination);
     
-                // Insérer les infos dans la base de donnéez
-                $sql3 = "DELETE FROM fichiers_reponses  where `id_rep`=(SELECT id_rep FROM reponses,etudiant WHERE 
-                                                    reponses.id_etud=etudiant.id_etud and email='$email') ";
-                $req3 = mysqli_query($conn, $sql3);
-                $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES
-                                 ((SELECT id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email'), '$file_name', '$destination')";
+                // Insérer les info dans la base de donnéez
+                // $sql3 = "DELETE FROM fichiers_reponses  where `id_rep`in (SELECT reponses.id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email' and reponses.id_sous=$id_sous) ";
+                // $req3 = mysqli_query($conn, $sql3);
+                $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ((SELECT reponses.id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email' and reponses.id_sous=$id_sous), '$file_name', '$destination')";
                 $req2 = mysqli_query($conn, $sql2);
 
                 
@@ -248,6 +246,9 @@ include "../nav_bar.php";
                                                                         </div>
                                                                         <div>
                                                                         <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
+                                                                        </div>
+                                                                        <div>
+                                                                        <a href="supprime_fichier.php?file_name=<?=$file_name?>">Supprimer</a>
                                                                         </div>
                                                                         </div>
                                                                         <br>

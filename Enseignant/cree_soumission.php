@@ -7,7 +7,7 @@ if ($_SESSION["role"] != "ens") {
 
 include_once "../connexion.php";
 
-$semestre = "SELECT * FROM matiere, enseigner, enseignant 
+$semestre = "SELECT   matiere.*,enseigner.*,enseignant.* FROM matiere, enseigner, enseignant 
     WHERE matiere.id_matiere = enseigner.id_matiere AND
     enseigner.id_ens = enseignant.id_ens AND email='$email'";
 $semestre_qry = mysqli_query($conn, $semestre);

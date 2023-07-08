@@ -50,7 +50,7 @@ $('#success-alert .close').click(function() {
 $alert = "";
     include_once("connexion.php");
     // Connection Created Successfully
- session_start();
+        session_start();
 
     // Store All Errors
     $errors = [];

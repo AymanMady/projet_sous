@@ -98,7 +98,7 @@ if($_SESSION["role"]!="ens"){
                     ?>
                 <h4>
                 <?php echo "<strong>Matricule : </strong>". $row['matricule']; ?><br><br>
-                <?php echo "<strong>nom et prenom de l'etudiant  : </strong>" . $row['nom']." ".$row['prenom']; ?><br><br>
+                <?php echo "<strong>Nom et prenom de l'etudiant  : </strong>" . $row['nom']." ".$row['prenom']; ?><br><br>
                 <?php echo "<strong>Description : </strong>". $row['description_rep'];  ?><br><br>
                 <?php echo "<strong>Date : </strong>". $row['date']; ?><br><br>
                 </h4>

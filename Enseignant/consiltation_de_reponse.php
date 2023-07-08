@@ -107,7 +107,7 @@ if($_SESSION["role"]!="ens"){
             <br><br>
             <?php
                 }
-                $req_detail = "SELECT * FROM reponses inner join etudiant using(id_etud) WHERE id_rep = $id_rep  ";
+                $req_detail = "SELECT reponses.* FROM reponses inner join etudiant using(id_etud) WHERE id_rep = $id_rep  ";
                 $req = mysqli_query($conn , $req_detail);
                 $row=mysqli_fetch_assoc($req)
             ?>
@@ -144,7 +144,7 @@ if($_SESSION["role"]!="ens"){
                             <button name="view" class="btn btn-primary ">Telecharger</button>
                         </form>
                         </div>
-                        </div>
+                        </div><br>
                        <?php
                     }
                 }
@@ -176,7 +176,7 @@ if($_SESSION["role"]!="ens"){
     ?>
 <div style="display: flex ; justify-content: space-between;">
 <div>
-<a href="reponses_etud.php?id_sous=<?=$row1['id_sous']?>" class="btn btn-primary">Retour</a>
+<a href="reponses_etud.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Retour</a>
 </div>
 <a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary mr-25">donne une Note</a>
 </div>

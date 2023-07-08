@@ -53,7 +53,7 @@ include_once "../connexion.php";
     <?php
                 $id_matiere = $_GET['id_matiere'];
 
-    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and status=0 ";
+    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and ( status=0  or status=1)";
     $req = mysqli_query($conn , $req_detail);
     if (mysqli_num_rows($req) > 0) {
 

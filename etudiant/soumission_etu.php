@@ -12,6 +12,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+       .submission-div {
+    display: flex;
+    align-items: center;
+    height: 200px;
+    justify-content: center;
+}
+
+.description { 
+    flex: 1;
+    padding-right: 100px;
+    background-color: aliceblue;
+    min-height: 100%;
+}
+
+.response-count {
+    width: 200px;
+    margin-left: auto;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.nbr_etud {
+    font-size: 30px;
+}
+
+.descri {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.descri_contenu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 15px;
+}
+    </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +66,7 @@
 </head>
 <body>
 </br></br></br>
+<br>
 <div class="container">
     <div class="row">
         <div class="col-lg-12"> 
@@ -34,13 +81,14 @@
     include_once "../connexion.php";
     $id_sous = $_GET['id_sous'];
 
-    $req_detail = "SELECT * FROM soumission  WHERE id_sous = $id_sous and status=0 ";
+    $req_detail = "SELECT * FROM soumission  WHERE id_sous = $id_sous and (status=0 or status=1)  ";
     $req = mysqli_query($conn , $req_detail);
     mysqli_num_rows($req);
 
     while($row=mysqli_fetch_assoc($req)){
     ?>
     <div class="row justify-content-center">
+        
         <div class="col-md-10">
             <fieldset>
                 <br><br>
@@ -54,7 +102,7 @@
         <br><br>
 
      </div>
-    <div class="alert alert-info" style="margin-left: 600px; width:400px; height:300px;position:relative;" > 
+    <div class="alert alert-info" style="margin-left: 500px; width:400px; height:300px;position:relative;" > 
             <strong style="position:absolute;top: 2;left: 0;"  >Le(s) Fichier(s)</strong><br><br>
             <div style="position:absolute;top: 6;left: 2;width: 380px;">
             <?php
@@ -93,18 +141,36 @@
             <?php
             $id_sous= $row['id_sous'];
     }
+    $sql17 = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
+    $req17 = mysqli_query($conn,$sql17);
+    if(mysqli_num_rows($req17)){
+    $row17=mysqli_fetch_assoc($req17)
     ?>
+     <div class="response-count" style="margin-left: 510px" >
+            <h3> note =  <?php echo $row17['note']     ?> </h3>
+            <div class="nbr_etud">
+            <?php if( $row17['note'] >0 ){    ?>
+                <a href= "reclemation.php" class="btn btn-primary">reclemation</a>
+                <?php  }
+    }
+                ?>
+ 
+            </div>
+        </div>
     </div>
     <?php
+    $req_detail = "SELECT * FROM soumission  WHERE id_sous = $id_sous and (status=0 or status=1)  ";
+    $req11 = mysqli_query($conn , $req_detail);
+    $row12=mysqli_fetch_assoc($req11);
     $sql = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
     $req = mysqli_query($conn,$sql);
-    if (mysqli_num_rows($req) == 0) {
+    if (mysqli_num_rows($req) == 0 and $row12['status']==0) {
     ?>
     <p>
         <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Rendre le travail</a>
     </p>
     <?php
-    }else{
+    }elseif(mysqli_num_rows($req) != 0 and $row12['status']==0){
     ?>
     <p>
         <a href="reponse_etudiant.php?id_sous=<?=$id_sous?>" class="btn btn-primary">Modifier le travail</a>
@@ -112,6 +178,8 @@
     <?php
     }
     ?>
+    
+   
 </div>
 </div>
 

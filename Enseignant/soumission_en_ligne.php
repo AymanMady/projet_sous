@@ -6,7 +6,7 @@ use function PHPSTORM_META\type;
  session_start() ;
  $email = $_SESSION['email'];
  if($_SESSION["role"]!="ens"){
-     header("location:authentification.php");
+     header("location:../authentification.php");
  }
 ?>
 <!DOCTYPE html>

@@ -1,6 +1,7 @@
 <?php
-   //session_start();
+ 
    include_once ("controller.php");
+  
 ?>
  <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +13,13 @@
     <link href="CSS/modern-business.css" rel="stylesheet">
     <link href="CSS/cssLogin.css" rel="stylesheet" />
     <title>Login</title>
+
+    
+    <!-- sweetalert2 links -->
+
+    <script src="JS/sweetalert2.js"></script>
+
+
 </head>
 <!-- <body>
     <div id='page'>
@@ -256,3 +264,24 @@
 </main>
   </body>
 </html>
+
+<?php
+
+// session_start();
+
+if (isset($_SESSION['cree_reussi']) && $_SESSION['cree_reussi'] === true) {
+  echo "<script>
+  Swal.fire({
+      title: 'Création réussi !',
+      text: 'Félicitations ! Votre compte a été créé avec succès',
+      icon: 'success',
+      confirmButtonColor: '#3099d6',
+      confirmButtonText: 'OK'
+  });
+  </script>";
+
+  // Supprimer l'indicateur de succès de la session
+  unset($_SESSION['cree_reussi']);
+}
+
+?>

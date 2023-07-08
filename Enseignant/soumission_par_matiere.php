@@ -63,22 +63,65 @@ $id_matiere=$_GET['id_matiere'];
      
         $type=$_POST['soul'];
      
-        $req_sous1 =  "SELECT DISTINCT soumission.*,matiere.* FROM soumission ,matiere,enseignant,enseigner WHERE enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email='$email' and matiere.id_matiere=$id_matiere  and soumission.id_type_sous = $type and  status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')  ORDER BY date_fin DESC ";
+        $req_sous1 =  "SELECT DISTINCT soumission.*,matiere.* FROM
+         soumission ,matiere,enseignant,enseigner WHERE 
+         enseigner.id_matiere=soumission.id_matiere and 
+         soumission.id_ens=enseignant.id_ens AND 
+         soumission.id_matiere=matiere.id_matiere and 
+         enseignant.email='$email' and matiere.id_matiere=$id_matiere  and 
+         soumission.id_type_sous = $type and  status = 0 and
+          matiere.id_matiere IN (SELECT enseigner.id_matiere FROM 
+          enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and
+           enseignant.email='$email')  ORDER BY date_fin DESC ";
+
+
+
         $req1 = mysqli_query($conn , $req_sous1);
-        $req_sous2 =  "SELECT DISTINCT soumission.*,matiere.* FROM soumission ,matiere,enseignant,enseigner WHERE enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email!='$email' and status = 0 and `matiere`.`code`='$code' and soumission.id_type_sous = $type and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')   ORDER BY date_fin DESC ";
+        $req_sous2 =  "SELECT DISTINCT soumission.*,matiere.* FROM 
+        soumission ,matiere,enseignant,enseigner WHERE 
+        enseigner.id_matiere=soumission.id_matiere and 
+        soumission.id_ens=enseignant.id_ens AND
+         soumission.id_matiere=matiere.id_matiere and
+          enseignant.email!='$email' and status = 0
+           and soumission.id_type_sous = $type and
+            matiere.id_matiere IN (SELECT enseigner.id_matiere FROM
+             enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and
+              enseignant.email='$email')   ORDER BY date_fin DESC ";
         $req2 = mysqli_query($conn , $req_sous2);
 
       }
     }
       else{
 
-$req_sous1 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.* FROM soumission ,matiere,enseignant,enseigner,type_soumission WHERE matiere.id_matiere=$id_matiere   and soumission.id_type_sous=type_soumission.id_type_sous and enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email='$email' and status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')
+$req_sous1 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.* FROM
+ soumission ,matiere,enseignant,enseigner,type_soumission
+  WHERE matiere.id_matiere=$id_matiere   and 
+  soumission.id_type_sous=type_soumission.id_type_sous 
+  and enseigner.id_matiere=soumission.id_matiere and
+   soumission.id_ens=enseignant.id_ens AND 
+   soumission.id_matiere=matiere.id_matiere and
+    enseignant.email='$email' and status = 0 and
+     matiere.id_matiere IN (SELECT enseigner.id_matiere FROM 
+     enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and
+      enseignant.email='$email')
 ORDER BY date_debut DESC";
+
+
 
 $req1 = mysqli_query($conn , $req_sous1);
 
 
-$req_sous2 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.* FROM soumission ,matiere,enseignant,enseigner,type_soumission WHERE matiere.id_matiere=$id_matiere and soumission.id_type_sous=type_soumission.id_type_sous and enseigner.id_matiere=soumission.id_matiere and soumission.id_ens=enseignant.id_ens AND soumission.id_matiere=matiere.id_matiere and enseignant.email!='$email' and status = 0 and matiere.id_matiere IN (SELECT enseigner.id_matiere FROM enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and enseignant.email='$email')
+$req_sous2 = "SELECT DISTINCT soumission.*,matiere.*,type_soumission.* FROM
+ soumission ,matiere,enseignant,enseigner,type_soumission WHERE 
+ matiere.id_matiere=$id_matiere and
+  soumission.id_type_sous=type_soumission.id_type_sous and 
+  enseigner.id_matiere=soumission.id_matiere and 
+  soumission.id_ens=enseignant.id_ens AND
+   soumission.id_matiere=matiere.id_matiere and 
+   enseignant.email!='$email' and status = 0 and
+    matiere.id_matiere IN (SELECT enseigner.id_matiere FROM
+     enseigner,enseignant WHERE enseigner.id_ens=enseignant.id_ens and 
+     enseignant.email='$email')
 ORDER BY date_debut DESC";
   
 
@@ -159,7 +202,6 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
 
     
 }else if(mysqli_num_rows($req1)>0 or mysqli_num_rows($req2)>0) {
-    while($row=mysqli_fetch_assoc($req1)){
       ?>
   </br></br></br>
 <div class="container">
@@ -222,12 +264,16 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
               <th>Code</th>
               <th>Titre de soumission</th>
               <th>Date debut </th>
-              <th> type_sous </th>
+              <th> Type soumission </th>
               <th>Date fin </th>
               <th colspan="4">Actions</th>
           </tr>
       
+   <?php
+       while($row=mysqli_fetch_assoc($req1)){
+
    
+   ?>
       <tr >
             <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['code']?></td>
             <td class="click" onclick="redirectToDetails(<?php echo $row['id_sous']; ?>)"><?=$row['titre_sous']?></td>

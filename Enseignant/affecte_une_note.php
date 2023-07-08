@@ -44,6 +44,7 @@ include "../nav_bar.php";
         </div>
     </div>
     <?php
+
 $sql = "select * from reponses where id_rep='$id_rep' ";
 $req = mysqli_query($conn,$sql);
 $row= mysqli_fetch_assoc($req);
@@ -53,10 +54,10 @@ $row= mysqli_fetch_assoc($req);
         <div class="form-group">
             <label class="col-md-1">Note :</label>
             <div class="col-md-6">
-            <input type="float" name="Note" class = "form-control" value="<?=$row['note']?>">
+            <input type="float" name="Note" class = "form-control" value="<?=$row['note']?>" >
         </div>
-        <div class="col-md-2">
-            <input type="submit" value="affecter" name="fin" class="btn-primary">
+            <div class="col-md-2">
+                <input type="submit" value="affecter" name="fin" class="btn-primary">
         </div>
     </form>
 </div>

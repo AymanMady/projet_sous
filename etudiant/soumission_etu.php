@@ -12,6 +12,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailler matiere par enseignant </title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
        .submission-div {
     display: flex;
@@ -29,7 +36,6 @@
 
 .response-count {
     width: 200px;
-    margin-left: auto;
     background-color: #f1f1f1;
     padding: 10px;
     font-size: 12px;
@@ -39,6 +45,8 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    top: -150px;
+    left: 425px;
 }
 
 .nbr_etud {
@@ -58,11 +66,7 @@
     margin-left: 15px;
 }
     </style>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detailler matiere par enseignant </title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 </br></br></br>
@@ -153,13 +157,16 @@
     if(mysqli_num_rows($req17)){
     $row17=mysqli_fetch_assoc($req17)
     ?>
-     <div class="response-count" style="margin-left: 510px" >
-            <h3> note =  <?php echo $row17['note']     ?> </h3>
+     <div class="response-count" >
+            <h3> 
+                Note =  <?php echo $row17['note']     ?> 
+            </h3>
             <div class="nbr_etud">
-            <?php if( $row17['note'] >0 ){    ?>
-                <a href= "reclemation.php" class="btn btn-primary">reclemation</a>
-                <?php  }
-    }
+            <?php if( $row17['note'] > 0 ){    ?>
+                <a href= "reclemation.php" class="btn btn-primary">Reclemation</a>
+                <?php  
+                }
+             }
                 ?>
  
             </div>

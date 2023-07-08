@@ -126,7 +126,7 @@ include "../nav_bar.php";
                         <select class="form-control" id="academic" value="Semesters" name="matiere">
                             <option selected disabled> Matière </option>
                             <?php while ($row = mysqli_fetch_assoc($semestre_qry)) : ?>
-                                <option value="<?= $row['id_matiere']; ?>"> <?= $row['libelle']; ?> </option>
+                                <option value="<?= $row['id_matiere']; ?>"><?= $row['code']; ?> <?= $row['libelle']; ?> </option>
                             <?php endwhile; ?>
                         </select>
                     </div>

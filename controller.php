@@ -203,6 +203,7 @@ $alert = "";
 
             if ($insertInfo) {
                 header('location: authentification.php');
+                $_SESSION['cree_reussi'] = true;
             } else {
                 $errors['db_error'] = "Impossible d’insérer des données dans la base de données!";
             }
@@ -316,6 +317,7 @@ $alert = "";
 }
 
     // if forgot button will clicked
+
     if (isset($_POST['submit'])) {
         $email = $_POST['email'];
         $_SESSION['email'] = $email;

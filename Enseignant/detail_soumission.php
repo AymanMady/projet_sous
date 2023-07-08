@@ -69,25 +69,17 @@ if($_SESSION["role"]!="ens"){
                     while($row2=mysqli_fetch_assoc($req2)){
                         ?>
                         <?php 
-                        $file_chemin = $row2['chemin_fichier'];
                         $file_name = $row2['nom_fichier'];
                         ?>
                         <div style="display: flex ; justify-content: space-between; " >
                         <div>
-                        <p><?=$row2['nom_fichier']?></p>
+                        <p><strong><?=$row2['nom_fichier']?></strong></p>
                         </div>
                         <div>
-                        <form action="open_file.php" method="post">
-                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
-                            <button name="view" class="btn btn-primary ">View file</button>
-                        </form>
+                        <a href="open_file.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>">Voir</a>
                         </div>
                         <div>
-                        <form action="telecharger_fichier.php" method="post">
-                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
-                            <input type="text" style="display:none" value="<?=$file_name?>" name="file_name">
-                            <button name="view" class="btn btn-primary ">Telecharger</button>
-                        </form>
+                        <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>">Telecharger</a>
                         </div>
                         </div>
                         <br>

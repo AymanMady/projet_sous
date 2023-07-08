@@ -229,11 +229,11 @@ INSERT INTO `type_soumission` (`id_type_sous`, `libelle`) VALUES
 
 INSERT INTO `utilisateur` (`login`, `pwd`, `active`, `code`, `id_role`) VALUES
 ('admin@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 1),
-('22014@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 2),
-('22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3),
 ('cheikh.dhib@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 0, '0', 2),
 ('sidi.med@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '', 2),
-('moussa.demba@supnum.mr', '25f9e794323b453885f5181f1b624d0b', '1', NULL, '2');
+('moussa.demba@supnum.mr', '25f9e794323b453885f5181f1b624d0b', '1', NULL, '2'),
+('22018@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3),
+('22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3);
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -443,45 +443,42 @@ INSERT INTO `matiere_semestre` (`id_matiere`, `id_semestre`) VALUES
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
-
-INSERT INTO `enseignant`(`nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`, `num_tel`, `num_whatsapp`, `diplome`, `grade`, `id_role`) VALUES 
-('Cheikh', 'Dhib', '1983-01-22', 'nktt', 'cheikh.dhib@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
-('Moussa', 'Demba', '1989-10-12', 'nkt', 'moussa.demba@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur adjoint', 2),
-('Meya', 'Haroune', '1993-06-22', 'nktt', 'meya.haroune@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('Sidi', 'Mohamed', '1995-10-27', 'Rosso', 'sidi.med@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Aicha', 'Bobakar', '1991-12-07', 'nkt', 'aicha.bobakar@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Mariem', 'Bellal', '1988-12-17', 'nktt', 'mariem.bellal@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
-('ahmed', 'oumar', '1990-03-15', 'nktt', 'ahmed.oumar@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
-('fatim', 'sidi', '1985-07-10', 'nktt', 'fatim.sidi@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('mohamed', 'ali', '1992-09-05', 'nktt', 'mohamed.ali@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('asma', 'oussama', '1995-04-25', 'Aion', 'asma.oussama@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
-('issouf', 'hamid', '1991-11-09', 'nktt', 'issouf.hamid@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('khadija', 'mohamed', '1987-08-03', 'nktt', 'khadija.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('ali', 'amine', '1994-02-18', 'nkt', 'ali.amine@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('souad', 'abdou', '1996-05-30', 'nkt', 'souad.abdou@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('ibrahim', 'khalil', '1984-09-02', 'nkt', 'ibrahim.khalil@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
-('salma', 'ahmed', '1986-06-28', 'nkt', 'salma.ahmed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('Oumar', 'Abdoulaye', '1990-07-15', 'Nouakchott', 'oumar.abdoulaye@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Mariem', 'Ahmed', '1988-05-19', 'Nouadhibou', 'mariem.ahmed@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
-('Khalifa', 'Mohamed', '1993-02-25', 'Rosso', 'khalifa.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('Aissatou', 'Mohamed', '1991-12-09', 'Nouakchott', 'aissatou.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Ahmed', 'Salem', '1987-10-27', 'Kaédi', 'ahmed.salem@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
-('Khadijetou', 'Ali', '1995-04-03', 'Nouakchott', 'khadijetou.ali@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('Abdallahi', 'Fatimetou', '1986-08-18', 'Nouadhibou', 'abdallahi.fatimetou@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Sidi', 'Mamadou', '1992-06-22', 'Nouakchott', 'sidi.mamadou@supnum.mr', '0123456789', '0123456789', 'doctor', 'directeur', 2),
-('Hawa', 'Mohamed', '1989-04-09', 'Kaédi', 'hawa.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Moulaye', 'Sidi', '1994-12-17', 'Rosso', 'moulaye.sidi@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Salem', 'Aicha', '1985-09-05', 'Nouakchott', 'salem.aicha@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2),
-('Mariem', 'Ahmed', '1991-07-10', 'Nouadhibou', 'mariem.ahmed@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('Mohamed', 'Khalil', '1988-05-30', 'Nouakchott', 'mohamed.khalil@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
-('Aminetou', 'Mohamed', '1996-03-12', 'Rosso', 'aminetou.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Abderrahmane', 'Salem', '1990-09-18', 'Nouakchott', 'abderrahmane.salem@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Fatimetou', 'Ali', '1987-06-23', 'Nouadhibou', 'fatimetou.ali@supnum.mr', '0123456789', '0123456789', 'doctor', 'prof', 2),
-('Mamadou', 'Sidi', '1993-04-10', 'Nouakchott', 'mamadou.sidi@supnum.mr', '0123456789', '0123456789', 'master', 'prof', 2),
-('Hawa', 'Mohamed', '1989-02-15', 'Kaédi', 'hawa.mohamed@supnum.mr', '0123456789', '0123456789', 'doctor', 'maître assistant', 2),
-('Salem', 'Aicha', '1986-08-08', 'Nouakchott', 'salem.aicha@supnum.mr', '0123456789', '0123456789', 'master', 'maître assistant', 2);
-
-
+INSERT INTO `enseignant` (`id_ens`, `nom`, `prenom`, `Date_naiss`, `lieu_naiss`, `email`, `num_tel`, `num_whatsapp`, `diplome`, `grade`, `id_role`) VALUES
+(1, 'Cheikh', 'Dhib', '1983-01-22', 'nktt', 'cheikh.dhib@supnum.mr', NULL, NULL, 'doctor', 'directeur', 2),
+(2, 'Moussa', 'Demba', '1989-10-12', 'nkt', 'moussa.demba@supnum.mr', NULL, NULL, 'doctor', 'directeur adjoint', 2),
+(3, 'Meya', 'Haroune', '1993-06-22', 'nktt', 'meya.haroune@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(4, 'Sidi', 'Mohamed', '1995-10-27', 'Rosso', 'sidi.med@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(5, 'Aicha', 'Bobakar', '1991-12-07', 'nkt', 'aicha.bobakar@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(6, 'Mariem', 'Bellal', '1988-12-17', 'nktt', 'mariem.bellal@supnum.mr', NULL, NULL, 'master', 'maître assistant', 2),
+(7, 'ahmed', 'oumar', '1990-03-15', 'nktt', 'ahmed.oumar@supnum.mr', NULL, NULL, 'master', 'prof', 2),
+(8, 'fatim', 'sidi', '1985-07-10', 'nktt', 'fatim.sidi@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(9, 'mohamed', 'ali', '1992-09-05', 'nktt', 'mohamed.ali@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(10, 'asma', 'oussama', '1995-04-25', 'Aion', 'asma.oussama@supnum.mr', NULL, NULL, 'master', 'maître assistant', 2),
+(11, 'issouf', 'hamid', '1991-11-09', 'nktt', 'issouf.hamid@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(12, 'khadija', 'mohamed', '1987-08-03', 'nktt', 'khadija.mohamed@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(13, 'ali', 'amine', '1994-02-18', 'nkt', 'ali.amine@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(14, 'souad', 'abdou', '1996-05-30', 'nkt', 'souad.abdou@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(15, 'ibrahim', 'khalil', '1984-09-02', 'nkt', 'ibrahim.khalil@supnum.mr', NULL, NULL, 'master', 'maître assistant', 2),
+(16, 'salma', 'ahmed', '1986-06-28', 'nkt', 'salma.ahmed@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(17, 'Oumar', 'Abdoulaye', '1990-07-15', 'Nouakchott', 'oumar.abdoulaye@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(18, 'Mariem', 'Ahmed', '1988-05-19', 'Nouadhibou', 'mariem.ahmed@supnum.mr', NULL, NULL, 'master', 'prof', 2),
+(19, 'Khalifa', 'Mohamed', '1993-02-25', 'Rosso', 'khalifa.mohamed@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(20, 'Aissatou', 'Mohamed', '1991-12-09', 'Nouakchott', 'aissatou.mohamed@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(21, 'Ahmed', 'Salem', '1987-10-27', 'Kaédi', 'ahmed.salem@supnum.mr', NULL, NULL, 'master', 'maître assistant', 2),
+(22, 'Khadijetou', 'Ali', '1995-04-03', 'Nouakchott', 'khadijetou.ali@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(23, 'Abdallahi', 'Fatimetou', '1986-08-18', 'Nouadhibou', 'abdallahi.fatimetou@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(24, 'Sidi', 'Mamadou', '1992-06-22', 'Nouakchott', 'sidi.mamadou@supnum.mr', NULL, NULL, 'doctor', 'directeur', 2),
+(25, 'Hawa', 'Mohamed', '1989-04-09', 'Kaédi', 'hawa.mohamed@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(26, 'Moulaye', 'Sidi', '1994-12-17', 'Rosso', 'moulaye.sidi@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(27, 'Salem', 'Aicha', '1985-09-05', 'Nouakchott', 'salem.aicha@supnum.mr', NULL, NULL, 'master', 'maître assistant', 2),
+(28, 'Mariem', 'Ahmed', '1991-07-10', 'Nouadhibou', 'mariem.ahmed@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(29, 'Mohamed', 'Khalil', '1988-05-30', 'Nouakchott', 'mohamed.khalil@supnum.mr', NULL, NULL, 'master', 'prof', 2),
+(30, 'Aminetou', 'Mohamed', '1996-03-12', 'Rosso', 'aminetou.mohamed@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(31, 'Abderrahmane', 'Salem', '1990-09-18', 'Nouakchott', 'abderrahmane.salem@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(32, 'Fatimetou', 'Ali', '1987-06-23', 'Nouadhibou', 'fatimetou.ali@supnum.mr', NULL, NULL, 'doctor', 'prof', 2),
+(33, 'Mamadou', 'Sidi', '1993-04-10', 'Nouakchott', 'mamadou.sidi@supnum.mr', NULL, NULL, 'master', 'prof', 2),
+(34, 'Hawa', 'Mohamed', '1989-02-15', 'Kaédi', 'hawa.mohamed@supnum.mr', NULL, NULL, 'doctor', 'maître assistant', 2),
+(35, 'Salem', 'Aicha', '1986-08-08', 'Nouakchott', 'salem.aicha@supnum.mr', NULL, NULL, 'master', 'maître assistant', 2);
 
 -- ----------------------------------------------------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -690,7 +687,6 @@ INSERT INTO `etudiant` (`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`
 
 
 INSERT INTO `inscription` (`id_etud`, `id_matiere`, `id_semestre`) VALUES
-(104, 95, 2),
 (74, 4, 2),
 (70, 4, 2),
 (104, 4, 2),

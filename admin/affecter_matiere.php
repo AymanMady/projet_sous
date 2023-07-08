@@ -126,7 +126,6 @@ include "../nav_bar.php";
 </script>
 
 
-
 </br>
 </br></br></br>
 <div class="container">
@@ -134,9 +133,7 @@ include "../nav_bar.php";
         <div class="col-lg-12">
             
             <ol class="breadcrumb">
-            <li><a href="acceuil.php">Acceuil</a>
-                    
-                    </li>
+            <li><a href="acceuil.php">Acceuil</a></li>
                     <li>Gestion des matière</li>
                     <li>Affecter un enseignant</li>
             </ol>

@@ -1,6 +1,7 @@
 <?php
-   //session_start();
+   session_start();
    include_once ("controller.php");
+  
 ?>
  <!DOCTYPE html>
 <html lang="en">
@@ -250,7 +251,6 @@
      <input type="submit" name="entrer" value="login" class="btn btn-lg btn-primary btn-block btn-signin" style="margin-bottom: 10px;">
      <a href="forgot.php" id="forgot">Mot de passe oublier?</a>
             <p>Cree un compte <a href="verification.php">Sign Up</a></p>
-    
   </form>
 </div>
 <p class="mt-5 mb-3 text-body-secondary">&copy; 2022–2023</p>
@@ -258,7 +258,22 @@
   </body>
 </html>
 
+<?php
 
 
+if (isset($_SESSION['cree_reussi']) && $_SESSION['cree_reussi'] === true) {
+  echo "<script>
+  Swal.fire({
+      title: 'Ajout réussi !',
+      text: 'L\'inscription a été ajouté avec succès.',
+      icon: 'success',
+      confirmButtonColor: '#3099d6',
+      confirmButtonText: 'OK'
+  });
+  </script>";
 
+  // Supprimer l'indicateur de succès de la session
+  unset($_SESSION['cree_reussi']);
+}
 
+?>

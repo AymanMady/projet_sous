@@ -10,7 +10,7 @@ if(isset($_POST['fin'])){
     $note=$_POST['Note'];
     $sql="UPDATE `reponses` SET note=$note WHERE id_rep=$id_rep";
    if( mysqli_query($conn,$sql)){
-    header("location:consiltation_de_reponse.php");
+    header("location:soumission_en_ligne.php");
    }
 }
 
@@ -39,12 +39,11 @@ include "../nav_bar.php";
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
                 <li><a href="#">Acceuil</a></li>
-                <li>Afectation du note </li>
+                <li>Affectation du note </li>
             </ol>
         </div>
     </div>
-    <?php
-
+<?php
 $sql = "select * from reponses where id_rep='$id_rep' ";
 $req = mysqli_query($conn,$sql);
 $row= mysqli_fetch_assoc($req);
@@ -52,12 +51,12 @@ $row= mysqli_fetch_assoc($req);
 <div class="form-horizontal">
     <form action="" method="POST">
         <div class="form-group">
-            <label class="col-md-1">Note :</label>
+            <label class="col-md-1">Note</label>
             <div class="col-md-6">
-            <input type="float" name="Note" class = "form-control" value="<?=$row['note']?>" >
+            <input type="float" name="Note" class = "form-control" value="<?=$row['note']?>">
         </div>
-            <div class="col-md-2">
-                <input type="submit" value="affecter" name="fin" class="btn-primary">
+        <div class="col-md-2">
+            <input type="submit" value="affecter" name="fin" class="btn-primary">
         </div>
     </form>
 </div>

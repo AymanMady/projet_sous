@@ -60,7 +60,7 @@ if($_SESSION["role"]!="admin"){
     ?>
 
 </br>
-</br></br></br>
+</br></br>
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -76,7 +76,7 @@ if($_SESSION["role"]!="admin"){
     </div>
    
 <div class="form-horizontal">
-    <br /><br />
+    
 
     <p class="erreur_message">
             <?php 

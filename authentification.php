@@ -250,15 +250,9 @@
      <input type="submit" name="entrer" value="login" class="btn btn-lg btn-primary btn-block btn-signin" style="margin-bottom: 10px;">
      <a href="forgot.php" id="forgot">Mot de passe oublier?</a>
             <p>Cree un compte <a href="verification.php">Sign Up</a></p>
-    
   </form>
 </div>
 <p class="mt-5 mb-3 text-body-secondary">&copy; 2022–2023</p>
 </main>
   </body>
 </html>
-
-
-
-
-

@@ -98,7 +98,7 @@ if($_SESSION["role"]!="ens"){
                     ?>
                 <h4>
                 <?php echo "<strong>Matricule : </strong>". $row['matricule']; ?><br><br>
-                <?php echo "<strong>nom est prenom de l'etudiant  : </strong>" . $row['nom']." ".$row['prenom']; ?><br><br>
+                <?php echo "<strong>nom et prenom de l'etudiant  : </strong>" . $row['nom']." ".$row['prenom']; ?><br><br>
                 <?php echo "<strong>Description : </strong>". $row['description_rep'];  ?><br><br>
                 <?php echo "<strong>Date : </strong>". $row['date']; ?><br><br>
                 </h4>
@@ -124,7 +124,6 @@ if($_SESSION["role"]!="ens"){
                     while($row2=mysqli_fetch_assoc($req2)){
                         ?>
                         <?php 
-                        $file_chemin = $row2['chemin_fichiere'];
                         $file_name=$row2['nom_fichiere'];
                         ?>
                         <div style="display: flex ; justify-content: space-between; " >
@@ -132,19 +131,13 @@ if($_SESSION["role"]!="ens"){
                         <strong><p><?=$row2['nom_fichiere']?></p></strong>
                         </div>
                         <div>
-                        <form action="open_file.php" method="post">
-                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
-                            <button name="view" class="btn btn-primary ">View file</button>
-                        </form>
+                        <a href="open_file.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Voir</a>
                         </div>
                         <div>
-                        <form action="telecharger_fichier.php" method="post">
-                            <input type="text" style="display:none" value="<?=$file_chemin?>" name="file_chemin">
-                            <input type="text" style="display:none" value="<?=$file_name?>" name="file_name">
-                            <button name="view" class="btn btn-primary ">Telecharger</button>
-                        </form>
+                        <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
                         </div>
-                        </div><br>
+                        </div>
+                        <br>
                        <?php
                     }
                 }
@@ -155,16 +148,32 @@ if($_SESSION["role"]!="ens"){
 
 
         <div class="response-count" >
-            <h3>le note de l'etudiant = </h3>
+            <h3><strong>Note</strong></h3>
             <div class="nbr_etud">
             <?php
             if($row['note']!=NULL){
             echo $row['note'] ;
             }
-            else {
-                echo "NULL";
-            }?>
+            ?>
             </div>
+            <?php
+            $sql3 = "select * from reponses where id_rep='$id_rep' ";
+            $req3 = mysqli_query($conn,$sql3);
+            $row3= mysqli_fetch_assoc($req3);
+            if($row3['note']>0){
+            ?>
+            <div>
+            <a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary mr-25">Modifier la note</a>
+            </div>
+            <?php
+            }else{
+            ?>
+            <div>
+            <a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary mr-25">Donner une note</a>
+            </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>
@@ -177,8 +186,6 @@ if($_SESSION["role"]!="ens"){
 <div style="display: flex ; justify-content: space-between;">
 <div>
 <a href="reponses_etud.php?id_sous=<?=$row['id_sous']?>" class="btn btn-primary">Retour</a>
-</div>
-<a href="affecte_une_note.php?id_etud=<?= $id_rep?>"  class="btn btn-primary mr-25">donne une Note</a>
 </div>
 </div>
 

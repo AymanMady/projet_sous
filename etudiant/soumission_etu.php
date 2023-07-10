@@ -133,7 +133,7 @@
                         }
                         else{
                             ?>
-                            <p >Voir</p>
+                            <a >Voir</a>
                             </div>
                             <?php 
                             }

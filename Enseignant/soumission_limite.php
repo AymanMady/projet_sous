@@ -159,7 +159,7 @@ include "../nav_bar.php";
                           </td>                          
                           <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
                           <td><a href="archiver_soumission_terminer.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
-                          <td><a href="prolonger_soumission.php?id_sous=<?=$row['id_sous']?>" id="prolonger" >Prollonger</a></td>
+                          <td><a href="prolonger_soumission.php?id_sous=<?=$row['id_sous']?>" id="prolonger" >Prolonger</a></td>
                       </tr>
                     <?php
                   }

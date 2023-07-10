@@ -10,7 +10,7 @@ if($_SESSION["role"]!="admin"){
 include_once "../connexion.php";
 $ens = "SELECT * FROM enseignant ";
 $ens_qry = mysqli_query($conn, $ens);
-$groupe = "SELECT * FROM groupe";
+$groupe = "SELECT DISTINCT groupe.* FROM groupe";
 $groupe_qry = mysqli_query($conn,$groupe);
 $type_matiere = "SELECT * FROM type_matiere";
 $type_matiere_qry = mysqli_query($conn,$type_matiere);
@@ -167,7 +167,9 @@ include "../nav_bar.php";
             <?php 
             $ens = "SELECT * FROM enseignant ";
             $ens_qry = mysqli_query($conn, $ens);
-            $groupe = "SELECT * FROM groupe ";
+            $groupe = "SELECT id_groupe, libelle
+            FROM groupe
+            GROUP BY libelle; ";
             $groupe_qry = mysqli_query($conn,$groupe);
             $type_matiere = "SELECT * FROM type_matiere";
             $type_matiere_qry = mysqli_query($conn,$type_matiere);

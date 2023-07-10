@@ -41,6 +41,9 @@ include_once "../connexion.php";
                 </ol>
             </div>
         </div>
+        
+<div class="b-example-divider"></div>
+
         <div style="overflow-x:auto;">
             <table class="table table-striped table-bordered">
                 <tr>

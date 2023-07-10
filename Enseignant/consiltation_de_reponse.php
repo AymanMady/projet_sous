@@ -78,7 +78,8 @@ if($_SESSION["role"]!="ens"){
             <ol class="breadcrumb">
                 <li><a href="acceuil.php">Acceuil</a>       
                 </li>
-                <li>Reponse de l'etudiant  <?php //echo $nom_ens ?> </li>     
+
+                <li>Consultation de réponse de l'etudiant  <a> <?php echo $row['nom'] ?> </a></li>     
             </ol>
         </div>
     </div>
@@ -131,8 +132,23 @@ if($_SESSION["role"]!="ens"){
                         <strong><p><?=$row2['nom_fichiere']?></p></strong>
                         </div>
                         <div>
+                        <?php 
+                        $test=explode(".",$file_name);
+                        if( $test[1]=="pdf"){
+                        ?>
+                        
                         <a href="open_file.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Voir</a>
                         </div>
+                        <?php
+                        }
+                        else{
+                            ?>
+                            <a >Voir</a>
+                            </div>
+                            <?php 
+                            }
+                        
+                        ?>
                         <div>
                         <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
                         </div>

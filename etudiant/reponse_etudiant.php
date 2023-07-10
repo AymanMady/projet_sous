@@ -19,7 +19,7 @@ $id_sous = $_GET['id_sous'];
     $sql = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
 $req = mysqli_query($conn,$sql);
 
-if (mysqli_num_rows($req) == 0) {
+if (mysqli_num_rows($req) == 0) { 
 
 function test_input($data)
 {
@@ -242,8 +242,22 @@ include "../nav_bar.php";
                                                                         <p><?=$row2['nom_fichiere']?></p>
                                                                         </div>
                                                                         <div>
+                                                                        <?php 
+                                                                        $test=explode(".",$file_name);
+                                                                        if( $test[1]=="pdf"){
+                                                                        ?>
                                                                         <a href="open_file.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Voir</a>
                                                                         </div>
+                                                                        <?php 
+                                                                        }
+                                                                        else{
+                                                                            ?>
+                                                                            <a >Voir</a>
+                                                                            </div>
+                                                                            <?php 
+                                                                            }
+                                                                        
+                                                                        ?>
                                                                         <div>
                                                                         <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
                                                                         </div>

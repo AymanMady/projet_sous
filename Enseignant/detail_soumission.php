@@ -45,10 +45,10 @@ if($_SESSION["role"]!="ens"){
                 <h4>
                 <?php echo "<strong>Titre : </strong>". $row['titre_sous']; ?><br><br>
                 <?php echo "<strong>Description : </strong>". $row['description_sous'];  ?><br><br>
-                <?php echo "<strong>Code de la matiere : </strong>". $row['code']; ?><br><br>
+                <?php echo "<strong>Code de la matière : </strong>". $row['code']; ?><br><br>
                 <?php echo "<strong>Date de  début : </strong>". $row['date_debut']; ?><br><br>
                 <?php echo "<strong>Date de  fin : </strong>" . $row['date_fin']; ?><br><br>
-                <?php echo "<strong>nom est prenom de l'enseignant  : </strong>" . $row['nom']." ".$row['prenom']; ?><br><br>
+                <?php echo "<strong>Nom et prénom de l'enseignant  : </strong>" . $row['nom']." ".$row['prenom']; ?><br><br>
                 </h4>
                
             </fieldset>

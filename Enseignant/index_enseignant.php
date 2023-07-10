@@ -7,6 +7,13 @@
      header("location:../authentification.php");
  }
 
+ include_once "../connexion.php";
+
+$sql_ens = "SELECT * FROM matiere,enseigner,enseignant,semestre WHERE enseignant.id_ens=enseigner.id_ens and matiere.id_semestre=semestre.id_semestre and matiere.id_matiere=enseigner.id_matiere  and enseignant.email ='$email'";
+$req_ens = mysqli_query($conn , $sql_ens);
+$row_ens = mysqli_fetch_assoc($req_ens);
+
+
 ?>
 <style>
     /* Ajoutez ce style pour changer le curseur en pointeur lorsqu'on survole une ligne */
@@ -22,7 +29,7 @@
             <ol class="breadcrumb">
                 <li><a href="acceuil.php">Acceuil</a>       
                 </li>
-                <li>Les matières enseignées par l'enseignant <?php //echo $nom_ens ?> </li>     
+                <li><a href="#">Les matières enseignées par l'enseignant <?php echo $row_ens['nom'] ." ".$row_ens['prenom'] ?> </a></li>     
             </ol>
         </div>
     </div>
@@ -30,13 +37,13 @@
   <table class="table table-striped table-bordered">
           <tr>
               <th>Code</th>
-              <th>Libelle</th>
+              <th>Libellè</th>
               <th>Semestre</th>
               <th>Specialite</th>
               <th>Action</th>
           </tr>
           <?php 
-              include_once "../connexion.php";
+          
               $req_ens_mail =  "SELECT matiere.*,semestre.* FROM matiere,enseigner,enseignant,semestre WHERE enseignant.id_ens=enseigner.id_ens and matiere.id_semestre=semestre.id_semestre and matiere.id_matiere=enseigner.id_matiere  and enseignant.email ='$email'";
 
               $req = mysqli_query($conn , $req_ens_mail);

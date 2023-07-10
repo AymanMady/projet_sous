@@ -95,9 +95,9 @@ include "../nav_bar.php";
         <div class="row">
             <div class="col-lg-12">
                 <ol class="breadcrumb">
-                    <li><a href="#">Acceuil</a></li>
-                    <li>Gestion des soumissions</li>
-                    <li>Ajouter une soumission</li>
+                    <li><a href="index_enseignant.php">Acceuil</a></li>
+                    <li><a href="soumission_en_ligne.php">Gestion des soumissions</a></li>
+                    <li><a href="cree_soumission.php">Créer une soumission</a></li>
                 </ol>
             </div>
         </div>
@@ -115,13 +115,13 @@ include "../nav_bar.php";
 
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label class="col-md-1">Titre </label>
+                    <label class="col-md-2">Titre </label>
                     <div class="col-md-6">
                         <input type="text" name="titre_sous" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Matière</label>
+                    <label class="col-md-2">Matière</label>
                     <div class="col-md-6">
                         <select class="form-control" id="academic" value="Semesters" name="matiere">
                             <option selected disabled> Matière </option>
@@ -132,19 +132,19 @@ include "../nav_bar.php";
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Date début </label>
+                    <label class="col-md-2">Date début </label>
                     <div class="col-md-6">
                         <input type="datetime-local" name="debut" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Date fin</label>
+                    <label class="col-md-2">Date fin</label>
                     <div class="col-md-6">
                         <input type="datetime-local" name="fin" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Type soumission</label>
+                    <label class="col-md-2">Type soumission</label>
                     <div class="col-md-6">
                         <select class="form-control" id="academic" value="Semesters" name="type">
                             <option selected disabled> Type soumission </option>
@@ -155,13 +155,13 @@ include "../nav_bar.php";
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Description </label>
+                    <label class="col-md-2">Description </label>
                     <div class="col-md-6">
                         <textarea name="description_sous" id="" class="form-control" cols="30" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Sélectionnez un fichier : </label>
+                    <label class="col-md-2">Sélectionnez un ou plusieurs fichier(s) : </label>
                     <div class="col-md-6">
                         <input type="file" id="fichier" name="file[]" class="form-control" multiple>
                     </div>

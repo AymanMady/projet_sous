@@ -9,8 +9,8 @@ if($_SESSION["role"]!="ens"){
     include_once "../connexion.php";
 
     $id_matiere=$_GET['id_matiere'];
-    $req = mysqli_query($conn,"select * from matiere where id_matiere = '$id_matiere' ");
-    $row=mysqli_fetch_assoc($req);
+    $req = mysqli_query($conn,"SELECT * FROM etudiant,matiere,inscription where inscription.id_matiere=matiere.id_matiere and etudiant.id_etud=inscription.id_etud and matiere.id_matiere ='$id_matiere' ");
+    $row_matiere=mysqli_fetch_assoc($req);
     include "../nav_bar.php";
 ?>
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ if($_SESSION["role"]!="ens"){
             <ol class="breadcrumb">
                 <li><a href="acceuil.php">Acceuil</a>       
                 </li>
-                <li>List des etudiant s'inscrient dans la matiere  <?php// echo $row['code']  ?> </li>     
+                <li>List des etudiants s'inscrient dans la matière <a> <?php echo $row_matiere['libelle']  ?></a> </li>     
             </ol>
         </div>
     </div>

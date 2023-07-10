@@ -150,7 +150,7 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
                 <li><a href="#">Acceuil</a>
                     
                 </li>
-                <li>Les soumissions en ligne par matiere</li>
+                <li>Les soumissions en ligne par matière</li>
                    
             </ol>
 

@@ -18,7 +18,7 @@ if(isset($_POST['search'])) {
     }
    
 } else {
-$matiere_query = "SELECT * FROM matiere INNER JOIN semestre USING(id_semestre)"; 
+$matiere_query = "SELECT * FROM matiere INNER JOIN semestre USING(id_semestre) order by code desc"; 
 }
 ?>
 

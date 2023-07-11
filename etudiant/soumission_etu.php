@@ -83,7 +83,11 @@
     <?php
 
     include_once "../connexion.php";
-    $id_sous = $_GET['id_sous'];
+    if(!empty($_GET['id_sous'])){
+        $id_sous = $_GET['id_sous'];
+    }else{
+        $id_sous= $_SESSION['id_sous'];
+    }
 
     $req_detail = "SELECT * FROM soumission  WHERE id_sous = $id_sous and (status=0 or status=1)  ";
     $req = mysqli_query($conn , $req_detail);
@@ -192,10 +196,23 @@
     <?php
     }
     ?>
-    
-   
 </div>
 </div>
-
+<?php
+if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Ajout réussi !',
+        text: 'La réponse a été ajouté avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+  
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['ajout_reussi']);
+  }
+?>
 </body>
 </html>

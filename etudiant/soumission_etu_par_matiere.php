@@ -45,7 +45,7 @@ include_once "../connexion.php";
             <table class="table table-striped table-bordered">
                 <tr>
                     <th>Code</th>
-                    <th>Semestre</th>
+                    <th>Titre de la soumission</th>
                     <th>Spécialité</th>
                     <th>date debut</th>
                     <th>date fin</th>

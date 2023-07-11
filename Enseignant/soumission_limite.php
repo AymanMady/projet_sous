@@ -102,7 +102,7 @@ include "../nav_bar.php";
               <th>Titre de soumission</th>
               <th>Date debut </th>
               <th>Date fin </th>
-              <th colspan="2">Actions</th>
+              <th colspan="4">Actions</th>
           </tr>
           <?php 
               include_once "../connexion.php";

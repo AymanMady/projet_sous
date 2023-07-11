@@ -6,7 +6,12 @@ if($_SESSION["role"]!="ens"){
 }
 ?>
 <?php
-    $id_rep=$_GET['id_rep'];
+    if(isset($_GET['id_rep'])){
+        $id_rep=$_GET['id_rep'];
+    }
+    else{
+        $id_rep = $_SESSION['id_rep'];
+    }
     include "../nav_bar.php";
     $req_detail="SELECT * FROM `reponses`,`etudiant`,`fichiers_reponses`
      WHERE reponses.id_etud=etudiant.id_etud and

@@ -70,6 +70,7 @@ if (isset($_POST['button'])) {
             if($req1 and $req2){
                 header("location:index_etudiant.php");
                 $_SESSION['ajout_reussi'] = true;
+             
             }
         }
     }
@@ -262,7 +263,7 @@ include "../nav_bar.php";
                                                                         <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
                                                                         </div>
                                                                         <div>
-                                                                        <a href="supprime_fichier.php?file_name=<?=$file_name?>">Supprimer</a>
+                                                                        <a href="supprime_fichier.php?file_name=<?=$file_name?>"><img style="width: 18px; margin-left:110px; " title="Supprimer" src="images/close.png" alt=""></a>
                                                                         </div>
                                                                         </div>
                                                                         <br>

@@ -20,6 +20,7 @@ $sql="DELETE FROM fichiers_reponses WHERE fichiers_reponses.nom_fichiere='$file'
 $resul=mysqli_query($conn,$sql);
 if($resul){
     header("location:index_etudiant.php");
+    
 }
 ?>
 </body>

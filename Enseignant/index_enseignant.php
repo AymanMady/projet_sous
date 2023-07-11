@@ -9,7 +9,7 @@
 
  include_once "../connexion.php";
 
-$sql_ens = "SELECT * FROM matiere,enseigner,enseignant,semestre WHERE enseignant.id_ens=enseigner.id_ens and matiere.id_semestre=semestre.id_semestre and matiere.id_matiere=enseigner.id_matiere  and enseignant.email ='$email'";
+$sql_ens = "SELECT * FROM enseignant WHERE enseignant.email ='$email'";
 $req_ens = mysqli_query($conn , $sql_ens);
 $row_ens = mysqli_fetch_assoc($req_ens);
 

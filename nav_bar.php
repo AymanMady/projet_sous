@@ -222,9 +222,6 @@
                         <li id="potfolio" class="dropdown">   
                                 <a href="index_etudiant.php" >Accueil</a>
                         </li>
-                        <li id="potfolio" class="dropdown">   
-                                <a href="notes.php" >Notes</a>
-                        </li>
                         
                         <li  class="dropdown">
                                

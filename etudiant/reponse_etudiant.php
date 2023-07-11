@@ -8,8 +8,11 @@
 
 include_once "../connexion.php";
 
-$id_sous = $_GET['id_sous'];
-
+if(!empty($_GET['id_sous'])){
+    $id_sous = $_GET['id_sous'];
+}else{
+    $id_sous= $_SESSION['id_sous'];
+}
 ?>
 <body>  
  
@@ -68,8 +71,9 @@ if (isset($_POST['button'])) {
             $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ($id_rep, '$file_name', '$destination')";
             $req2 = mysqli_query($conn, $sql2);
             if($req1 and $req2){
-                header("location:index_etudiant.php");
+                $_SESSION['id_sous'] = $id_sous;
                 $_SESSION['ajout_reussi'] = true;
+                header("location:soumission_etu.php");
             }
         }
     }
@@ -167,15 +171,14 @@ include "../nav_bar.php";
                 move_uploaded_file($file_tmp, $destination);
     
                 // Insérer les info dans la base de donnéez
-                // $sql3 = "DELETE FROM fichiers_reponses  where `id_rep`in (SELECT reponses.id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email' and reponses.id_sous=$id_sous) ";
-                // $req3 = mysqli_query($conn, $sql3);
                 $sql2 = "INSERT INTO `fichiers_reponses` (`id_rep`, `nom_fichiere`, `chemin_fichiere`) VALUES ((SELECT reponses.id_rep FROM reponses,etudiant WHERE reponses.id_etud=etudiant.id_etud and email='$email' and reponses.id_sous=$id_sous), '$file_name', '$destination')";
                 $req2 = mysqli_query($conn, $sql2);
 
                 
                 if($req1 && $req2){
-                    header("location:index_etudiant.php");
+                    $_SESSION['id_sous'] = $id_sous;
                     $_SESSION['ajout_reussi'] = true;
+                    header("location:soumission_etu.php");
                 }else{
                     mysqli_connect_error();
                 }
@@ -262,7 +265,7 @@ include "../nav_bar.php";
                                                                         <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
                                                                         </div>
                                                                         <div>
-                                                                        <a href="supprime_fichier.php?file_name=<?=$file_name?>">Supprimer</a>
+                                                                        <a href="supprime_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>">Supprimer</a>
                                                                         </div>
                                                                         </div>
                                                                         <br>
@@ -302,7 +305,22 @@ include "../nav_bar.php";
             </div>
         </div>
 <?php
+if (isset($_SESSION['suppression_reussi']) && $_SESSION['suppression_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'clôture réussi !',
+        text: 'Le fichier a été supprimer avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+  
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['suppression_reussi']);
+  }
 }
+  
 ?>
 </body>
 </html>

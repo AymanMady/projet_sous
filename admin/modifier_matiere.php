@@ -4,7 +4,6 @@ session_start() ;
      header("location:authentification.php");
 } 
 include_once "../connexion.php";
-//$id_matiere = $_GET['id_matiere'];
 
 
 $id_matiere=$_GET['id_matiere'];

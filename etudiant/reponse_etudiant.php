@@ -265,7 +265,11 @@ include "../nav_bar.php";
                                                                         <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
                                                                         </div>
                                                                         <div>
+<<<<<<< HEAD
                                                                         <a href="supprime_fichier.php?file_name=<?=$file_name?>"><img style="width: 18px; margin-left:110px; " title="Supprimer" src="images/close.png" alt=""></a>
+=======
+                                                                        <a href="supprime_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>">Supprimer</a>
+>>>>>>> 005e31880e6c954ddf61c9b5eff2ab7ac3f829ac
                                                                         </div>
                                                                         </div>
                                                                         <br>

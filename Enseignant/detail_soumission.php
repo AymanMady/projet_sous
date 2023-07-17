@@ -75,9 +75,25 @@ if($_SESSION["role"]!="ens"){
                         <div>
                         <p><strong><?=$row2['nom_fichier']?></strong></p>
                         </div>
+                        
                         <div>
+                        <?php 
+                        $test=explode(".",$file_name);
+                        if( $test[1]=="pdf"){
+                        ?>
+                        
                         <a href="open_file.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>">Voir</a>
                         </div>
+                        <?php
+                        }
+                        else{
+                            ?>
+                            <a >Voir</a>
+                            </div>
+                            <?php 
+                            }
+                        
+                        ?>
                         <div>
                         <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>">Telecharger</a>
                         </div>

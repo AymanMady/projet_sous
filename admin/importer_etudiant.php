@@ -82,8 +82,8 @@ if (isset($_POST["import"])) {
 		if(mysqli_query($conn, "INSERT INTO etudiant
 		(`matricule`, `nom`, `prenom`, `lieu_naiss`, `Date_naiss`, `id_semestre`, `annee`, `email`,`id_role`, `id_groupe`) VALUES
 		('$matricule', '$nom','$prenom', '$lieu_naiss','$Date_naiss', 
-		(select id_semestre from semestre where nom_semestre = '$semestre'), '$annee','$email',3,
-		(SELECT id_groupe FROM groupe WHERE libelle = '$groupe') )")){
+		(select id_semestre from semestre where nom_semestre = '$semestre'  LIMIT 1), '$annee','$email',3,
+		(SELECT id_groupe FROM groupe WHERE libelle = '$groupe'  LIMIT 1) )")){
 			header("location:etudiant.php");
 		}	
 		}

@@ -162,16 +162,16 @@
                                 <a href="enseignant.php">Gestion des enseignants</a>
                                 </li>
                                 <li>
-                                    <a href="etudiant.php">Gestion des etudiants</a>
+                                    <a href="etudiant.php">Gestion des étudiants</a>
                                 </li >  
                                 <li >
                                     <a href="utilisateurs.php">Gestion des utilisateurs</a>
                                 </li>
                                 <li >
-                                    <a href="groupe.php">Gestion des groupe</a>
+                                    <a href="groupe.php">Gestion des groupes</a>
                                 </li>
                                 <li >
-                                    <a href="matiere.php">Gestion des matiere</a>
+                                    <a href="matiere.php">Gestion des matières</a>
                                 </li>
                             </ul> 
                         </li>

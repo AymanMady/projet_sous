@@ -97,7 +97,7 @@ require 'vendor/autoload.php';
             $req_condition = mysqli_query($conn, $sql_condition);
 
             if (mysqli_num_rows($req_condition) == 0) {
-                if (mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_matiere`, `id_semestre`) VALUES ($id_etudiant, $id_matiere, $id_semestre)")) {
+                if (mysqli_query($conn, "INSERT INTO inscription(`id_etud`, `id_matiere`, `id_semestre`) VALUES($id_etudiant, $id_matiere, $id_semestre)")) {
                     header('location:inscription.php');
                     $_SESSION['import_reussi'] = true;
                 }

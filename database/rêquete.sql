@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `fichiers_reponses` (
   `nom_fichiere` varchar(255) NOT NULL,
   `chemin_fichiere` varchar(255) NOT NULL,
   PRIMARY KEY (`id_fich_rep`),
-    FOREIGN KEY (id_rep) REFERENCES reponses(id_rep)
+  FOREIGN KEY (id_rep) REFERENCES reponses(id_rep)
 );
 
 -- --------------------------------------------------------
@@ -212,9 +212,9 @@ INSERT INTO `semestre` (`id_semestre`, `nom_semestre`) VALUES
 
 
 INSERT INTO `role` (`id_role`, `profile`) VALUES
-(1, 'administrateur'),
-(2, 'enseignant'),
-(3, 'etudiant');
+(1, 'Administrateur'),
+(2, 'Enseignant'),
+(3, 'Étudiant');
 
 
 
@@ -277,8 +277,8 @@ INSERT INTO `departement` ( `code`, `nom`) VALUES
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
-INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'TP');
 INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'CM');
+INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'TP');
 INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'TD');
 
 
@@ -312,8 +312,8 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 ('DSI310', 'Programmation avancée', 'DSI', 60, 1, 3, 1),
 ('DSI311', 'Bases de données', 'DSI', 60, 1, 3, 1),
 ('DSI312', 'Projet intégrateur I', 'DSI', 60, 1, 3, 1),
-('DSI320', 'Programmation web', 'DSI', 60, 1, 3, 1),
-('DSI321', 'Architecture des applications', 'DSI', 60, 1, 3, 1),
+('DSI320', 'Programmation web', 'DSI', 60, 1, 2, 1),
+('DSI321', 'Architecture des applications', 'DSI', 60, 1, 2, 1),
 ('DPR310', 'Communication professionnelle', 'DSI', 60, 4, 3, 1),
 ('DPR311', 'Anglais', 'DSI', 60, 4, 3, 1),
 ('DPR312', 'PPP', 'DSI', 60, 4, 3, 1),
@@ -331,7 +331,7 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 ('RSS311', 'Administration systèmes et réseaux', 'RSS', 60, 2, 3, 1),
 ('RSS312', 'Projet intégrateur Avancé', 'RSS', 60, 2, 3, 1),
 ('PAV312', 'Sécurité des applications mobiles', 'PAV', 60, 4, 3, 1),
-('DPR314', 'Marketing numérique', 'DSI', 60, 4, 3, 1),
+('DPR314', 'Marketing numérique', 'DSI', 60, 4, 2, 1),
 ('DPR315', 'Management de l\'innovation', 'DSI', 60, 4, 3, 1),
 ('DPR316', 'Entreprenariat', 'DSI', 60, 4, 3, 1),
 ('DPR317', 'Management de la qualité', 'DSI', 60, 4, 3, 1),
@@ -340,8 +340,8 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 ('CNM315', 'Projet intégrateur Avancé II', 'CNM', 60, 3, 3, 1),
 ('CNM322', 'Technologies audiovisuelles', 'CNM', 60, 3, 3, 1),
 ('CNM323', 'Gestion de projet multimédia', 'CNM', 60, 3, 3, 1),
-('PAV313', 'Développement mobile multiplateforme', 'PAV', 60, 4, 3, 1),
-('PAV314', 'Programmation avancée en C++', 'PAV', 60, 4, 3, 1),
+('PAV313', 'Développement mobile multiplateforme', 'PAV', 60, 4, 2, 1),
+('PAV314', 'Programmation avancée en C++', 'PAV', 60, 4, 2, 1),
 ('PAV315', 'Modélisation et conception objet', 'PAV', 60, 4, 3, 1),
 ('PAV316', 'Projet intégrateur Avancé III', 'PAV', 60, 4, 3, 1),
 ('DAS313', 'Analyse de données en temps réel', 'DAS', 60, 4, 3, 1),
@@ -357,7 +357,7 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 ('DPR410', 'Communication professionnelle II', 'DSI', 60, 4, 4, 1),
 ('DSI412', 'Intelligence artificielle', 'DSI', 60, 1, 4, 1),
 ('DPR411', 'Management de projet', 'DSI', 60, 4, 4, 1),
-('CNM410', 'Développement web avancé', 'CNM', 60, 3, 4, 1),
+('CNM410', 'Développement web avancé', 'CNM', 60, 3, 2, 1),
 ('CNM411', 'Animation 2D et 3D', 'CNM', 60, 3, 4, 1),
 ('PAV410', 'Architecture logicielle', 'PAV', 60, 4, 4, 1),
 ('PAV411', 'Systèmes distribués', 'PAV', 60, 4, 4, 1),
@@ -419,25 +419,31 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 
 
 
-INSERT INTO `matiere_semestre` (`id_matiere`, `id_semestre`) VALUES 
-('27', '1'),
- ('31', '1'),
-  ('11', '1'),
-   ('4', '2'), 
-   ('3', '2'), 
-   ('14', '3'),
-    ( '68', '3'), 
-   ('31', '2'), 
-    ( '5', '3'), 
-    ( '47', '4'), 
-    ( '5', '4'), 
-    ('13', '4'),
-     ('27', '5'), 
-     ('66', '5'), 
-     ('17', '5'), 
-     ('77', '6'), 
-     ('13', '6'), 
-     ('28', '6');
+
+INSERT INTO `matiere_semestre` (`id_matiere`, `id_semestre`) VALUES
+(27, 1),
+(31, 1),
+(11, 1),
+(4, 2),
+(3, 2),
+(14, 3),
+(68, 3),
+(31, 2),
+(5, 3),
+(47, 4),
+(5, 4),
+(13, 4),
+(27, 5),
+(66, 5),
+(17, 5),
+(77, 6),
+(13, 6),
+(28, 6),
+(4, 2),
+(33, 2),
+(32, 2),
+(49, 2),
+(5, 2);
 
 
 
@@ -598,7 +604,7 @@ INSERT INTO `etudiant` (`id_etud`, `matricule`, `nom`, `prenom`, `lieu_naiss`, `
 (71, '22015', 'Nebghouha', 'Seyid', 'Nouakchott', '2001-01-05', 2, '2023', '22015@supnum.mr', 3, 1, NULL),
 (72, '22016', 'Diyana', 'Sambe', 'Nouakchott', '1999-04-12', 2, '2023', '22016@supnum.mr', 3, 2, NULL),
 (73, '22017', 'Kadiata', 'Niang', 'Nouadhibou', '2000-11-19', 2, '2023', '22017@supnum.mr', 3, 3, NULL),
-(74, '22018', 'souleyman', 'baba', 'nkt', '2023-05-25', 2, '2023', '22018@supnum.mr', 3, NULL, NULL),
+(74, '22018', 'Souleyman', 'Baba', 'nktt', '2023-05-25', 2, '2023', '22018@supnum.mr', 3, NULL, NULL),
 (75, '22019', 'Sultana', 'Ebe Oumar', 'Nouakchott', '2001-06-03', 2, '2023', '22019@supnum.mr', 3, 2, NULL),
 (76, '22020', 'Idoumou', 'Lehbouss', 'Nouadhibou', '1999-03-11', 2, '2023', '22020@supnum.mr', 3, 3, NULL),
 (77, '22021', 'Taleb', 'Abde Selam', 'Nouakchott', '2000-10-18', 2, '2023', '22021@supnum.mr', 3, 1, NULL),
@@ -628,7 +634,7 @@ INSERT INTO `etudiant` (`id_etud`, `matricule`, `nom`, `prenom`, `lieu_naiss`, `
 (101, '22050', 'Ahamed Salem', 'Chennan', 'Nouakchott', '2001-04-19', 2, '2023', '22050@supnum.mr', 3, 1, NULL),
 (102, '22051', 'Ahmed', 'El Maouloud', 'Nouadhibou', '1998-03-07', 2, '2023', '22051@supnum.mr', 3, 2, NULL),
 (103, '22052', 'Safia', 'El Hacen', 'Nouakchott', '2000-10-15', 2, '2023', '22052@supnum.mr', 3, 3, NULL),
-(104, '22053', 'abderahman', 'abderahman', 'nkt', '2023-05-11', 2, '2023', '22053@supnum.mr', 3, NULL, NULL),
+(104, '22053', 'Abderahman', 'Abderahman', 'nkt', '2023-05-11', 2, '2023', '22053@supnum.mr', 3, NULL, NULL),
 (105, '22054', 'Ahmed', 'Ely', 'Nouadhibou', '2000-09-03', 2, '2023', '22054@supnum.mr', 3, 3, NULL),
 (106, '22055', 'Sara', 'Wedih', 'Nouakchott', '1998-06-11', 2, '2023', '22055@supnum.mr', 3, 1, NULL),
 (107, '22056', 'Achato', 'Cheikh El Mehdy', 'Nouakchott', '2001-03-19', 2, '2023', '22056@supnum.mr', 3, 2, NULL),

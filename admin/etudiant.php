@@ -104,7 +104,84 @@ include "../nav_bar.php";
     </div>
 </div>
 
+<?php
+//if (isset($_GET['succes']) && $_GET['succes'] == 1) {
+
+if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Ajout réussi !',
+        text: 'L\'étidiant a été ajouté avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['ajout_reussi']);
+}
+
+
+if (isset($_SESSION['supp_reussi']) && $_SESSION['supp_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Suppression réussi !',
+        text: 'L\'étidiant a été supprimer avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['supp_reussi']);
+}
+
+
+if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Modification réussi !',
+        text: 'L\'étidiant a été modifier avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['modifier_reussi']);
+}
+
+?>
 <script>
+
+const lienssuprumer = document.querySelectorAll("#supprimer");
+
+lienssuprumer.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "Voulez-vous vraiment supprimé ce étudiant ?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Supprimer"
+    }).then((result) => {
+      if (result.isConfirmed) {
+          window.location.href = this.href;
+            }
+        });
+      });
+    });
+
+   
+
+
 $(document).ready(function(){
     $('.search-text').on('input', function(){
         var search = $(this).val();

@@ -75,7 +75,7 @@
     <div class="row">
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
-                <li><a href="acceuil.php">Acceuil</a></li>
+                <li><a href="index_etudiant.php">Acceuil</a></li>
                 <li>Détails sur la soumission</li>
             </ol>
         </div>

@@ -12,9 +12,11 @@ if (isset($_GET['semestre_id'])) {
 
     $options = '<option selected disabled> Les codes </option>';
     while ($row_matiere = mysqli_fetch_assoc($matiere_result)) {
-        $options .= '<option value="' . $row_matiere['id_matiere'] . '">' . $row_matiere['code'] .$row_matiere['libelle']. '</option>';
+        $options .= '<option value="' . $row_matiere['id_matiere'] . '">' . $row_matiere['code']." " .$row_matiere['libelle']. '</option>';
     }
 
     echo $options;
 }
 ?>
+
+

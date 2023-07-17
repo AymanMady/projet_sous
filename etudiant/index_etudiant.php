@@ -8,9 +8,9 @@ if ($_SESSION["role"] != "etudiant") {
 include "../nav_bar.php";
 include_once "../connexion.php";
 
-// $sql_etud = "SELECT * FROM etudiant WHERE email = $email";
-// $etud_qry = mysqli_query($conn, $sql_etud);
-// $row_etud = mysqli_fetch_assoc($etud_qry);
+$sql_etud = "SELECT * FROM etudiant WHERE email = '$email' ;";
+$etud_qry = mysqli_query($conn, $sql_etud);
+$row_etud = mysqli_fetch_assoc($etud_qry);
 
 ?>
 <!DOCTYPE html>
@@ -36,8 +36,8 @@ include_once "../connexion.php";
         <div class="row">
             <div class="col-lg-12">
                 <ol class="breadcrumb">
-                    <li><a href="acceuil.php">Accueil</a></li>
-                    <li>Les matières inscrites par l'étudiant <?php //echo $row_etud['nom']." ".$row_etud['prenom'] ?></li>
+                    <li><a href="#">Accueil</a></li>
+                    <li>Les matières inscrites par l'étudiant &nbsp;&nbsp;<a> <?php echo $row_etud['nom']." ".$row_etud['prenom'] ?> </a></li>
                 </ol>
             </div>
         </div>

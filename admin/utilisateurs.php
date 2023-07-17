@@ -72,7 +72,7 @@ $req = mysqli_query($conn , "SELECT * FROM utilisateur inner join role using(id_
             <tr>
                     <th>E-mail</th>
                     <th>Rôle</th>
-                    <th colspan="2">Actions</th>
+                    <th colspan="3">Actions</th>
                
             </tr>
 
@@ -89,7 +89,21 @@ $req = mysqli_query($conn , "SELECT * FROM utilisateur inner join role using(id_
                                 <td><?=$row['profile']?></td>
                                 <td><a href="modifier_utilisateur.php?id_user=<?=$row['id_user']?>">Modifier</a></td>
                                 <td><a href="supprimer_utilisateur.php?id_user=<?=$row['id_user']?>" id="supprimer"> Supprimer</a></td>
-                                <td><a href="desactive.php?id_user=<?=$row['id_user']?>" id="desactive"> desactive</a></td>
+                                    <?php
+                                    
+                                        if($row['active'] == 1){
+                                            ?>
+                                                <td><a href="activer_ou_desactiver.php?id_user=<?=$row['id_user']?>" id="desactive"> Désactiver</a></td>
+                                        <?php
+                                        }else{
+                                            ?>
+                                            <td><a href="activer_ou_desactiver.php?id_user=<?=$row['id_user']?>" id="active"> Activer</a></td>
+                                       
+                                        <?php
+                                        }
+                                        ?>
+                                   
+                               
                             </tr>
                             <?php
                         }
@@ -98,10 +112,10 @@ $req = mysqli_query($conn , "SELECT * FROM utilisateur inner join role using(id_
 
 
 
-        </table>
+            </table>
+        </div>
+        <div class="pager">
     </div>
-    <div class="pager">
-            </div>
 
 </div>
 <?php
@@ -138,6 +152,52 @@ if (isset($_SESSION['mod_reussi']) && $_SESSION['mod_reussi'] === true) {
     unset($_SESSION['mod_reussi']);
 }
 
+// var_dump($_SESSION['desactive_reussi']);
+
+if (isset($_SESSION['desactive_reussi']) && $_SESSION['desactive_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Désactivation réussie !',
+        text: 'L'utilisateur a été désactive avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['desactive_reussi']);
+}
+
+
+if (isset($_SESSION['active_reussi']) && $_SESSION['active_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Activation réussie !',
+        text: 'L\'utilisateur a été activer avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['active_reussi']);
+}
+if (isset($_SESSION['desactive_non_autorise']) && $_SESSION['desactive_non_autorise'] === true) {
+    echo '<script>
+    Swal.fire({
+        title: "Désactivation non autorisée !",
+        text: "Vous ne pouvez pas désactiver le compte de l\'administrateur.",
+        icon: "error",
+        confirmButtonColor: "#3099d6",
+        confirmButtonText: "OK"
+    });
+    </script>';
+
+    // Supprimer la variable de session pour éviter qu'elle ne s'affiche à nouveau lors du rechargement de la page
+    unset($_SESSION['desactive_non_autorise']);
+}
 ?>
 
 
@@ -179,6 +239,33 @@ liensArchiver.forEach(function(lien) {
     });
   });
 });
+
+
+var liensArchivers = document.querySelectorAll("#active");
+
+// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
+liensArchivers.forEach(function(lien) {
+  lien.addEventListener("click", function(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: "Voulez-vous vraiment activer ce utilisateur ?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3099d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Active"
+    }).then((result) => {
+
+          // Redirection après le délai
+          window.location.href = this.href;
+        });
+      })
+    });
+
+
+
 var liensArchivers = document.querySelectorAll("#desactive");
 
 // Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
@@ -186,37 +273,24 @@ liensArchivers.forEach(function(lien) {
   lien.addEventListener("click", function(event) {
     event.preventDefault();
     Swal.fire({
-      title: "Voulez-vous vraiment desactive ce utilisateur ?",
+      title: "Voulez-vous vraiment désactive ce utilisateur ?",
       text: "",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3099d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "Annuler",
-      confirmButtonText: "desactive"
+      confirmButtonText: "Désactive"
     }).then((result) => {
-      if (result.isConfirmed) {
-        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
-        Swal.fire({
-          title: "desactivation réussie !",
-          text: "L'utilisateur a été desactive avec succès.",
-          icon: "success",
-          confirmButtonColor: "#3099d6",
-          confirmButtonText: "OK",
-          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
-          //timerProgressBar: true,
-          showConfirmButton: true
+    
         }).then(() => {
           // Redirection après le délai
           window.location.href = this.href;
         });
-      }
+      })
     });
-  });
-});
-    
-  //});
-//});
+
+
 $(document).ready(function(){
     $('.search-text').on('input', function(){
         var search = $(this).val();

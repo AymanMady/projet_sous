@@ -27,9 +27,9 @@ $row_ens = mysqli_fetch_assoc($req_ens);
     <div class="row">
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
-                <li><a href="acceuil.php">Acceuil</a>       
+                <li><a href="#">Acceuil</a>       
                 </li>
-                <li><a href="#">Les matières enseignées par l'enseignant <?php echo $row_ens['nom'] ." ".$row_ens['prenom'] ?> </a></li>     
+                <li><a>Les matières enseignées par l'enseignant <?php echo $row_ens['nom'] ." ".$row_ens['prenom'] ?> </a></li>     
             </ol>
         </div>
     </div>

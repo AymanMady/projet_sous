@@ -1,3 +1,5 @@
+
+
 <?php
 session_start() ;
 $email = $_SESSION['email'];
@@ -13,11 +15,11 @@ if($_SESSION["role"]!="ens"){
         $id_rep = $_SESSION['id_rep'];
     }
     include "../nav_bar.php";
-    $req_detail="SELECT * FROM `reponses`,`etudiant`,`fichiers_reponses`
-     WHERE reponses.id_etud=etudiant.id_etud and
-      reponses.id_rep=fichiers_reponses.id_rep and reponses.id_rep='$id_rep'";
+    $req_detail="SELECT * FROM `reponses`,`etudiant`
+            WHERE reponses.id_etud=etudiant.id_etud  and reponses.id_rep ='$id_rep'";
     $req = mysqli_query($conn , $req_detail);
-    $row=mysqli_fetch_assoc($req);
+    $row_nom=mysqli_fetch_assoc($req);
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,8 +85,9 @@ if($_SESSION["role"]!="ens"){
             <ol class="breadcrumb">
                 <li><a href="acceuil.php">Acceuil</a>       
                 </li>
-
-                <li>Consultation de réponse de l'etudiant  <a> <?php echo $row['nom'] ?> </a></li>     
+                 
+                <li>Consultation de réponse de l'etudiant  <a> <?php echo $row_nom['nom']." " .$row_nom['prenom']?> </a></li> 
+                
             </ol>
         </div>
     </div>

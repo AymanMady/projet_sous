@@ -73,11 +73,7 @@ if (isset($_POST['button'])) {
             if($req1 and $req2){
                 $_SESSION['id_sous'] = $id_sous;
                 $_SESSION['ajout_reussi'] = true;
-<<<<<<< HEAD
-             
-=======
                 header("location:soumission_etu.php");
->>>>>>> 0f88e4209e8c94a9f0515845e0ea2f81291edb15
             }
         }
     }
@@ -92,7 +88,7 @@ include "../nav_bar.php";
         <div class="col-lg-12">
             
             <ol class="breadcrumb">
-            <li><a href="#">Acceuil</a></li>
+            <li><a href="index_etudiant.php">Acceuil</a></li>
             <li>Rendre  le travail</li>
             </ol>
         </div>
@@ -203,7 +199,7 @@ include "../nav_bar.php";
         <div class="col-lg-12">
             
             <ol class="breadcrumb">
-            <li><a href="#">Acceuil</a></li>
+            <li><a href="index_etudiant.php">Acceuil</a></li>
             <li>Modifier  le travail</li>
             </ol>
         </div>
@@ -269,11 +265,7 @@ include "../nav_bar.php";
                                                                         <a href="telecharger_fichier.php?file_name=<?=$file_name?>&id_rep=<?=$id_rep?>">Telecharger</a>
                                                                         </div>
                                                                         <div>
-<<<<<<< HEAD
                                                                         <a href="supprime_fichier.php?file_name=<?=$file_name?>"><img style="width: 18px; margin-left:110px; " title="Supprimer" src="images/close.png" alt=""></a>
-=======
-                                                                        <a href="supprime_fichier.php?file_name=<?=$file_name?>&id_sous=<?=$id_sous?>">Supprimer</a>
->>>>>>> 0f88e4209e8c94a9f0515845e0ea2f81291edb15
                                                                         </div>
                                                                         </div>
                                                                         <br>

@@ -181,10 +181,9 @@ if (isset($_SESSION['modifier_reussi']) && $_SESSION['modifier_reussi'] === true
 
 
 <script>
-var liensArchiver = document.querySelectorAll("#supprimer");
+const lienssuprumer = document.querySelectorAll("#supprimer");
 
-// Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
-liensArchiver.forEach(function(lien) {
+lienssuprumer.forEach(function(lien) {
   lien.addEventListener("click", function(event) {
     event.preventDefault();
     Swal.fire({
@@ -198,25 +197,11 @@ liensArchiver.forEach(function(lien) {
       confirmButtonText: "Supprimer"
     }).then((result) => {
       if (result.isConfirmed) {
-        // Afficher la deuxième boîte de dialogue pendant 1 seconde avant la redirection
-        //Swal.fire({
-        //   title: "Suppression réussie !",
-        //   text: "L'inscription a été supprimée avec succès.",
-        //   icon: "success",
-        //   confirmButtonColor: "#3099d6",
-        //   confirmButtonText: "OK",
-          //timer: 3000, // Durée d'affichage de la boîte de dialogue en millisecondes
-          //timerProgressBar: true,
-         // showConfirmButton: true
-       // }).then(() => {
-          // Redirection après le délai
           window.location.href = this.href;
             }
         });
       });
     });
-//   });
-// });
 
    
 </script>

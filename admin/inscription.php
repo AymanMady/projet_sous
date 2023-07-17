@@ -24,7 +24,7 @@ if(isset($_POST['search'])) {
 $req = mysqli_query($conn , "SELECT * FROM semestre
  INNER JOIN inscription ON inscription.id_semestre = semestre.id_semestre 
  INNER JOIN matiere ON inscription.id_matiere = matiere.id_matiere INNER JOIN 
-  etudiant ON inscription.id_etud = etudiant.id_etud;");
+  etudiant ON inscription.id_etud = etudiant.id_etud ;");
 }
 ?>
 
@@ -83,10 +83,12 @@ $req = mysqli_query($conn , "SELECT * FROM semestre
             </div>
         </div>
         <br>
+        <!-- href="importe_iscription.php" -->
         <div style="display: flex ; justify-content: space-between;">
         <a href="ajouter_inscription.php" class = "btn btn-primary mr-25" >Nouveau</a>
-        <a href="importe_iscription.php"  class="btn btn-primary ml-25">Importer</a>
+        <a href="importe_iscription.php"  class="btn btn-primary ml-25" id="new">Importer</a>
     </div>
+    
     <br>
     <?php } ?>
 
@@ -207,6 +209,10 @@ if (isset($_SESSION['import_reussi']) && $_SESSION['import_reussi'] === true) {
 </html>
 
 <script>
+
+
+
+
 var liensArchiver = document.querySelectorAll("#supprimer");
 
 // Parcourir chaque lien d'archivage et ajouter un écouteur d'événements
@@ -225,7 +231,7 @@ liensArchiver.forEach(function(lien) {
     }).then((result) => {
       if (result.isConfirmed) {
 
-          window.location.href = this.href;
+            window.location.href = this.href;
             }
         });
       });

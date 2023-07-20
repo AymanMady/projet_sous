@@ -11,7 +11,6 @@ function test_input($data){
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_sous = test_input($_POST['id_sous']);
     $nouvelle_date_fin = test_input($_POST['nouvelle_date_fin']);
-
     $update_query = "UPDATE soumission SET date_fin = '$nouvelle_date_fin' WHERE id_sous = $id_sous";
     $req = mysqli_query($conn, $update_query);
     if ($req) {

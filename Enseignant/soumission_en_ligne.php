@@ -346,22 +346,12 @@ liensArchiver.forEach(function(lien) {
       confirmButtonText: "Archiver"
     }).then((result) => {
       if (result.isConfirmed) {
-        // Swal.fire({
-        //   title: "Archive réussie !",
-        //   text: "La soumission a été archiver avec succès.",
-        //   icon: "success",
-        //   confirmButtonColor: "#3099d6",
-        //   confirmButtonText: "OK",
-        //   showConfirmButton: true
-        // }).then((result) => {
-        //   if (result.isConfirmed) {
+       
             window.location.href = this.href; 
           }
         });
       });
     });
-//   });
-// });
 
 // Sélectionner tous les éléments avec l'ID "cloturer"
 var liensCloturer = document.querySelectorAll("#cloturer");

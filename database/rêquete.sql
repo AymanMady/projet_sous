@@ -8,16 +8,12 @@ CREATE TABLE `departement` (
   `nom` text NOT NULL
 );
 
-
-
-
 CREATE TABLE `groupe` (
 `id_groupe` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `libelle` varchar(50) DEFAULT NULL,
 `id_dep` int(10),
 FOREIGN KEY (id_dep) REFERENCES departement(id)
 );
-
 
 CREATE TABLE `role` (
 `id_role` int(10) PRIMARY KEY AUTO_INCREMENT,
@@ -173,7 +169,7 @@ CREATE TABLE matiere_semestre(
 CREATE TABLE reponses(
   id_rep int(10) AUTO_INCREMENT PRIMARY key ,
   description_rep varchar(200),
-  date datetime DEFAULT NOW(),
+  date datetime DEFAULT NOW(), 
   render bool DEFAULT 0,
   note float(10) DEFAULT 0,
   id_sous INT(10) not NULL,
@@ -234,7 +230,8 @@ INSERT INTO `utilisateur` (`login`, `pwd`, `active`, `code`, `id_role`) VALUES
 ('sidi.med@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '', 2),
 ('moussa.demba@supnum.mr', '25f9e794323b453885f5181f1b624d0b', '1', NULL, '2'),
 ('22018@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3),
-('22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3);
+('22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3)
+;
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------

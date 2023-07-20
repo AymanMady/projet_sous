@@ -46,7 +46,7 @@ $code_qry = mysqli_query($conn, $code);
                 $semestre = test_input($_POST['semestre']);
                 $code =  test_input($_POST['code']);
 
-
+                        echo $matricule;
                     // Vérification si l'étudiant est déjà inscrit pour cette matière dans ce semestre 
                     $verification = "SELECT * FROM inscription WHERE id_etud = '$matricule' AND id_semestre = '$semestre' AND id_matiere = '$code'";
                     $verification_qry = mysqli_query($conn, $verification);

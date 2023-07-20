@@ -9,8 +9,12 @@ $id_rep=$_GET['id_etud'];
 if(isset($_POST['fin'])){
     $note=$_POST['Note'];
     $sql="UPDATE `reponses` SET note=$note WHERE id_rep=$id_rep";
-   if( mysqli_query($conn,$sql)){
-    header("location:soumission_en_ligne.php");
+    $req_rep = mysqli_query($conn,$sql);
+    //$row_rep = mysqli_fetch_assoc($req_rep);
+   if($req_rep){
+    header("location:consiltation_de_reponse.php");
+    $_SESSION['id_rep'] = $id_rep;
+
    }
 }
 
@@ -39,7 +43,7 @@ include "../nav_bar.php";
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
                 <li><a href="#">Acceuil</a></li>
-                <li>Afectation du note </li>
+                <li>Affectation du note </li>
             </ol>
         </div>
     </div>

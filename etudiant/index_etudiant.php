@@ -8,9 +8,9 @@ if ($_SESSION["role"] != "etudiant") {
 include "../nav_bar.php";
 include_once "../connexion.php";
 
-// $sql_etud = "SELECT * FROM etudiant WHERE email = $email";
-// $etud_qry = mysqli_query($conn, $sql_etud);
-// $row_etud = mysqli_fetch_assoc($etud_qry);
+$sql_etud = "SELECT * FROM etudiant WHERE email = '$email' ;";
+$etud_qry = mysqli_query($conn, $sql_etud);
+$row_etud = mysqli_fetch_assoc($etud_qry);
 
 ?>
 <!DOCTYPE html>
@@ -36,11 +36,14 @@ include_once "../connexion.php";
         <div class="row">
             <div class="col-lg-12">
                 <ol class="breadcrumb">
-                    <li><a href="acceuil.php">Accueil</a></li>
-                    <li>Les matières inscrites par l'étudiant <?php //echo $row_etud['nom']." ".$row_etud['prenom'] ?></li>
+                    <li><a href="#">Accueil</a></li>
+                    <li>Les matières inscrites par l'étudiant &nbsp;&nbsp;<a> <?php echo $row_etud['nom']." ".$row_etud['prenom'] ?> </a></li>
                 </ol>
             </div>
         </div>
+        
+<div class="b-example-divider"></div>
+
         <div style="overflow-x:auto;">
             <table class="table table-striped table-bordered">
                 <tr>
@@ -50,7 +53,7 @@ include_once "../connexion.php";
                     <th>Action</th>
                 </tr>
                 <?php
-                $req_ens_mail =  "SELECT * FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email='$email'";
+                $req_ens_mail =  "SELECT * FROM inscription, matiere, etudiant WHERE inscription.id_etud=etudiant.id_etud AND inscription.id_matiere=matiere.id_matiere AND email = '$email'";
                 $req = mysqli_query($conn, $req_ens_mail);
                 if (mysqli_num_rows($req) == 0) {
                     echo "Il n'y a pas encore de matières ajoutées !";

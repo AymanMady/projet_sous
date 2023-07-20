@@ -15,11 +15,14 @@
  }
 
 include_once "../connexion.php";
+$id_sous = $_GET['id_sous'];
 $file=$_GET['file_name'];
 $sql="DELETE FROM fichiers_reponses WHERE fichiers_reponses.nom_fichiere='$file'";
 $resul=mysqli_query($conn,$sql);
 if($resul){
-    header("location:index_etudiant.php");
+    $_SESSION['id_sous'] = $id_sous;
+    $_SESSION['suppression_reussi'] = true ;
+    header("location:reponse_etudiant.php");
 }
 ?>
 </body>

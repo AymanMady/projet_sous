@@ -147,10 +147,10 @@ if(mysqli_num_rows($req1) == 0 and mysqli_num_rows($req2) == 0){
      <div class="row">
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
-                <li><a href="#">Acceuil</a>
+                <li><a href="index_enseignant.php">Acceuil</a>
                     
                 </li>
-                <li>Les soumissions en ligne par matiere</li>
+                <li>Les soumissions en ligne par matière</li>
                    
             </ol>
 

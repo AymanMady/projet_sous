@@ -230,7 +230,7 @@ $alert = "";
             $status = $row['active'];
                 if ($status == 1) {
                      if($row['id_role']==1){
-                        header("location:admin/acceuil.php");
+                        header("location:admin/utilisateurs.php");
                         session_start();
                         $_SESSION['email']=$email;
                         $_SESSION['role']="admin";
@@ -272,47 +272,6 @@ $alert = "";
         <strong>Mot de passe ou Email incorrect! </strong>
         </div>';
     // // ################################################################
-    //         $password_check = mysqli_query($conn, $passwordQuery);
-    //         if (mysqli_num_rows($password_check) > 0) {
-    //             $fetchInfo = mysqli_fetch_assoc($password_check);
-    //             $status = $fetchInfo['active'];
-    //             $name = $fetchInfo['nom'];
-    //             $_SESSION['name'] = $name;
-    //             $_SESSION['email'] = $fetchInfo['login'];
-    //             $_SESSION['password'] = $fetchInfo['pwd'];
-                
-    //             if ($status == 1) {
-    //                 @$login=$_POST["email"];
-    //                 @$pass=md5($_POST["password"]);
-    //                 @$valider=$_POST["entrer"];
-    //                 $erreur="";
-    //   $query=mysqli_query($conn,"select id_role from utilisateur where login='$login' and pwd='$pass' limit 1;");
-    //   $tab=mysqli_fetch_assoc($query)or die("tfou");
-    //   print_r($tab);
-    //   print_r($tab['id_role']);
-    //   if(mysqli_num_rows($query)==1){
-    //     print_r($tab);
-    
-          
-    //      else {
-    //         $errors['email'] = 'Le mot de passe ne correspondait pas';
-    //     }
-   
-                   
-    // } else {
-    //                 $info = "Il semble que vous n’ayez pas encore vérifié votre e-mail $email";
-    //                 $_SESSION['message'] = $info;
-    //                 header('location: verifier_code.php');
-    //             }
-    //     } else {
-    //             $errors['email'] = $alert;
-    //         }
-    //     }else {
-
-    //         $errors['email'] = 'Le mot de passe ne correspondait pas';
-    //     }
-        
-    // }
     
 }
 

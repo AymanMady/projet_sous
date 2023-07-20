@@ -36,7 +36,7 @@ include_once "../connexion.php";
         <div class="row">
             <div class="col-lg-12">
                 <ol class="breadcrumb">
-                    <li><a href="acceuil.php">Accueil</a></li>
+                    <li><a href="index_etudiant.php">Accueil</a></li>
                     <li>Les soumission par matiere  <?php //echo $row_etud['nom']." ".$row_etud['prenom'] ?></li>
                 </ol>
             </div>
@@ -45,7 +45,7 @@ include_once "../connexion.php";
             <table class="table table-striped table-bordered">
                 <tr>
                     <th>Code</th>
-                    <th>Semestre</th>
+                    <th>Titre de la soumission</th>
                     <th>Spécialité</th>
                     <th>date debut</th>
                     <th>date fin</th>
@@ -53,7 +53,7 @@ include_once "../connexion.php";
     <?php
                 $id_matiere = $_GET['id_matiere'];
 
-    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and ( status=0  or status=1)";
+    $req_detail = "SELECT * FROM soumission inner join matiere using(id_matiere) WHERE id_matiere = $id_matiere and ( status=0  or status=1) and date_debut <= Now()";
     $req = mysqli_query($conn , $req_detail);
     if (mysqli_num_rows($req) > 0) {
 

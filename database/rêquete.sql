@@ -2,14 +2,11 @@ DROP database pi;
 CREATE database pi;
 use pi;
 
-CREATE OR REPLACE TABLE `departement` (
+CREATE TABLE `departement` (
   `id` int(10) AUTO_INCREMENT PRIMARY key,
   `code` text NOT NULL,
   `nom` text NOT NULL
 );
-
-
-
 
 CREATE TABLE `groupe` (
 `id_groupe` int(10) PRIMARY KEY AUTO_INCREMENT ,
@@ -17,7 +14,6 @@ CREATE TABLE `groupe` (
 `id_dep` int(10),
 FOREIGN KEY (id_dep) REFERENCES departement(id)
 );
-
 
 CREATE TABLE `role` (
 `id_role` int(10) PRIMARY KEY AUTO_INCREMENT,
@@ -160,7 +156,7 @@ FOREIGN KEY (id_etud) REFERENCES etudiant(id_etud)
 
 --
 
-CREATE OR REPLACE TABLE matiere_semestre(
+CREATE TABLE matiere_semestre(
 	id_matiere_semestre int(10) PRIMARY KEY AUTO_INCREMENT ,
     id_matiere int(10),
     id_semestre int(10),
@@ -173,7 +169,7 @@ CREATE OR REPLACE TABLE matiere_semestre(
 CREATE TABLE reponses(
   id_rep int(10) AUTO_INCREMENT PRIMARY key ,
   description_rep varchar(200),
-  date datetime DEFAULT NOW(),
+  date datetime DEFAULT NOW(), 
   render bool DEFAULT 0,
   note float(10) DEFAULT 0,
   id_sous INT(10) not NULL,
@@ -188,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `fichiers_reponses` (
   `nom_fichiere` varchar(255) NOT NULL,
   `chemin_fichiere` varchar(255) NOT NULL,
   PRIMARY KEY (`id_fich_rep`),
-    FOREIGN KEY (id_rep) REFERENCES reponses(id_rep)
+  FOREIGN KEY (id_rep) REFERENCES reponses(id_rep)
 );
 
 -- --------------------------------------------------------
@@ -212,9 +208,9 @@ INSERT INTO `semestre` (`id_semestre`, `nom_semestre`) VALUES
 
 
 INSERT INTO `role` (`id_role`, `profile`) VALUES
-(1, 'administrateur'),
-(2, 'enseignant'),
-(3, 'etudiant');
+(1, 'Administrateur'),
+(2, 'Enseignant'),
+(3, 'Étudiant');
 
 
 
@@ -234,7 +230,8 @@ INSERT INTO `utilisateur` (`login`, `pwd`, `active`, `code`, `id_role`) VALUES
 ('sidi.med@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '', 2),
 ('moussa.demba@supnum.mr', '25f9e794323b453885f5181f1b624d0b', '1', NULL, '2'),
 ('22018@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3),
-('22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3);
+('22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3)
+;
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -277,8 +274,8 @@ INSERT INTO `departement` ( `code`, `nom`) VALUES
 -- --------------------------------------------------------
 -- --------------------------------------------------------
 
-INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'TP');
 INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'CM');
+INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'TP');
 INSERT INTO `type_matiere` ( `libelle_type`) VALUES ( 'TD');
 
 
@@ -312,8 +309,8 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 ('DSI310', 'Programmation avancée', 'DSI', 60, 1, 3, 1),
 ('DSI311', 'Bases de données', 'DSI', 60, 1, 3, 1),
 ('DSI312', 'Projet intégrateur I', 'DSI', 60, 1, 3, 1),
-('DSI320', 'Programmation web', 'DSI', 60, 1, 3, 1),
-('DSI321', 'Architecture des applications', 'DSI', 60, 1, 3, 1),
+('DSI320', 'Programmation web', 'DSI', 60, 1, 2, 1),
+('DSI321', 'Architecture des applications', 'DSI', 60, 1, 2, 1),
 ('DPR310', 'Communication professionnelle', 'DSI', 60, 4, 3, 1),
 ('DPR311', 'Anglais', 'DSI', 60, 4, 3, 1),
 ('DPR312', 'PPP', 'DSI', 60, 4, 3, 1),
@@ -331,7 +328,7 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 ('RSS311', 'Administration systèmes et réseaux', 'RSS', 60, 2, 3, 1),
 ('RSS312', 'Projet intégrateur Avancé', 'RSS', 60, 2, 3, 1),
 ('PAV312', 'Sécurité des applications mobiles', 'PAV', 60, 4, 3, 1),
-('DPR314', 'Marketing numérique', 'DSI', 60, 4, 3, 1),
+('DPR314', 'Marketing numérique', 'DSI', 60, 4, 2, 1),
 ('DPR315', 'Management de l\'innovation', 'DSI', 60, 4, 3, 1),
 ('DPR316', 'Entreprenariat', 'DSI', 60, 4, 3, 1),
 ('DPR317', 'Management de la qualité', 'DSI', 60, 4, 3, 1),
@@ -340,8 +337,8 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 ('CNM315', 'Projet intégrateur Avancé II', 'CNM', 60, 3, 3, 1),
 ('CNM322', 'Technologies audiovisuelles', 'CNM', 60, 3, 3, 1),
 ('CNM323', 'Gestion de projet multimédia', 'CNM', 60, 3, 3, 1),
-('PAV313', 'Développement mobile multiplateforme', 'PAV', 60, 4, 3, 1),
-('PAV314', 'Programmation avancée en C++', 'PAV', 60, 4, 3, 1),
+('PAV313', 'Développement mobile multiplateforme', 'PAV', 60, 4, 2, 1),
+('PAV314', 'Programmation avancée en C++', 'PAV', 60, 4, 2, 1),
 ('PAV315', 'Modélisation et conception objet', 'PAV', 60, 4, 3, 1),
 ('PAV316', 'Projet intégrateur Avancé III', 'PAV', 60, 4, 3, 1),
 ('DAS313', 'Analyse de données en temps réel', 'DAS', 60, 4, 3, 1),
@@ -357,7 +354,7 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 ('DPR410', 'Communication professionnelle II', 'DSI', 60, 4, 4, 1),
 ('DSI412', 'Intelligence artificielle', 'DSI', 60, 1, 4, 1),
 ('DPR411', 'Management de projet', 'DSI', 60, 4, 4, 1),
-('CNM410', 'Développement web avancé', 'CNM', 60, 3, 4, 1),
+('CNM410', 'Développement web avancé', 'CNM', 60, 3, 2, 1),
 ('CNM411', 'Animation 2D et 3D', 'CNM', 60, 3, 4, 1),
 ('PAV410', 'Architecture logicielle', 'PAV', 60, 4, 4, 1),
 ('PAV411', 'Systèmes distribués', 'PAV', 60, 4, 4, 1),
@@ -419,25 +416,31 @@ INSERT INTO `matiere` (`code`, `libelle`, `specialite`, `charge`, `id_module`, `
 
 
 
-INSERT INTO `matiere_semestre` (`id_matiere`, `id_semestre`) VALUES 
-('27', '1'),
- ('31', '1'),
-  ('11', '1'),
-   ('4', '2'), 
-   ('3', '2'), 
-   ('14', '3'),
-    ( '68', '3'), 
-   ('31', '2'), 
-    ( '5', '3'), 
-    ( '47', '4'), 
-    ( '5', '4'), 
-    ('13', '4'),
-     ('27', '5'), 
-     ('66', '5'), 
-     ('17', '5'), 
-     ('77', '6'), 
-     ('13', '6'), 
-     ('28', '6');
+
+INSERT INTO `matiere_semestre` (`id_matiere`, `id_semestre`) VALUES
+(27, 1),
+(31, 1),
+(11, 1),
+(4, 2),
+(3, 2),
+(14, 3),
+(68, 3),
+(31, 2),
+(5, 3),
+(47, 4),
+(5, 4),
+(13, 4),
+(27, 5),
+(66, 5),
+(17, 5),
+(77, 6),
+(13, 6),
+(28, 6),
+(4, 2),
+(33, 2),
+(32, 2),
+(49, 2),
+(5, 2);
 
 
 
@@ -491,20 +494,21 @@ INSERT INTO `soumission` (`id_sous`, `titre_sous`, `description_sous`, `id_ens`,
 (3, 'Devoir', 'Description', 4, '2023-07-07 12:19:00', '2023-08-06 17:20:00', 0, 0, 4, 2),
 (19, 'TP', 'Description', 4, '2023-07-07 13:06:00', '2023-08-05 13:08:00', 0, 0, 5, 3),
 (20, 'Devoir', 'Description1', 4, '2023-07-07 13:08:00', '2023-08-06 13:09:00', 0, 0, 5, 2),
-(21, 'Examen', 'Description', 4, '2023-07-07 13:07:00', '2023-08-05 13:10:00', 0, 0, 5, 1),
+(21, 'Examen', 'Description', 4, '2023-07-08 00:55:00', '2023-08-06 00:58:00', 0, 0, 4, 1),
 (22, 'Examen', 'Description', 4, '2023-07-07 13:07:00', '2023-08-05 13:10:00', 0, 0, 5, 1),
-(24, 'TP', 'Description', 4, '2023-07-07 13:11:00', '2023-08-05 13:11:00', 0, 0, 32, 3),
-(25, 'Devoir', 'Description', 4, '2023-07-07 13:11:00', '2023-08-06 13:12:00', 0, 0, 32, 2),
-(26, 'Examen', 'Description', 4, '2023-07-07 13:11:00', '2023-07-29 18:13:00', 0, 0, 32, 1),
-(27, 'TP', 'Description', 4, '2023-07-07 13:12:00', '2023-08-04 13:14:00', 0, 0, 33, 3),
-(28, 'Devoir', 'Description', 4, '2023-07-07 13:13:00', '2023-08-05 13:14:00', 0, 0, 33, 2),
-(29, 'Examen', 'Description', 4, '2023-07-07 13:14:00', '2023-08-06 13:15:00', 0, 0, 33, 1),
-(30, 'TP', 'Description', 4, '2023-07-07 13:12:00', '2023-08-06 13:16:00', 0, 0, 49, 3),
-(31, 'Devoir', 'Description', 4, '2023-07-07 13:15:00', '2023-08-06 13:17:00', 0, 0, 49, 2),
-(32, 'Examen', 'Description', 4, '2023-07-07 13:16:00', '2023-09-10 18:17:00', 0, 0, 49, 1),
-(33, 'TP', 'Description', 4, '2023-07-08 00:55:00', '2023-08-06 00:56:00', 0, 1, 4, 3),
-(34, 'Devoir', 'Description', 4, '0000-00-00 00:00:00', '2023-08-04 00:57:00', 0, 1, 4, 2),
-(35, 'Examen', 'Description', 4, '2023-07-08 00:55:00', '2023-08-06 00:58:00', 0, 0, 4, 1);
+(24, 'Examen', 'Description', 4, '2023-07-07 13:07:00', '2023-08-05 13:10:00', 0, 0, 5, 1),
+(25, 'TP', 'Description', 4, '2023-07-07 13:11:00', '2023-08-05 13:11:00', 0, 0, 32, 3),
+(26, 'Devoir', 'Description', 4, '2023-07-07 13:11:00', '2023-08-06 13:12:00', 0, 0, 32, 2),
+(27, 'Examen', 'Description', 4, '2023-07-07 13:11:00', '2023-07-29 18:13:00', 0, 0, 32, 1),
+(28, 'TP', 'Description', 4, '2023-07-07 13:12:00', '2023-08-04 13:14:00', 0, 0, 33, 3),
+(29, 'Devoir', 'Description', 4, '2023-07-07 13:13:00', '2023-08-05 13:14:00', 0, 0, 33, 2),
+(30, 'Examen', 'Description', 4, '2023-07-07 13:14:00', '2023-08-06 13:15:00', 0, 0, 33, 1),
+(31, 'TP', 'Description', 4, '2023-07-07 13:12:00', '2023-08-06 13:16:00', 0, 0, 49, 3),
+(32, 'Devoir', 'Description', 4, '2023-07-07 13:15:00', '2023-08-06 13:17:00', 0, 0, 49, 2),
+(33, 'Examen', 'Description', 4, '2023-07-07 13:16:00', '2023-09-10 18:17:00', 0, 0, 49, 1),
+(34, 'TP', 'Description', 4, '2023-07-08 00:55:00', '2023-08-06 00:56:00', 0, 1, 4, 3),
+(35, 'Devoir', 'Description', 4, '2023-07-08 00:55:00', '2023-08-04 00:57:00', 0, 1, 4, 2);
+
 
 
 
@@ -597,7 +601,7 @@ INSERT INTO `etudiant` (`id_etud`, `matricule`, `nom`, `prenom`, `lieu_naiss`, `
 (71, '22015', 'Nebghouha', 'Seyid', 'Nouakchott', '2001-01-05', 2, '2023', '22015@supnum.mr', 3, 1, NULL),
 (72, '22016', 'Diyana', 'Sambe', 'Nouakchott', '1999-04-12', 2, '2023', '22016@supnum.mr', 3, 2, NULL),
 (73, '22017', 'Kadiata', 'Niang', 'Nouadhibou', '2000-11-19', 2, '2023', '22017@supnum.mr', 3, 3, NULL),
-(74, '22018', 'souleyman', 'baba', 'nkt', '2023-05-25', 2, '2023', '22018@supnum.mr', 3, NULL, NULL),
+(74, '22018', 'Souleyman', 'Baba', 'nktt', '2023-05-25', 2, '2023', '22018@supnum.mr', 3, NULL, NULL),
 (75, '22019', 'Sultana', 'Ebe Oumar', 'Nouakchott', '2001-06-03', 2, '2023', '22019@supnum.mr', 3, 2, NULL),
 (76, '22020', 'Idoumou', 'Lehbouss', 'Nouadhibou', '1999-03-11', 2, '2023', '22020@supnum.mr', 3, 3, NULL),
 (77, '22021', 'Taleb', 'Abde Selam', 'Nouakchott', '2000-10-18', 2, '2023', '22021@supnum.mr', 3, 1, NULL),
@@ -627,7 +631,7 @@ INSERT INTO `etudiant` (`id_etud`, `matricule`, `nom`, `prenom`, `lieu_naiss`, `
 (101, '22050', 'Ahamed Salem', 'Chennan', 'Nouakchott', '2001-04-19', 2, '2023', '22050@supnum.mr', 3, 1, NULL),
 (102, '22051', 'Ahmed', 'El Maouloud', 'Nouadhibou', '1998-03-07', 2, '2023', '22051@supnum.mr', 3, 2, NULL),
 (103, '22052', 'Safia', 'El Hacen', 'Nouakchott', '2000-10-15', 2, '2023', '22052@supnum.mr', 3, 3, NULL),
-(104, '22053', 'abderahman', 'abderahman', 'nkt', '2023-05-11', 2, '2023', '22053@supnum.mr', 3, NULL, NULL),
+(104, '22053', 'Abderahman', 'Abderahman', 'nkt', '2023-05-11', 2, '2023', '22053@supnum.mr', 3, NULL, NULL),
 (105, '22054', 'Ahmed', 'Ely', 'Nouadhibou', '2000-09-03', 2, '2023', '22054@supnum.mr', 3, 3, NULL),
 (106, '22055', 'Sara', 'Wedih', 'Nouakchott', '1998-06-11', 2, '2023', '22055@supnum.mr', 3, 1, NULL),
 (107, '22056', 'Achato', 'Cheikh El Mehdy', 'Nouakchott', '2001-03-19', 2, '2023', '22056@supnum.mr', 3, 2, NULL),
@@ -733,33 +737,33 @@ CREATE TABLE IF NOT EXISTS `fichiers_reponses` (
 INSERT INTO `reponses` (`id_rep`, `description_rep`, `date`, `render`, `note`, `id_sous`, `id_etud`) VALUES
 (1, 'Description', '2023-07-07 15:22:59', 0, 15.5, 3, 104),
 (2, 'Description', '2023-07-07 13:23:57', 0, 0, 20, 104),
-(3, 'Description', '2023-07-07 15:09:17', 0, 15.25, 29, 104),
-(5, 'Description', '2023-07-08 01:14:39', 0, 13, 33, 104),
-(6, 'Description', '2023-07-08 01:15:42', 0, 15.75, 35, 104),
-(7, 'Description', '2023-07-08 01:32:46', 0, 4.5, 19, 104),
-(8, 'Description', '2023-07-08 01:35:05', 0, 13, 21, 104),
-(9, 'Description', '2023-07-08 01:46:27', 0, 2, 22, 104),
-(10, 'Description', '2023-07-08 02:11:47', 0, 14, 33, 74),
-(11, 'Description', '2023-07-08 02:52:46', 0, 0, 3, 74),
-(12, 'Description', '2023-07-08 02:53:49', 0, 14.25, 35, 74),
-(13, 'Description', '2023-07-08 02:54:12', 0, 0, 20, 74),
-(14, 'Description', '2023-07-08 02:56:25', 0, 12, 21, 74),
-(15, 'Description', '2023-07-08 02:56:44', 0, 19, 22, 74),
-(16, 'Description', '2023-07-08 02:59:52', 0, 0, 24, 74),
-(17, 'Description', '2023-07-08 03:01:34', 0, 13, 26, 74),
-(18, 'Description', '2023-07-08 03:02:06', 0, 10, 27, 74),
-(19, 'Description', '2023-07-08 03:02:21', 0, 5.5, 28, 74),
-(20, 'Description', '2023-07-08 03:02:59', 0, 14, 29, 74),
-(21, 'Description', '2023-07-08 03:03:16', 0, 9, 30, 74),
-(22, 'Description', '2023-07-08 03:03:31', 1, 2, 31, 74),
-(23, 'Description', '2023-07-08 03:04:14', 0, 13.5, 32, 74),
-(24, 'Description', '2023-07-08 03:10:10', 0, 14, 30, 104),
-(25, 'Description', '2023-07-08 03:10:28', 1, 3, 31, 104),
-(26, 'Description', '2023-07-08 03:10:50', 0, 5.5, 32, 104),
-(27, 'Description', '2023-07-08 03:11:08', 0, 8, 27, 104),
-(28, 'Description', '2023-07-08 03:12:57', 0, 0, 24, 104),
-(29, 'Description', '2023-07-08 03:13:29', 0, 12, 25, 104),
-(30, 'Description', '2023-07-08 03:13:47', 0, 12, 26, 104);
+(3, 'Description', '2023-07-08 01:14:39', 0, 13, 33, 104),
+(5, 'Description', '2023-07-08 01:15:42', 0, 15.75, 35, 104),
+(6, 'Description', '2023-07-08 01:32:46', 0, 4.5, 19, 104),
+(7, 'Description', '2023-07-08 01:35:05', 0, 13, 21, 104),
+(8, 'Description', '2023-07-08 01:46:27', 0, 2, 22, 104),
+(9, 'Description', '2023-07-08 02:11:47', 0, 14, 33, 74),
+(10, 'Description', '2023-07-08 02:52:46', 0, 0, 3, 74),
+(11, 'Description', '2023-07-08 02:53:49', 0, 14.25, 35, 74),
+(12, 'Description', '2023-07-08 02:54:12', 0, 0, 20, 74),
+(13, 'Description', '2023-07-08 02:56:25', 0, 12, 21, 74),
+(14, 'Description', '2023-07-08 02:56:44', 0, 19, 22, 74),
+(15, 'Description', '2023-07-08 02:59:52', 0, 0, 24, 74),
+(16, 'Description', '2023-07-08 03:01:34', 0, 13, 26, 74),
+(17, 'Description', '2023-07-08 03:02:06', 0, 10, 27, 74),
+(18, 'Description', '2023-07-08 03:02:21', 0, 5.5, 28, 74),
+(19, 'Description', '2023-07-08 03:02:59', 0, 14, 29, 74),
+(20, 'Description', '2023-07-08 03:03:16', 0, 9, 30, 74),
+(21, 'Description', '2023-07-08 03:03:31', 1, 2, 31, 74),
+(22, 'Description', '2023-07-08 03:04:14', 0, 13.5, 32, 74),
+(23, 'Description', '2023-07-08 03:10:10', 0, 14, 30, 104),
+(24, 'Description', '2023-07-08 03:10:28', 1, 3, 31, 104),
+(25, 'Description', '2023-07-08 03:10:50', 0, 5.5, 32, 104),
+(26, 'Description', '2023-07-08 03:11:08', 0, 8, 27, 104),
+(27, 'Description', '2023-07-08 03:12:57', 0, 0, 24, 104),
+(28, 'Description', '2023-07-08 03:13:29', 0, 12, 25, 104),
+(29, 'Description', '2023-07-08 03:13:47', 0, 12, 26, 104),
+(30, 'Description', '2023-07-07 15:09:17', 0, 15.25, 29, 104);
 
 
 

@@ -75,7 +75,7 @@
     <div class="row">
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
-                <li><a href="acceuil.php">Acceuil</a></li>
+                <li><a href="index_etudiant.php">Acceuil</a></li>
                 <li>Détails sur la soumission</li>
             </ol>
         </div>
@@ -83,7 +83,11 @@
     <?php
 
     include_once "../connexion.php";
-    $id_sous = $_GET['id_sous'];
+    if(!empty($_GET['id_sous'])){
+        $id_sous = $_GET['id_sous'];
+    }else{
+        $id_sous= $_SESSION['id_sous'];
+    }
 
     $req_detail = "SELECT * FROM soumission  WHERE id_sous = $id_sous and (status=0 or status=1)  ";
     $req = mysqli_query($conn , $req_detail);
@@ -133,7 +137,7 @@
                         }
                         else{
                             ?>
-                            <p >Voir</p>
+                            <a >Voir</a>
                             </div>
                             <?php 
                             }
@@ -152,7 +156,7 @@
             <?php
             $id_sous= $row['id_sous'];
     }
-    $sql17 = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
+    $sql17 = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') AND render = 1 ";
     $req17 = mysqli_query($conn,$sql17);
     if(mysqli_num_rows($req17)){
     $row17=mysqli_fetch_assoc($req17)
@@ -192,10 +196,23 @@
     <?php
     }
     ?>
-    
-   
 </div>
 </div>
-
+<?php
+if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
+    echo "<script>
+    Swal.fire({
+        title: 'Ajout réussi !',
+        text: 'La réponse a été ajouté avec succès.',
+        icon: 'success',
+        confirmButtonColor: '#3099d6',
+        confirmButtonText: 'OK'
+    });
+    </script>";
+  
+    // Supprimer l'indicateur de succès de la session
+    unset($_SESSION['ajout_reussi']);
+  }
+?>
 </body>
 </html>

@@ -18,7 +18,7 @@ if(isset($_POST['search'])) {
     }
    
 } else {
-$matiere_query = "SELECT * FROM matiere INNER JOIN semestre USING(id_semestre)"; 
+$matiere_query = "SELECT * FROM matiere INNER JOIN semestre USING(id_semestre) order by code desc"; 
 }
 ?>
 
@@ -62,10 +62,11 @@ $matiere_query = "SELECT * FROM matiere INNER JOIN semestre USING(id_semestre)";
             </div>
         </div>
         <br>
-        <div style="display: flex ; justify-content: space-between;">
+    <div style="display: flex ; justify-content: space-between;">
         <a href="ajoute_matiere.php" class = "btn btn-primary" >Nouveau</a>
         <a href="importe_matiere.php"  class="btn btn-primary ml-25">Importer</a>
     </div>
+  
     <br>
     <?php } ?>
 
@@ -182,6 +183,8 @@ if (isset($_SESSION['affecter_reussi']) && $_SESSION['affecter_reussi'] === true
 
 
 <script>
+
+
 var liensArchiver = document.querySelectorAll("#supprimer");
 
 // Parcourir chaque lien d'archivage et ajouter un écouteur d'événements

@@ -1,10 +1,15 @@
 <?php
 session_start() ;
-//  if($_SESSION["role"]!="admin"){
-//      header("location:authentification.php");
-// } 
+ if($_SESSION["role"]!="admin"){
+     header("location:authentification.php");
+} 
 include_once "../connexion.php";
-$id_matiere = $_GET['id_matiere'];
+
+
+$id_matiere=$_GET['id_matiere'];
+
+//$id_matiere = $_SESSION['id_matiere'];
+
 
 $semestre = "SELECT * FROM semestre ";
 $semestre_qry = mysqli_query($conn, $semestre);
@@ -35,7 +40,7 @@ if(isset($_POST['submit'])){
          $msg = 4;
       }
       }
-      header ("Location: matiere.php");
+      header ("Location : matiere.php");
       }
 
  include "../nav_bar.php";

@@ -36,17 +36,20 @@ if($_SESSION["role"]!="ens"){
             <?php
                  include_once "../connexion.php";
                 $id_matiere = $_GET['id_matiere'];
-                $matiere = "SELECT DISTINCT * FROM matiere NATURAL JOIN enseignant WHERE id_matiere = $id_matiere LIMIT 1";
+                $matiere = "SELECT DISTINCT *  FROM matiere
+                INNER JOIN enseigner ON matiere.id_matiere = enseigner.id_matiere
+                INNER JOIN enseignant ON enseignant.id_ens = enseigner.id_ens
+                WHERE matiere.id_matiere = $id_matiere AND email = '$email'";
                 $matiere_qry = mysqli_query($conn,$matiere);
-                while ($row_matiere = mysqli_fetch_assoc($matiere_qry)) :
+               $row_matiere = mysqli_fetch_assoc($matiere_qry);
                 ?>
             <fieldset class="fsStyle">
                         <legend class="legendStyle">
-                            <a data-toggle="collapse" data-target="#demo" href="#" >Détails sur la matière <?php echo $row_matiere['libelle']." "." Enseigner par "." ".$row_matiere['nom'] ?></a>
+                            <a data-toggle="collapse" data-target="#demo" href="#" >Détails sur la matière <?php echo $row_matiere['libelle']." "." Enseigner par "." ".$row_matiere['nom']." ".$row_matiere['prenom']  ?></a>
                         </legend>
                        
                     </fieldset>
-            <?php endwhile;?>
+            
         </div>
     </div>
 </div>
@@ -56,10 +59,12 @@ if($_SESSION["role"]!="ens"){
    
     $id_matiere = $_GET['id_matiere'];
 
-    $req_detail = "SELECT DISTINCT matiere.id_matiere, nom, prenom, code, libelle, specialite, email FROM matiere
+    $req_detail = "SELECT DISTINCT matiere.id_matiere, nom, prenom, code, matiere.libelle as 'libelle_matiere', groupe.libelle as 'libelle_groupe',libelle_type, specialite, email FROM matiere
                 INNER JOIN enseigner ON matiere.id_matiere = enseigner.id_matiere
                 INNER JOIN enseignant ON enseignant.id_ens = enseigner.id_ens
-                WHERE matiere.id_matiere = $id_matiere";
+                INNER JOIN groupe ON groupe.id_groupe = enseigner.id_groupe
+                INNER JOIN type_matiere ON type_matiere.id_type_matiere = enseigner.id_type_matiere
+                WHERE matiere.id_matiere = $id_matiere AND email = '$email'";
     $req = mysqli_query($conn , $req_detail);
     $row=mysqli_fetch_assoc($req);
     ?>
@@ -71,10 +76,12 @@ if($_SESSION["role"]!="ens"){
 
                 <h4>
                 <?php echo "<strong>Nom de l'enseignant : </strong>". $row['nom']." ".$row['prenom']; ?><br><br>
-                <?php echo "<strong>Code de la matiere : </strong>". $row['code']; ?><br><br>
-                <?php echo "<strong>Libellè : </strong>". $row['libelle']; ?><br><br>
+                <?php echo "<strong>Code de la matière : </strong>". $row['code']; ?><br><br>
+                <?php echo "<strong>Libellè : </strong>". $row['libelle_matiere']; ?><br><br>
                 <?php echo "<strong> Specialite : </strong>" . $row['specialite']; ?><br><br>
-                <?php echo "<strong> E-mail de l'enseignant : </strong>" . $row['email']; ?><br>
+                <?php echo "<strong> E-mail de l'enseignant : </strong>" . $row['email']; ?><br><br>
+                <?php echo "<strong>Groupe : </strong>". $row['libelle_groupe']; ?><br><br>
+                <?php echo "<strong>Type de la matière : </strong>". $row['libelle_type']; ?><br><br>
                 </h4>
                
             </fieldset>
@@ -85,11 +92,11 @@ if($_SESSION["role"]!="ens"){
 
     <div style="display: flex ; justify-content: space-between;">
     <div>
-    <a href="list_etudiant.php?id_matiere=<?=$row['id_matiere']?>" class = "btn btn-primary" >List des etudiant s'inscrire</a>
+    <a href="list_etudiant.php?id_matiere=<?=$row['id_matiere']?>" class = "btn btn-primary" >List des etudiants inscrire</a>
     </div>
-    <div>
+    <!-- <div>
     <a href="../index_enseignant.php" class="btn btn-primary">Retour</a>
-    </div>
+    </div> -->
     <?php
     include "../nav_bar.php";
     ?>

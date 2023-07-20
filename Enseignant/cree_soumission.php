@@ -71,8 +71,35 @@ if (isset($_POST['button'])) {
             $sql2 = "INSERT INTO `fichiers_soumission` (`id_sous`, `nom_fichier`, `chemin_fichier`) VALUES ($id_sous, '$file_name', '$destination')";
             $req2 = mysqli_query($conn, $sql2);
             if($req1 and $req2){
+                $sql_tou="SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
+                $req_tou=mysqli_query($conn,$sql_tou);
+                while($row_tou=mysqli_fetch_assoc($req_tou)){
+                    $id_etud=$row_tou['id_etud'];
+                    $sql_tout="SELECT * FROM `etudiant` where id_etud=$id_etud";
+                    $req_tout=mysqli_query($conn,$sql_tout);
+                    $row_tout=mysqli_fetch_assoc( $req_tout);
+                    $subject = "il ya une soumission  ";
+                    $message = "date de debus de test est $date_debut   
+                    alors que date de fin est $date_debut ";
+                     $url =  "https://script.google.com/macros/s/AKfycbz1KWjBC8wx3Ay9fYYg6pW_1dcS-07rYT07Xxq0SscKOgUXpiPcq5zqgfTsR7PZFr4j/exec";
+                        $ch = curl_init($url);
+                curl_setopt_array($ch, [
+                   CURLOPT_RETURNTRANSFER => true,
+                   CURLOPT_FOLLOWLOCATION => true,
+                   CURLOPT_POSTFIELDS => http_build_query([
+                      "recipient" =>$row_tout['matricule'],
+                      "subject"   =>$subject,
+                      "body"      =>$message
+                   ])
+                ]); 
+                   $result = curl_exec($ch);
+                  
+
+                }
+                if ($result) {
                 header("location:soumission_en_ligne.php");
                 $_SESSION['ajout_reussi'] = true;
+                }
             }
         }
     }
@@ -95,9 +122,9 @@ include "../nav_bar.php";
         <div class="row">
             <div class="col-lg-12">
                 <ol class="breadcrumb">
-                    <li><a href="#">Acceuil</a></li>
-                    <li>Gestion des soumissions</li>
-                    <li>Ajouter une soumission</li>
+                    <li><a href="index_enseignant.php">Acceuil</a></li>
+                    <li><a href="soumission_en_ligne.php">Gestion des soumissions</a></li>
+                    <li><a href="cree_soumission.php">Créer une soumission</a></li>
                 </ol>
             </div>
         </div>
@@ -115,13 +142,13 @@ include "../nav_bar.php";
 
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label class="col-md-1">Titre </label>
+                    <label class="col-md-2">Titre </label>
                     <div class="col-md-6">
                         <input type="text" name="titre_sous" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Matière</label>
+                    <label class="col-md-2">Matière</label>
                     <div class="col-md-6">
                         <select class="form-control" id="academic" value="Semesters" name="matiere">
                             <option selected disabled> Matière </option>
@@ -132,19 +159,19 @@ include "../nav_bar.php";
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Date début </label>
+                    <label class="col-md-2">Date début </label>
                     <div class="col-md-6">
                         <input type="datetime-local" name="debut" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Date fin</label>
+                    <label class="col-md-2">Date fin</label>
                     <div class="col-md-6">
                         <input type="datetime-local" name="fin" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Type soumission</label>
+                    <label class="col-md-2">Type soumission</label>
                     <div class="col-md-6">
                         <select class="form-control" id="academic" value="Semesters" name="type">
                             <option selected disabled> Type soumission </option>
@@ -155,13 +182,13 @@ include "../nav_bar.php";
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Description </label>
+                    <label class="col-md-2">Description </label>
                     <div class="col-md-6">
                         <textarea name="description_sous" id="" class="form-control" cols="30" rows="10"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-1">Sélectionnez un fichier : </label>
+                    <label class="col-md-2">Sélectionnez un ou plusieurs fichier(s) : </label>
                     <div class="col-md-6">
                         <input type="file" id="fichier" name="file[]" class="form-control" multiple>
                     </div>

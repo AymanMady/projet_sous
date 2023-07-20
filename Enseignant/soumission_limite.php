@@ -36,7 +36,7 @@ include "../nav_bar.php";
     <div class="row">
         <div class="col-lg-12"> 
             <ol class="breadcrumb">
-                <li><a href="#">Acceuil</a>
+                <li><a href="index_enseignant.php">Acceuil</a>
                     
                 </li>
                 <li>Les soumissions limiter</li>
@@ -102,7 +102,7 @@ include "../nav_bar.php";
               <th>Titre de soumission</th>
               <th>Date debut </th>
               <th>Date fin </th>
-              <th colspan="2">Actions</th>
+              <th colspan="4">Actions</th>
           </tr>
           <?php 
               include_once "../connexion.php";
@@ -159,7 +159,7 @@ include "../nav_bar.php";
                           </td>                          
                           <td><a href="detail_soumission.php?id_sous=<?=$row['id_sous']?>">Detaille</a></td>
                           <td><a href="archiver_soumission_terminer.php?id_sous=<?=$row['id_sous']?>" id="archiver" >Archiver</a></td>
-                          <td><a href="prolonger_soumission.php?id_sous=<?=$row['id_sous']?>" id="prolonger" >Prollonger</a></td>
+                          <td><a href="prolonger_soumission.php?id_sous=<?=$row['id_sous']?>" id="prolonger" >Prolonger</a></td>
                       </tr>
                     <?php
                   }

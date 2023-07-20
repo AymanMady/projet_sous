@@ -59,8 +59,6 @@ require 'vendor/autoload.php';
 			$worksheet = $spreadsheet->getActiveSheet();
 			$data = $worksheet->toArray();
 
-
-			
 			foreach ($data as $key => $row) {
 				if ($key === 0) {
 					continue; // Skip the header row
@@ -73,10 +71,7 @@ require 'vendor/autoload.php';
                 $module = $row[4];
 				
                               
- 				$sql = "INSERT INTO matiere( 
-								`code`, `libelle`,
-								`id_semestre`,
-								`specialite`, id_module )
+ 				$sql = "INSERT INTO matiere( `code`, `libelle`,`id_semestre`,`specialite`, id_module )
 								VALUES(
 									'$code','$libelle',
 								(SELECT id_semestre FROM semestre WHERE nom_semestre = '$semestre'), '$specialite', 

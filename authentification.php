@@ -19,74 +19,20 @@
 
     <script src="JS/sweetalert2.js"></script>
 
-
-</head>
-<!-- <body>
-    <div id='page'>
-        <div id="head">
-            <br/>
-            <div id="emblhead" align="center">
-
-                <p id="p1"> <strong>Institut supérieur du numérique </strong></p>
-                <p id="p2">
-                    <strong>Plateforme de soumission des devoirs et des examens en ligne</strong>
-                </p>
-            </div>
-        </div>
-        <div id="sitename">
-            <div align="center">
-                <strong>  </strong>
-            </div>
-        </div>
-    </div>
-            <div align="center">
-                <img id="profile-img" src="" />
-            </div>
-    <div class="card card-container">
-        <form action="authentification.php" method="POST" class="form-signin"> -->
-        <!-- <img class="mb-4" src="assets/brand/supnum.jpg" alt="" width="72" height="57"> -->
-
-            <?php
-                    // if(count($errors) > 0){
-                    //     foreach($errors AS $displayErrors){
-                        
-                        ?>
-                        <div><?php //echo $displayErrors; ?></div>
-                        <?php
-                    //     }
-                    // }
-                    ?>
-            <!-- <span id="reauth-email" class="reauth-email"></span>
-            <input type="email" name="email" required placeholder="Email"  class="form-control">
-            <input type="password" name="password" required placeholder="Password" class="form-control">
-            <input type="submit" name="entrer" value="login" class="btn btn-lg btn-primary btn-block btn-signin">
-            <a href="forgot.php" id="forgot">Mot de passe oublier?</a>
-            <p>Cree un compte <a href="verification.php">Sign Up</a></p>
-        </form>
-    </div>
-</body>-->
-</html> 
-
-
-
-<!doctype html>
-<html lang="en" data-bs-theme="auto">
-  <head><script src="assets/js/color-modes.js"></script>
+    <script src="assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.111.3">
-    <title>Signin Template · Bootstrap v5.3</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
 
     
 
- <!-- hello    -->
 
-<link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/dist/css/b ootstrap.min.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -235,7 +181,6 @@
             </div>
         </div>
     <img class="mb-4" src="assets/brand/supnum.jpg" alt="" width="74px" height="50">
-    <!-- <h1 class="h3 mb-3 fw-normal">Please sign in</h1> -->
                 <?php
                     if(count($errors) > 0){
                         foreach($errors AS $displayErrors){
@@ -254,7 +199,6 @@
       <input type="password" name="password" required class="form-control" id="floatingPassword" placeholder="Password">
       <label for="floatingPassword">Password</label>
     </div>
-    <!-- <button class="w-100 btn btn-lg btn-primary" type="submit" name="entrer" value="login">Sign in</button> -->
      <input type="submit" name="entrer" value="login" class="btn btn-lg btn-primary btn-block btn-signin" style="margin-bottom: 10px;">
      <a href="forgot.php" id="forgot">Mot de passe oublier?</a>
             <p>Cree un compte <a href="verification.php">Sign Up</a></p>

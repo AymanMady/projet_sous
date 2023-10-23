@@ -11,7 +11,6 @@ include "../nav_bar.php";
 
 <!-- sweetalert2 links -->
 
-<script src="../JS/sweetalert2.js"></script>
 
 </br></br></br>
 
@@ -103,12 +102,11 @@ include "../nav_bar.php";
         </table>
     </div>
 </div>
-
 <?php
-//if (isset($_GET['succes']) && $_GET['succes'] == 1) {
 
 if (isset($_SESSION['ajout_reussi']) && $_SESSION['ajout_reussi'] === true) {
-    echo "<script>
+    echo 
+    "<script>
     Swal.fire({
         title: 'Ajout réussi !',
         text: 'L\'étidiant a été ajouté avec succès.',

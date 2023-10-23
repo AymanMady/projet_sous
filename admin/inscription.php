@@ -20,7 +20,8 @@ if(isset($_POST['search'])) {
     $searched = true;
     }
    
-} else {
+}
+ else {
 $req = mysqli_query($conn , "SELECT * FROM semestre
  INNER JOIN inscription ON inscription.id_semestre = semestre.id_semestre 
  INNER JOIN matiere ON inscription.id_matiere = matiere.id_matiere INNER JOIN 
@@ -106,7 +107,10 @@ $req = mysqli_query($conn , "SELECT * FROM semestre
             </tr>
 
 
-            <?php
+            <?php 
+                
+                   
+                   
                     if(mysqli_num_rows($req) == 0){
                         echo "Il n'y a pas encore  des inscriptions ajouter !" ;
                         

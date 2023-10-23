@@ -71,8 +71,35 @@ if (isset($_POST['button'])) {
             $sql2 = "INSERT INTO `fichiers_soumission` (`id_sous`, `nom_fichier`, `chemin_fichier`) VALUES ($id_sous, '$file_name', '$destination')";
             $req2 = mysqli_query($conn, $sql2);
             if($req1 and $req2){
+                $sql_tou="SELECT * FROM `inscription` WHERE inscription.id_matiere='$id_matiere'";
+                $req_tou=mysqli_query($conn,$sql_tou);
+                while($row_tou=mysqli_fetch_assoc($req_tou)){
+                    $id_etud=$row_tou['id_etud'];
+                    $sql_tout="SELECT * FROM `etudiant` where id_etud=$id_etud";
+                    $req_tout=mysqli_query($conn,$sql_tout);
+                    $row_tout=mysqli_fetch_assoc( $req_tout);
+                    $subject = "il ya une soumission  ";
+                    $message = "date de debus de test est $date_debut   
+                    alors que date de fin est $date_debut ";
+                     $url =  "https://script.google.com/macros/s/AKfycbz1KWjBC8wx3Ay9fYYg6pW_1dcS-07rYT07Xxq0SscKOgUXpiPcq5zqgfTsR7PZFr4j/exec";
+                        $ch = curl_init($url);
+                curl_setopt_array($ch, [
+                   CURLOPT_RETURNTRANSFER => true,
+                   CURLOPT_FOLLOWLOCATION => true,
+                   CURLOPT_POSTFIELDS => http_build_query([
+                      "recipient" =>$row_tout['matricule'],
+                      "subject"   =>$subject,
+                      "body"      =>$message
+                   ])
+                ]); 
+                   $result = curl_exec($ch);
+                  
+
+                }
+                if ($result) {
                 header("location:soumission_en_ligne.php");
                 $_SESSION['ajout_reussi'] = true;
+                }
             }
         }
     }

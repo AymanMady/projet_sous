@@ -94,8 +94,8 @@ include "../nav_bar.php";
                     <td><?=$row['nom_semestre']?></td>
                     <td><?=$row['email']?></td>
                     <td><a href="detail_etudiant.php?id_etud=<?=$row['id_etud']?>">Détails</a></td>
-                    <td><a href="modifier_etudiant.php?id_etud=<?=$row['id_etud']?>">Modifier</a></td>
-                    <td><a href="supprimer_etudiant.php?id_etud=<?=$row['id_etud']?>" id="supprimer">Supprimer</a></td>
+                    <td class="kh"><a href="modifier_etudiant.php?id_etud=<?=$row['id_etud']?>"><img src="kh.png" alt=""></a></td>
+                    <td class="kh"><a href="supprimer_etudiant.php?id_etud=<?=$row['id_etud']?>" id="supprimer"><img src="im.png" alt=""></a></td>
                 </tr>
                 <?php
             }
@@ -208,3 +208,14 @@ $(document).ready(function(){
 </script>
 </body>
 </html>
+<style>
+    .kh{
+        width: 2px;
+        height: 2px;
+        padding: 100px;
+        margin: 300px;
+    }
+    img{
+        height: 25px;
+    }
+</style>

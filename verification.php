@@ -37,7 +37,6 @@
       <input type="submit" name="verifier" value="login" class="btn btn-lg btn-primary btn-block btn-signin">
       <p><a href="authentification.php">connectez-vous</a></p>
    </form>
-
 </div>
 </body>
 </html>

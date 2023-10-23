@@ -8,16 +8,12 @@ CREATE TABLE `departement` (
   `nom` text NOT NULL
 );
 
-
-
-
 CREATE TABLE `groupe` (
 `id_groupe` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `libelle` varchar(50) DEFAULT NULL,
 `id_dep` int(10),
 FOREIGN KEY (id_dep) REFERENCES departement(id)
 );
-
 
 CREATE TABLE `role` (
 `id_role` int(10) PRIMARY KEY AUTO_INCREMENT,
@@ -27,7 +23,7 @@ CREATE TABLE `role` (
 CREATE TABLE `utilisateur` (
 `id_user` int(10) PRIMARY KEY AUTO_INCREMENT ,
 `login` varchar(50) DEFAULT NULL,
-`pwd` varchar(50) DEFAULT NULL,
+`pwd` varchar(100) DEFAULT NULL,
 `active` tinyint(1) DEFAULT 1 COMMENT '1=Active | 0=Inactive',
 `code` varchar(20) DEFAULT NULL,
 `id_role` int(10) DEFAULT NULL ,
@@ -81,8 +77,8 @@ FOREIGN KEY (id_role) REFERENCES role(id_role)
 );
 
 
-CREATE TABLE type_soumission(
-  id_type_sous INT(10) AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE `type_soumission`(
+  `id_type_sous` INT(10) AUTO_INCREMENT PRIMARY KEY,
   `libelle` varchar(50) DEFAULT NULL
 );
 
@@ -138,9 +134,9 @@ FOREIGN KEY (id_sous) REFERENCES soumission(id_sous)
 
 
 CREATE TABLE `enseigner` (
-`id_matiere` int(10) DEFAULT NULL,
-`id_ens` int(10) DEFAULT NULL,
-`id_groupe` int(10) DEFAULT NULL,
+`id_matiere` int(10)  NOT NULL,
+`id_ens` int(10)  NOT NULL,
+`id_groupe` int(10) NOT NULL,
 `id_type_matiere` int(10) NOT NULL,
 FOREIGN KEY (id_type_matiere) REFERENCES type_matiere(id_type_matiere),
 FOREIGN KEY (id_matiere) REFERENCES matiere(id_matiere),
@@ -173,7 +169,7 @@ CREATE TABLE matiere_semestre(
 CREATE TABLE reponses(
   id_rep int(10) AUTO_INCREMENT PRIMARY key ,
   description_rep varchar(200),
-  date datetime DEFAULT NOW(),
+  date datetime DEFAULT NOW(), 
   render bool DEFAULT 0,
   note float(10) DEFAULT 0,
   id_sous INT(10) not NULL,
@@ -230,11 +226,15 @@ INSERT INTO `type_soumission` (`id_type_sous`, `libelle`) VALUES
 
 INSERT INTO `utilisateur` (`login`, `pwd`, `active`, `code`, `id_role`) VALUES
 ('admin@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 1),
-('cheikh.dhib@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 0, '0', 2),
+('cheikh.dhib@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 2),
 ('sidi.med@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '', 2),
 ('moussa.demba@supnum.mr', '25f9e794323b453885f5181f1b624d0b', '1', NULL, '2'),
 ('22018@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3),
-('22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3);
+('22053@supnum.mr', '25f9e794323b453885f5181f1b624d0b', 1, '0', 3),
+('22053@supnum.mr', '$2b$10$2Ey3nmGNn2LPcXYc8RxPRuPgdsNL3bO4elJVLCtdeE7RBXYfH67hO', '1', NULL, '3'), 
+('adminNode@supnum.mr', '$2b$10$R2prC1uaAW75mt4n4bN4EuhfzDv8n5OnWfDZJ7eOOPQFl9d4q0olC', '1', NULL, '1'),
+('22034@supnum.mr', '$2b$10$/Dawu/Gi2TTPFuKKkCqsmOxNXoEpfPGLcS7efbXkl8AtoOjduxgG2', '1', NULL, '3')
+;
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -270,9 +270,9 @@ VALUES ('Programmation et développement 1'),
 
 INSERT INTO `departement` ( `code`, `nom`) VALUES
 ('DSI', 'Devellopement'),
-('RSS', 'reseaux'),
-('CNM', 'multimedia'),
-('TC', 'trancommun');
+('RSS', 'Réseaux'),
+('CNM', 'Multimedia'),
+('TC', 'Trancommun');
 
 -- --------------------------------------------------------
 -- --------------------------------------------------------
@@ -838,13 +838,6 @@ INSERT INTO `fichiers_soumission` (`id`, `id_sous`, `nom_fichier`, `chemin_fichi
 (13, 33, 'transactions.txt', 'C:/wamp64/www/projet_sous-main/Files/DSI320/64a8b44b1d9534.22718912.txt'),
 (14, 34, 'Pix_temperatures (2).xlsx', 'C:/wamp64/www/projet_sous-main/Files/DSI320/64a8b46fa789c7.32789377.xlsx'),
 (15, 35, 'PIX-12.pdf', 'C:/wamp64/www/projet_sous-main/Files/DSI320/64a8b4b20502a6.10731719.pdf');
-
-
-
-
-
-
-
 
 
 

@@ -156,7 +156,7 @@
             <?php
             $id_sous= $row['id_sous'];
     }
-    $sql17 = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') ";
+    $sql17 = "select * from reponses where id_sous = '$id_sous' and id_etud = (select id_etud from etudiant where email = '$email') AND render = 1 ";
     $req17 = mysqli_query($conn,$sql17);
     if(mysqli_num_rows($req17)){
     $row17=mysqli_fetch_assoc($req17)

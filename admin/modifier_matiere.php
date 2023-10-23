@@ -40,7 +40,7 @@ if(isset($_POST['submit'])){
          $msg = 4;
       }
       }
-      header ("Location: matiere.php");
+      header ("Location : matiere.php");
       }
 
  include "../nav_bar.php";

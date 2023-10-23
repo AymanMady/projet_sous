@@ -108,5 +108,6 @@ require 'vendor/autoload.php';
     }
     include "../nav_bar.php";
     ?>
+    
 
 </body>

@@ -6,6 +6,7 @@ $semester_qry= "SELECT nom_semestre FROM `semestre` where id_semestre = $academi
 $semester = mysqli_query($conn, $semester_qry);
 $semester_row = mysqli_fetch_assoc($semester);
 
+
 if($semester_row['nom_semestre'] != 'S1' && $semester_row['nom_semestre'] != 'S6'){
     $deppartement = "SELECT * FROM `departement`;";
     $deppartement_qry = mysqli_query($conn, $deppartement);
@@ -22,6 +23,7 @@ if($semester_row['nom_semestre'] != 'S1' && $semester_row['nom_semestre'] != 'S6
     while ($deppartement_row = mysqli_fetch_assoc($deppartement_qry)) {
         $output .= '<option value="' . $deppartement_row['code'] . '">' . $deppartement_row['code'] .'</option>';
     }
+
     echo $output;
 
 }

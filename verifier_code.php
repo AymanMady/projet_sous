@@ -33,6 +33,5 @@
             <input type="submit" name="verify" value="Verify" class="btn btn-lg btn-primary btn-block btn-signin">
     </form>
 </div>
-
 </body>
 </html>
